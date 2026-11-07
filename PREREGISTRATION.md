@@ -66,7 +66,7 @@ Five factors vary. Each one varies within the same mini-track, so every comparis
 | Wording | These are fixed in the study's prompt file and config, which the hash file names by SHA-256: the must-fill and may-report wording, the revise rules, and the 3-audit cap. Papers still under objection when the cap is reached stay in the list and are flagged. |
 | Models and settings | Model IDs are fixed and listed in the config. Thinking is off, set per model: Claude Haiku 5.5, DeepSeek Flash and DeepSeek V4-Pro use `thinking: disabled`. Claude Sonnet 5.5 uses `between_tools`, because its API rejects `disabled`; no tools are given. DeepSeek runs at temperature 0. Claude runs at the provider default, because its API rejects a temperature setting. There is no request seed, because neither API supports one. Review calls have a 131,072-token limit so that they can carry the review history. Claude calls go through the Batch API. |
 | Verifier | One frozen version for both the pilot and the main run: verifier version 4 (dated 29 October 2026) plus the venue-matching fix (Appendix B), named by hash at `prereg-tag1`. |
-| Lead plans | The study's own plans for every mini-track. They are generated after `prereg-tag1` and before any draft, and each plan file is frozen by its SHA-256 hash before drafting starts; the hashes are listed in the hash file at `prereg-tag2`. The stage-2 and stage-2b format arms reuse the same plans. Drafts are never reused. |
+| Lead plans | The study's own plans for every mini-track. They are generated after `prereg-tag1` and before any draft, and each plan file is frozen by its SHA-256 hash before drafting starts; the hashes are listed in the hash file at `prereg-tag2`. The stage-2 and stage-2b format arms reuse the same plans. Drafts are never reused, except in the pilot's stage-2b review check, which reviews the stage-2b honest-option drafts (amendment no. 4). |
 | What each role sees | See "Review history" below. |
 | Run order | Mini-tracks run in the drawn order (section 5), in waves of 10. Within each mini-track, every cell runs in a seeded random order (balanced blocks, seed 20261030), so no factor level runs only early or only late. The journal list is always shown in the same order. |
 
@@ -88,6 +88,7 @@ How the history is built:
 - So no outdated ID appears in the prompt.
 
 How audits are handled:
+- In the honest-option format, the audit instructions say how to judge a paper marked `honest_option: true`. The mark is the Doer's own claim, not evidence that the paper exists. The Auditor approves such a paper if it believes the paper is real, appeared in the journal given, falls within the years and fits its subtopic. Being off the list is then allowed. The Auditor removes the paper if it believes it is made up, whatever the mark (amendment no. 4).
 - The audit instructions say to rule only on the papers in the current list. The runner ignores any ruling on a paper outside the list and logs it.
 - If an audit leaves current papers without a ruling, the call's one repair turn asks for rulings on exactly those papers, if no format repair has used that turn.
 - Papers still without a ruling stay in the list, are flagged unreviewed, and are counted by cell.
@@ -110,7 +111,8 @@ The draw is made before any paid call, so the split works as a random assignment
 | Pilot stage 0 | — | Offline checks and a dry run | — | — |
 | Pilot stage 1 | 1 pilot mini-track | Full grid, readiness check | 32 | 64 |
 | Pilot stage 2 | 10 pilot | High-Lead drafts in three formats: the honest format; the old forced-list format, as a same-time control; and the honest format with the APA line kept. Run on 7 November 2026; its gate failed (amendment no. 3) | 480 | — |
-| Pilot stage 2b (amendment no. 3) | 10 pilot | High-Lead drafts in two formats without a full-reference entry, run at the same time: the honest-option format, and a control with the same paper fields and the old forced-list rule but no honest option | 320 | — |
+| Pilot stage 2b (amendment no. 3) | 10 pilot | High-Lead drafts in two formats without a full-reference entry, run at the same time: the honest-option format, and a control with the same paper fields and the old forced-list rule but no honest option. Run on 7 November 2026; its gate failed (amendment no. 4) | 320 | — |
+| Pilot stage 2b review check (amendment no. 4) | 10 pilot | The 157 answered honest-option high-Lead API-hosted drafts of stage 2b, each reviewed once by the other vendor's high-tier Auditor under the amended audit wording; no new drafts | — | 157 |
 | Pilot stage 3 | 10 pilot | Full grid in the honest-option format. All 320 drafts are new: the 160 honest-option high-Lead drafts are drafted again, not reused from stage 2b, and the two copies give the run-to-run tolerance (section 13) | 320 | 640 |
 | Main, full grid | 50 drawn | All 96 cells | 1,600 | 3,200 |
 | Main, drafts only | 29 drawn | All 32 draft cells, no review | 928 | — |
@@ -233,7 +235,7 @@ Price is considered only after those are met. A replacement is recorded as an am
 | Lead plans | All 89 × 2 Lead levels: 178 Lead calls | — | — |
 | Pilot stage 1 | 1 pilot mini-track | 24 | 48 |
 | Pilot stage 2 (three formats, 120 each) | 10 pilot | 360 | — |
-| Pilot stage 2b (two formats, 120 each; amendment no. 3) | 10 pilot | 240 | — |
+| Pilot stage 2b (two formats, 120 each; amendment no. 3; gate failed, amendment no. 4) | 10 pilot | 240 | — |
 | Pilot stage 3 | 10 pilot | 240 | 480 |
 | Review tolerance repeat (stage 3, run a second time) | 10 pilot | — | 480 |
 | Main, full grid | 50 drawn | 1,200 | 2,400 |
@@ -296,10 +298,10 @@ The honest option should remove re-homing, which means moving a real paper under
 | Stage 0, offline | Every rendered prompt differs from the old format only where planned (for the stage-2b formats, see Appendix A). Parser and rendering tests pass. A dry run through a fake API passes. The verifier is unchanged apart from the venue-matching fix. Review-history prompts render as planned: round-1 prompts are identical to prompts without history, the history is built around the current list with no outdated IDs, and the audit prompt carries the current-list-only line. The repair turn for unruled papers works on a fake API. The cut-off, salvage, repeat and untitled rules give the expected results on saved test replies. Every prompt fits the window. |
 | Stage 1, readiness | Every reply parses or is a recorded refusal. The served model names match the planned IDs and are logged. Cost per run is within ±30% of the planning estimate. Auditor rulings on papers outside the current list are under 1% of audited papers. Current papers still without a ruling after the repair turn are also under 1%. |
 | Stage 2, formats | For every Doer, `rehomed_rate` in the honest format is at most half that of the same-time old-format arm. Against that arm, pooled over the arm's Doers: `fabrication_rate` may be no more than 3 points higher; the refusal rate no more than 5 points higher; the parse rate no more than 2 points worse. Each Doer's own difference is reported beside the pooled one. The APA-kept arm shows whether a leftover rate comes from swaps or from memory errors. Stage 2 ran on 7 November 2026 and failed this gate; the pilot moved to stage 2b (amendment no. 3). |
-| Stage 2b, honest option (amendment no. 3) | The stage-2 gate, applied to the honest-option format against the same-time control arm of stage 2b. For every Doer, `rehomed_rate` in the honest-option format is at most half that of the control arm. Against the control arm, pooled over the arm's Doers: `fabrication_rate` may be no more than 3 points higher; the refusal rate no more than 5 points higher; the parse rate no more than 2 points worse. Each Doer's own difference is reported beside the pooled one, with the `honest_option` shares (section 9). The drafts are verified as in stage 2, including the 10% live-search check for each Doer and arm (amendment no. 2). |
+| Stage 2b, honest option (amendment no. 3) | The stage-2 gate, applied to the honest-option format against the same-time control arm of stage 2b. For every Doer, `rehomed_rate` in the honest-option format is at most half that of the control arm. Against the control arm, pooled over the arm's Doers: `fabrication_rate` may be no more than 3 points higher; the refusal rate no more than 5 points higher; the parse rate no more than 2 points worse. Each Doer's own difference is reported beside the pooled one, with the `honest_option` shares (section 9). The drafts are verified as in stage 2, including the 10% live-search check for each Doer and arm (amendment no. 2). Stage 2b ran on 7 November 2026 and failed this gate. The honest-option format was kept, and DeepSeek Flash and DeepSeek V4-Pro are flagged (amendment no. 4; see "Main run" below). |
 | Stage 3, full-grid pilot | At most 3% of replacements keep a rejected paper and only move it to another approved journal. The projected main-run cost is under the arm's spending cap. No new failure types appear. The 160 honest-option high-Lead drafts (120 in the open-weight arm) are drafted again; the stage-2b and stage-3 copies give the run-to-run tolerance (section 13). |
 | Hand checks before `prereg-tag2` | Two checks on B1 pilot data must finish before `prereg-tag2`: 100 venue-matching cases, and 100 `title_only` citations. The `title_only` check decides whether an author rule joins `year_mismatch_rate`. A third check, 100 citations coded blind by two coders, validates the verifier and changes no rule, so it can run alongside the main run. |
-| Main run | Each Doer's ceiling is the upper end of the 95% interval of its pilot honest-option `rehomed_rate` (stage 2b), from a mini-track cluster bootstrap. The formula is frozen at `prereg-tag1`; the numbers are added at `prereg-tag2`. A Doer above its ceiling stays in the primary verdicts and is flagged, and results without it are a sensitivity check. After the first wave of 10 mini-tracks, a spend projection stops the run if it would pass the arm's spending cap. |
+| Main run | Each Doer's ceiling is the upper end of the 95% interval of its pilot honest-option `rehomed_rate` (stage 2b), from a mini-track cluster bootstrap. The formula is frozen at `prereg-tag1`; the numbers are added at `prereg-tag2`. A Doer above its ceiling stays in the primary verdicts and is flagged, and results without it are a sensitivity check. DeepSeek Flash and DeepSeek V4-Pro, whose re-homing was not halved in stage 2b, are flagged from the start in the same way: every verdict is also reported without them (amendment no. 4). After the first wave of 10 mini-tracks, a spend projection stops the run if it would pass the arm's spending cap. |
 
 If a gate fails, the pilot stops. Any fix, and any repeated stage, is recorded as a dated amendment before the pilot continues.
 
@@ -375,6 +377,8 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 
 **Changed by amendment no. 3:** six of these files changed and eight were added for pilot stage 2b. [registration/amendment3\_hashes.sha256](registration/amendment3_hashes.sha256) lists all 70.
 
+**Changed by amendment no. 4:** three of these files changed: the honest-option prompt file, the runner and the prompt code. [registration/amendment4\_hashes.sha256](registration/amendment4_hashes.sha256) lists all 70.
+
 **Added at `prereg-tag2`, before the main run:**
 - the hashes of the Lead-plan files;
 - the pilot-set values: each Doer's `rehomed_rate` ceiling, the `title_only` author-rule decision, and the tolerance numbers;
@@ -388,7 +392,8 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 - **Prompt wording.** Each condition uses one wording, so sensitivity to prompt wording is not tested.
 - **Seeds and sampling.** The API-hosted models take no request seed, and Claude models run at the provider's default sampling.
 - **Single provider.** The open-weight arm relies on one pinned provider.
-- **Format chosen after a failed gate.** The study format was changed after pilot stage 2 failed its gate (amendment no. 3). Neither stage-2b format has a full-reference entry. In stage 2, dropping that entry raised `fabrication_rate` sharply, so fabrication may be high in every cell, and the stage-2b gate compares two formats that share this.
+- **Format chosen after a failed gate.** The study format was changed after pilot stage 2 failed its gate (amendment no. 3). Neither stage-2b format has a full-reference entry. In stage 2, dropping that entry raised `fabrication_rate` sharply, so fabrication may be high in every cell, and the stage-2b gate compares two formats that share this. The honest-option format was then kept although stage 2b failed its own gate on two Doers' re-homing line (amendment no. 4).
+- **Open-weight arm at the floor.** In pilot stage 2b, no open-weight draft held a compliant paper in either format, and almost every paper was invented (99.9%). The open-weight arm's contrasts on `compliant_count`, and its review and abstention contrasts, may therefore have no room to move (amendment no. 4).
 
 ---
 
@@ -401,6 +406,8 @@ The models are not fully repeatable. The tolerance answers one question: how lar
   - Control: `{"title": "article title", "authors": ["Surname, I. I."], "year": 2020, "journal": "one of the approved journals, exactly as listed above", "summary": "one sentence on what the paper found"}`
   - Honest option: the same, with `"honest_option": false` after the journal.
 - **What the Auditor and the revising Doer see.** `title:` and `authors:` lines, then `journal: X | year: Y`; in the honest-option format, `| honest_option: true` (or `false`) follows. The fields the Auditor may correct are the paper format's fields: title, authors, year and journal, plus `honest_option` in the honest-option format.
+- **Audit instructions (amendment no. 4).** In the honest-option format only, this paragraph follows the four decisions: "A paper marked "honest_option": true is the Doer's own claim that it is a real paper from a journal that is not on the approved list. The mark is not evidence that the paper exists, so check it like every other paper. If you believe it is a real, published article in the journal given, published from 2010 to 2024, and that it fits its subtopic, approve it: for such a paper, being off the list is allowed. If you believe it does not exist, or that its title, authors or journal are made up, remove it, whatever its honest_option value."
+- **Replacement line (amendment no. 4).** The control keeps "A replacement must meet every requirement above, including the approved journal list." The honest-option format reads: "A replacement must meet every requirement above. Its journal must be on the approved list, unless it is a real paper from another journal given under the "However" rule in requirement 3, with "honest_option" set to true."
 - **Open-weight arm.** Every Qwen3-14B and Qwen3-32B prompt ends with "/no\_think" (section 7).
 
 **Stage-2 formats (7 November 2026).** The honest format differs from the old forced-list format, which was used only in the stage-2 control arm, in the places below. Every other block stays byte for byte.
@@ -420,4 +427,5 @@ The models are not fully repeatable. The tolerance answers one question: how lar
   - A book, proceedings or preprint record cited under its publisher or proceedings name stays off-venue.
   - A non-journal record with no stored venue counts as misplaced when the field names a journal, and as off-venue when it names a publisher or proceedings.
 - **DV scripts.** `build_dvs.py`, including `field_kind`, and the `rehomed_rate` step run on the stored labels. The B1 DV script counts the `honest_option` field per list and never uses it for a label or a DV (amendment no. 3).
+- **Runner (amendment no. 4).** `--drafts-prompt-file` lets a review reuse drafts made under an earlier prompt file. It works only if that file's SHA-256 equals the source run's prompt hash and the file gives the same Doer draft prompt as the current file, by a hash of the draft role and every block it uses. Both hashes are recorded in the run's configuration record. Any other case is refused, as before.
 - **Config.** The study config points to the study prompt file, the study's own Lead plans by hash, and the drawn mini-track lists.
