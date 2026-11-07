@@ -18,7 +18,14 @@ This file gives the formula for every DV named in [PREREGISTRATION.md](../PREREG
 
 ## 2. Citation labels
 
-The verifier (version 4 plus the venue-matching fix) looks up each unique citation in Crossref first, then OpenAlex. Each citation then gets one label: the first check it fails.
+The verifier (version 4 plus the venue-matching fix) looks up each unique citation in three steps (amendment no. 2):
+1. Crossref.
+2. The frozen local copy of the 34 approved journals' OpenAlex records for 2010–2024 (24,944 records, fetched 29 October 2026; content SHA-256 1f35f8200f0e183d655a838cc5673e131a39ca3c6e9a99049fc23825626b8c97).
+3. A live OpenAlex search, only for a citation with no real match and no near match after steps 1 and 2 (a title similarity of 0.80 or more goes to adjudication instead) whose Journal field names a journal outside the 34, names no journal, or names a poorly indexed approved journal. Poorly indexed means that the frozen ISSN file (`data/reference/approved_journal_issns.yaml`, hashed at `prereg-tag1`) gives the journal no ISSN or marks it low-coverage, or that the local copy holds fewer than 100 of its records for 2010–2024. Four journals meet this: Data Base for Advances in Information Systems, Journal of Information Technology Theory and Application, Knowledge Management Research and Practice, and Scandinavian Journal of Information Systems.
+
+A citation that names any other approved journal and is found in neither of the first two sources is labelled `fabricated` without a live search. A real paper that neither source finds, cited under an approved journal but published outside the 34 or outside 2010–2024, is therefore `fabricated`, not `misplaced`, `year_mismatch` or `off_window` (amendment no. 2). A 10% live-search check of these citations, drawn within each Doer and format arm (seed 20261107), measures how many are real papers; it changes no label.
+
+Each citation then gets one label: the first check it fails.
 
 | Order | Check | Label if it fails |
 | --- | --- | --- |
@@ -104,6 +111,8 @@ The verifier (version 4 plus the venue-matching fix) looks up each unique citati
 | `rehomed_rate` | Real works whose Journal field names one of the 34 approved journals while the matched record's venue is outside the 34 (non-journal works included) / real works, per Doer |
 | `journal_field_empty_rate` | Citations with an empty Journal field / unique citations |
 | `unresolved_share` | `unresolved` / unique citations. Every deciding contrast is also reported with unresolved citations counted all `compliant`, then all `fabricated` |
+| Fabricated-without-search share | `fabricated` labels set from Crossref and the local copy alone, with no live search / `fabricated` labels, by cell. Added by amendment no. 2 |
+| Live-search check share | Citations in the 10% check that the live search finds to be real papers / citations in the check, by Doer and format arm, with the labels they would get. Added by amendment no. 2 |
 
 ## 7. Reply-rule shares (reported by cell)
 
