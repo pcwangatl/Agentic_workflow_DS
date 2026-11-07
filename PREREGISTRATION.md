@@ -1,6 +1,6 @@
 # Pre-registration: agent-team set-up and literature-reference errors (Study B1)
 
-**Status.** Design frozen on 6 November 2026. This file is registered in two tagged commits: `prereg-tag1`, before the first paid pilot call, and `prereg-tag2`, before the main run. Any change after `prereg-tag1` is a dated amendment listed in [AMENDMENTS.md](AMENDMENTS.md).
+**Status.** Design frozen on 6 November 2026. This file is registered in two tagged commits: `prereg-tag1`, before the first paid call of the study (the Lead-plan calls included), and `prereg-tag2`, before the main run. Any change after `prereg-tag1` is a dated amendment listed in [AMENDMENTS.md](AMENDMENTS.md).
 
 **Authors.** Withheld during peer review.
 
@@ -58,10 +58,10 @@ Five factors vary. Each one varies within the same mini-track, so every comparis
 | Paper format | The venue field is honest: it gives the journal where the paper actually appeared. There is no on-list flag and no APA line. Only the 34 approved journals count. An off-list paper never counts toward the goal. |
 | Wording | These are fixed in the study's prompt file and config, which the hash file names by SHA-256: the must-fill and may-report wording, the revise rules, and the 3-audit cap. Papers still under objection when the cap is reached stay in the list and are flagged. |
 | Models and settings | Model IDs are fixed and listed in the config. Thinking is off, set per model: Claude Haiku 5.5, DeepSeek Flash and DeepSeek V4-Pro use `thinking: disabled`. Claude Sonnet 5.5 uses `between_tools`, because its API rejects `disabled`; no tools are given. DeepSeek runs at temperature 0. Claude runs at the provider default, because its API rejects a temperature setting. There is no request seed, because neither API supports one. Review calls have a 131,072-token limit so that they can carry the review history. Claude calls go through the Batch API. |
-| Verifier | One frozen version for both the pilot and the main run: verifier version 4 plus the venue-matching fix (Appendix B). |
-| Lead plans | The study's own plans for every mini-track, frozen by file hash before any draft. |
+| Verifier | One frozen version for both the pilot and the main run: verifier version 4 (dated 29 October 2026) plus the venue-matching fix (Appendix B), named by hash at `prereg-tag1`. |
+| Lead plans | The study's own plans for every mini-track. They are generated after `prereg-tag1` and before any draft, and each plan file is frozen by its SHA-256 hash before drafting starts; the hashes are listed in the hash file at `prereg-tag2`. The stage-2 format arms reuse the same plans. Drafts are never reused. |
 | What each role sees | See "Review history" below. |
-| Run order | Mini-tracks run in the seeded order, in waves of 10. Within each mini-track, every cell runs in a seeded random order (balanced blocks, seed 20261030), so no factor level runs only early or only late. The journal list is always shown in the same order. |
+| Run order | Mini-tracks run in the drawn order (section 5), in waves of 10. Within each mini-track, every cell runs in a seeded random order (balanced blocks, seed 20261030), so no factor level runs only early or only late. The journal list is always shown in the same order. |
 
 **Review history.** Both the Auditor and the Doer remember the earlier audit rounds.
 
@@ -88,26 +88,27 @@ How audits are handled:
 
 ## 5. Sample and runs (API-hosted arm)
 
-Mini-tracks come from one seeded order of the HICSS-59 mini-track list (seed 20261029). The study uses positions 62–171 of that order:
+Mini-tracks are drawn at random from the HICSS-59 mini-track list.
 
-- 162–171: pilot;
-- 62–111: main run, full grid;
-- 112–161: main run, drafts only.
+- **Pool.** Every mini-track in the list that no earlier exploratory run or code test used: 89 mini-tracks.
+- **Draw.** The pool, sorted by mini-track ID, is shuffled once with Python's `random.Random(20261107).shuffle`.
+- **Split.** In the shuffled order, the first 10 are the pilot, the next 50 are the main run's full grid, and the rest, up to 50, are the main run's drafts-only set: 29 mini-tracks with this pool.
+- **Record.** The draw script, the pool list and the three resulting lists are named by hash at `prereg-tag1`.
 
-The positions are already in seeded random order, so this split, fixed before any run, works as a random assignment.
+The draw is made before any paid call, so the split works as a random assignment.
 
 | Part | Mini-tracks | What runs | Drafts | Reviewed runs |
 | --- | --- | --- | --- | --- |
-| Lead plans | All 110 | 4 plans each (2 vendors × 2 Lead levels): 440 Lead calls | — | — |
+| Lead plans | All 89 | 4 plans each (2 vendors × 2 Lead levels): 356 Lead calls | — | — |
 | Pilot stage 0 | — | Offline checks and a dry run | — | — |
-| Pilot stage 1 | 1 of 162–171 | Full grid, readiness check | 32 | 64 |
-| Pilot stage 2 | 162–171 | High-Lead drafts in three formats: the honest format; the old forced-list format, as a same-time control; and the honest format with the APA line kept | 480 | — |
-| Pilot stage 3 | 162–171 | Full grid in the honest format. All 320 drafts are new: the 160 honest high-Lead drafts are drafted again, not reused from stage 2, and the two copies give the run-to-run tolerance (section 13) | 320 | 640 |
-| Main, full grid | 62–111 (50) | All 96 cells | 1,600 | 3,200 |
-| Main, drafts only | 112–161 (50) | All 32 draft cells, no review | 1,600 | — |
+| Pilot stage 1 | 1 pilot mini-track | Full grid, readiness check | 32 | 64 |
+| Pilot stage 2 | 10 pilot | High-Lead drafts in three formats: the honest format; the old forced-list format, as a same-time control; and the honest format with the APA line kept | 480 | — |
+| Pilot stage 3 | 10 pilot | Full grid in the honest format. All 320 drafts are new: the 160 honest high-Lead drafts are drafted again, not reused from stage 2, and the two copies give the run-to-run tolerance (section 13) | 320 | 640 |
+| Main, full grid | 50 drawn | All 96 cells | 1,600 | 3,200 |
+| Main, drafts only | 29 drawn | All 32 draft cells, no review | 928 | — |
 
 **Which data test what:**
-- Draft hypotheses (H1, H4a, H6, H6x, H8) use all 100 main mini-tracks.
+- Draft hypotheses (H1, H4a, H6, H6x, H8) use all 79 main mini-tracks.
 - Review hypotheses (H2, H3, H5, H9) use the 50 full-grid mini-tracks.
 - Pilot data never enter the analysis.
 
@@ -137,15 +138,15 @@ With four tests at raw p, the chance of a false "supported" verdict is roughly 1
 
 | ID | Prediction | Primary contrast | Data | Deciding DV and test | Status |
 | --- | --- | --- | --- | --- | --- |
-| H1 | Higher goals raise hallucination | Goal 10 minus goal 3 | Drafts, 100 mini-tracks | `fabrication_rate`, two-sided | Confirmatory |
+| H1 | Higher goals raise hallucination | Goal 10 minus goal 3 | Drafts, 79 mini-tracks | `fabrication_rate`, two-sided | Confirmatory |
 | H2 | An Auditor improves the list | Any Auditor (the four levels averaged) minus none; each final list is compared with its own draft | Review, 50 | `compliant_count` up | Confirmatory |
 | H3 | An other-vendor Auditor lowers fabrication more than a same-vendor one, because a different model family brings more diverse knowledge | Cross minus same, averaged over tiers and vendors | Review, 50 | `fabrication_rate` down, two-sided p < .05. Failing to reject is an acceptable result. `realized_false_rejection` is a named secondary | Confirmatory, directional |
-| H4a | A more capable Doer lowers fabrication | High minus low Doer within vendor, averaged over vendors | Drafts, 100 | `fabrication_rate` down | Confirmatory |
+| H4a | A more capable Doer lowers fabrication | High minus low Doer within vendor, averaged over vendors | Drafts, 79 | `fabrication_rate` down | Confirmatory |
 | H5 | Review helps most at high goals | (Goal 10 minus 3) × (any Auditor minus none) | Review, 50 | `fabrication_rate` | Secondary |
-| H6 | Permission to report too few lowers fabrication without losing valid papers | May-report minus must-fill | Drafts, 100 | `fabrication_rate` down, and `compliant_count` non-inferior to must-fill at a 10% margin. Both: supported. Fabrication only: partly supported | Confirmatory |
-| H6x | The H6 effect depends on the goal | (May-report minus must-fill) at goal 10, minus the same at goal 3 | Drafts, 100 | `fabrication_rate` | Secondary |
+| H6 | Permission to report too few lowers fabrication without losing valid papers | May-report minus must-fill | Drafts, 79 | `fabrication_rate` down, and `compliant_count` non-inferior to must-fill at a 10% margin. Both: supported. Fabrication only: partly supported | Confirmatory |
+| H6x | The H6 effect depends on the goal | (May-report minus must-fill) at goal 10, minus the same at goal 3 | Drafts, 79 | `fabrication_rate` | Secondary |
 | H7 | Efficiency: every confirmatory contrast is repeated on cost | As in each hypothesis | As above | Tokens, `cost_usd`, and working time. Time is not measured for Claude runs, which go through the Batch API | Secondary |
-| H8 | A more capable Lead lowers fabrication | High minus low Lead within vendor, averaged over vendors | Drafts, 100 | `fabrication_rate` down, two-sided p < .05. Failing to reject is an acceptable result | Confirmatory |
+| H8 | A more capable Lead lowers fabrication | High minus low Lead within vendor, averaged over vendors | Drafts, 79 | `fabrication_rate` down, two-sided p < .05. Failing to reject is an acceptable result | Confirmatory |
 | H9 | A higher-tier Auditor improves overall performance more than a lower-tier one | High minus low tier, averaged over families and vendors | Review, 50 | All four primary DVs, each in the better direction (`compliant_count` up; `fabrication_rate`, `year_mismatch_rate` and `misplacement_rate` down), two-sided p < .05. One overall verdict by the H9 rule above. `realized_false_rejection` is a named secondary | Confirmatory, directional, on all four primary DVs |
 
 ## 7. Open-weight arm (OpenRouter)
@@ -157,7 +158,7 @@ With four tests at raw p, the chance of a false "supported" verdict is roughly 1
 - the 3-audit cap, the review history and the final output rule;
 - the paper format, the verifier, the DVs, the hypotheses and the verdict rules;
 - the manipulation check, in which each Doer is compared with this arm's own same-time old-format drafts;
-- the mini-tracks and their seeded split, the run order, and pilot stages 0 to 3.
+- the drawn mini-tracks and their split, the run order, and pilot stages 0 to 3.
 
 | Factor | Open-weight arm |
 | --- | --- |
@@ -191,12 +192,12 @@ The low-versus-high contrast is Qwen3-14B against Qwen3-32B, a milder gap than i
 Price is considered only after those are met. A replacement is recorded as an amendment.
 
 **Thinking off.**
-- Every Qwen prompt, for the Lead, the Doer and the Auditor, ends with "/no\_think". In development tests, no request setting turned Qwen's thinking off on this provider, and thinking left on could use up the whole output limit.
-- The runner removes the empty think block Qwen returns before parsing.
-- This line is the only prompt wording that differs from the API-hosted arm.
+- **Qwen3-14B and Qwen3-32B.** Every prompt, for the Lead, the Doer and the Auditor, ends with "/no\_think". In development tests, no request setting turned these models' thinking off on this provider, and thinking left on could use up the whole output limit. The runner removes the empty think block they return before parsing.
+- **Qwen3.8-27B.** This model ignores "/no\_think" on this provider, so its thinking is turned off with OpenRouter's reasoning setting, as fixed in the config. In development tests that setting returned no reasoning tokens. Its prompts carry no "/no\_think" line.
+- The "/no\_think" line is the only prompt wording that differs from the API-hosted arm.
 
 **Logging.** Every call logs:
-- the served provider and quantization;
+- the served provider (OpenRouter does not report precision for each reply; it is fixed by the pinned endpoint);
 - the model ID;
 - any reasoning tokens;
 - OpenRouter's reported cost.
@@ -207,32 +208,32 @@ Price is considered only after those are met. A replacement is recorded as an am
 | --- | --- | --- | --- |
 | Qwen3 | 0.7 | 0.8 | 20 |
 | Gemma 3 | 1.0 | 0.95 | 64 |
-| Qwen3.8-27B | its model card's values | | |
+| Qwen3.8-27B | its model card's non-thinking values, as fixed in the config | | |
 
 - Each call gets its own seed, derived from a fixed base seed (20261106).
-- No presence penalty is used. It can cause language mixing and lower quality, and it would tune one arm toward a better result.
+- No presence penalty is used, for any model, including the one in Qwen3.8-27B's card. It can cause language mixing and lower quality, and it would tune one arm toward a better result.
 
 **Output limits.**
 - Every model has the same output limit of 16,384 tokens.
 - Each call's `max_tokens` is min(16,384, window − prompt).
-- A run whose next review call would leave fewer than 4,096 tokens for the reply stops there (section 11, final output rule).
+- A run whose next audit or revision call would leave fewer than 4,096 tokens for the reply stops there (section 11, final output rule). The room left is estimated from the prompt's length (3 characters per token, plus a 3% and 256-token margin), so a run may stop slightly early, never late.
 
 **Goal 10.** Goal 10 stays in this arm so that it mirrors the API-hosted arm. Repeated, cut-off and untitled entries are treated as outcomes under the rules in section 11, not as faults to tune away. The pilot gate in section 10 decides whether goal 10 holds up.
 
 | Part | Mini-tracks | Drafts | Reviewed runs |
 | --- | --- | --- | --- |
-| Lead plans | All 110 × 2 Lead levels: 220 Lead calls | — | — |
-| Pilot stage 1 | 1 of 162–171 | 24 | 48 |
-| Pilot stage 2 (three formats, 120 each) | 162–171 | 360 | — |
-| Pilot stage 3 | 162–171 | 240 | 480 |
-| Review tolerance repeat (stage 3, run a second time) | 162–171 | — | 480 |
-| Main, full grid | 62–111 | 1,200 | 2,400 |
-| Main, drafts only | 112–161 | 1,200 | — |
+| Lead plans | All 89 × 2 Lead levels: 178 Lead calls | — | — |
+| Pilot stage 1 | 1 pilot mini-track | 24 | 48 |
+| Pilot stage 2 (three formats, 120 each) | 10 pilot | 360 | — |
+| Pilot stage 3 | 10 pilot | 240 | 480 |
+| Review tolerance repeat (stage 3, run a second time) | 10 pilot | — | 480 |
+| Main, full grid | 50 drawn | 1,200 | 2,400 |
+| Main, drafts only | 29 drawn | 696 | — |
 
 **Pilot additions in this arm:**
 - **Stage 0.** Counts every goal-10 review prompt with each model's own tokenizer, and reports the share that would be trimmed or stopped. Checks every sampling value against the model card.
 - **Stage 1.** Checks three things:
-  - every reply came from DeepInfra at the listed precision;
+  - every reply came from the pinned DeepInfra endpoint;
   - no reasoning tokens were billed for any of the three Qwen models;
   - the sampling settings and seed sent are the planned ones, and DeepInfra applies them.
 - **Stages 1 and 3.** Reports the truncated, salvaged, repeat and untitled shares, and the window-full stops, for each Doer and goal.
@@ -314,7 +315,7 @@ If a gate fails, the pilot stops. Any fix, and any repeated stage, is recorded a
   - A call that still fails ends its draft or run as failed.
   - Failed items are rerun once before analysis, inside the spending cap.
   - Anything still failing is left out and listed in a failure table by cell.
-- **Served model.** Every reply's served model is logged; in the open-weight arm, so are its provider and quantization.
+- **Served model.** Every reply's served model is logged; in the open-weight arm, so is its provider.
   - A reply whose served model differs from the ID confirmed in stage 1 is left out, and its item is rerun once.
   - If this happens to more than 1% of calls, collection stops. It resumes only after the cause and any fix are recorded as an amendment.
 - **Final output rule.** A team's output is the Doer's last list, and every DV is computed on it.
@@ -324,7 +325,7 @@ If a gate fails, the pilot stops. Any fix, and any repeated stage, is recorded a
   - A capped run never counts as having no output.
   - Empty lists, refusals, unreadable revisions and failed calls follow the rules above.
   - The secondary list without papers still under objection is computed afterwards from the logged decisions, and is reported beside each review contrast.
-  - In the open-weight arm, a run whose next review call cannot fit the model's token window (fewer than 4,096 tokens left for the reply) stops there in the same way. The Doer's last list is the output, flagged `window_full`, and the flag is reported by cell.
+  - In the open-weight arm, a run whose next review call cannot fit the model's token window (fewer than 4,096 tokens left for the reply) stops there in the same way. The Doer's last list is the output, flagged `window_full` (logged as `review_window_full` or `revise_window_full`, by the call that would not fit), and the flag is reported by cell.
 - **Spend stop.** If the spend projection stops a main run, only complete mini-tracks, with all of their cells finished, are analysed. The shortfall is reported.
 - **Pilot data.** No pilot draft or run enters the analysis. The repeated stage-3 drafts and runs are used only for the tolerance.
 
@@ -354,12 +355,14 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 
 ## 14. Registration record
 
-**Frozen at `prereg-tag1`, before the first paid pilot call:**
+**Frozen at `prereg-tag1`, before the first paid call of the study (the Lead-plan calls included):**
 - this document: the hypotheses with their predictions, contrasts, deciding DVs and verdict rules; the DV rules and check order; the exclusion, stopping and gate rules; and the ceiling and tolerance formulas;
 - the prompt file and config;
-- the models and settings, the verifier version, and the sample positions and run order.
+- the models and settings, the verifier version, and the mini-track draw, its lists and the run order;
+- the SHA-256 hash of every file that fixes these: the study code (runner, parser, verifier), prompt files, configs, the task file, the mini-track draw script and its lists, the journal lists and the DV code, 62 files in all ([registration/tag1\_hashes.sha256](registration/tag1_hashes.sha256)). The files themselves are published with the replication package, and anyone can check them against these hashes.
 
 **Added at `prereg-tag2`, before the main run:**
+- the hashes of the Lead-plan files;
 - the pilot-set values: each Doer's `rehomed_rate` ceiling, the `title_only` author-rule decision, and the tolerance numbers;
 - each arm's spending cap for the main run;
 - the analysis code;
@@ -384,8 +387,8 @@ The honest format differs from the old forced-list format, which is used only in
 - **Paper format.** The `apa` entry is dropped. The stage-2 old-format arm uses the earlier text unchanged, and the APA-kept arm puts the `apa` entry back first. The new format:
 
   `{"title": "article title", "authors": ["Surname, I. I."], "year": 2020, "journal": "the journal where this paper actually appeared", "summary": "one sentence on what the paper found"}`
-- **What the Auditor and the revising Doer see.** `title:` and `authors:` lines in place of the APA line, then `journal: X | year: Y`. The Auditor's instructions are unchanged.
-- **Open-weight arm.** Every Qwen prompt ends with "/no\_think" (section 7).
+- **What the Auditor and the revising Doer see.** `title:` and `authors:` lines in place of the APA line, then `journal: X | year: Y`. The Auditor's instructions are unchanged, except that in the honest format the fields it may correct are exactly the fields of the honest paper format.
+- **Open-weight arm.** Every Qwen3-14B and Qwen3-32B prompt ends with "/no\_think" (section 7).
 
 ## Appendix B. Code and verifier
 
@@ -394,4 +397,4 @@ The honest format differs from the old forced-list format, which is used only in
   - A book, proceedings or preprint record cited under its publisher or proceedings name stays off-venue.
   - A non-journal record with no stored venue counts as misplaced when the field names a journal, and as off-venue when it names a publisher or proceedings.
 - **DV scripts.** `build_dvs.py`, including `field_kind`, and the `rehomed_rate` step run on the stored labels.
-- **Config.** The study config points to the study prompt file, the study's own Lead plans by hash, and positions 62–171.
+- **Config.** The study config points to the study prompt file, the study's own Lead plans by hash, and the drawn mini-track lists.
