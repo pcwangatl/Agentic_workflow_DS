@@ -11,6 +11,7 @@ Authors are withheld during peer review.
 | [PREREGISTRATION.md](PREREGISTRATION.md) | The frozen design: the treatments, sample, hypotheses and verdict rules, dependent variables, manipulation check, pilot gates, exclusion and stopping rules, analysis plan and run-to-run tolerance |
 | [docs/dv_specification.md](docs/dv_specification.md) | The formula for every dependent variable, citation label and reported share |
 | [registration/tag1_hashes.sha256](registration/tag1_hashes.sha256) | SHA-256 hashes of the 62 code, prompt, config, task and list files frozen at `prereg-tag1` |
+| [registration/amendment3_hashes.sha256](registration/amendment3_hashes.sha256) | SHA-256 hashes of the 70 files frozen after amendment no. 3 (pilot stage 2b) |
 | [AMENDMENTS.md](AMENDMENTS.md) | Every dated change made after the first registration tag |
 
 The prompt file, config, verifier version and analysis code are added as the registration tags below require. A hash file (SHA-256) of every frozen file is added at the second tag.
