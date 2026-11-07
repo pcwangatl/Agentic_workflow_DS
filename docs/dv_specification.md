@@ -109,7 +109,8 @@ The verifier (version 4 plus the venue-matching fix) looks up each unique citati
 
 | Measure | Formula |
 | --- | --- |
-| Truncated share | Drafts flagged truncated / drafts |
+| Truncated share | Drafts flagged truncated (unreadable and stopped at the output limit) / drafts |
+| Limit-hit readable share | Replies that stopped at the output limit but held a complete, readable JSON object / replies, by role (draft, audit, revision). Added by amendment no. 1 |
 | Salvaged share | Drafts flagged salvaged / drafts |
 | Failed-draft share | Drafts with no usable paper after the reply rules / drafts. This feeds the open-weight pause gate (more than 10% in any Doer-and-goal cell) |
 | `revise_truncated` share | Reviewed runs ended by a cut-off revision / reviewed runs |

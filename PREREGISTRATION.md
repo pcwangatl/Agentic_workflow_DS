@@ -236,7 +236,7 @@ Price is considered only after those are met. A replacement is recorded as an am
   - every reply came from the pinned DeepInfra endpoint;
   - no reasoning tokens were billed for any of the three Qwen models;
   - the sampling settings and seed sent are the planned ones, and DeepInfra applies them.
-- **Stages 1 and 3.** Reports the truncated, salvaged, repeat and untitled shares, and the window-full stops, for each Doer and goal.
+- **Stages 1 and 3.** Reports the truncated, salvaged, repeat and untitled shares, the share of readable replies that stopped at the output limit, and the window-full stops, for each Doer and goal.
 - **Pause gate.** If more than 10% of the drafts in any Doer-and-goal cell fail outright, with no usable paper, the run pauses. Any change, for example a lower top goal in this arm, is made only as a dated amendment before the main run.
 
 **H4a in this arm.** The primary H4a contrast is Qwen3-32B minus Qwen3-14B, matching the arm's low and high levels. Qwen3.8-27B is a third Doer level; it is reported against both but does not decide H4a.
@@ -300,9 +300,11 @@ If a gate fails, the pilot stops. Any fix, and any repeated stage, is recorded a
   - it is recorded, never asked again, and counted in the refusal DV;
   - a refused draft is an empty draft;
   - a refusal during review ends the run with the list as it stands, flagged.
-- **Cut-off replies.** A reply cut off at the output limit gets no repair turn.
-  - *Cut-off draft:* every complete, well-formed paper before the cut is kept, and the draft is flagged truncated.
-  - *Cut-off revision:* the run ends. The Doer's last complete list is the output, flagged `revise_truncated`.
+- **Replies that stop at the output limit** (amended, see [AMENDMENTS.md](AMENDMENTS.md), no. 1).
+  - *Readable:* a reply that stops at the output limit but holds a complete, readable JSON object is used like any other reply. The text after the object is stored, not scored (Appendix B). The stop is recorded in the call log, and the share of such replies is reported by cell and role.
+  - *Unreadable (a cut-off reply):* it gets no repair turn.
+    - *Cut-off draft:* every complete, well-formed paper before the cut is kept, and the draft is flagged truncated.
+    - *Cut-off revision:* the run ends. The Doer's last complete list is the output, flagged `revise_truncated`.
 - **Other unreadable replies.** Any other unreadable reply gets one repair turn that shows the parse error.
   - *Draft still unreadable:* its complete, well-formed papers are kept in the same way, and it is flagged salvaged. With none, it is a failed draft and is treated like an empty draft.
   - *Revision still unreadable:* it changes nothing, and the run goes on.
