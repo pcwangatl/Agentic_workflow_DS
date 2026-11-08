@@ -1,6 +1,6 @@
 # Pre-registration: agent-team set-up and literature-reference errors (Study B1)
 
-**Status.** Design frozen on 6 November 2026. This file is registered in two tagged commits: `prereg-tag1`, before the first paid call of the study (the Lead-plan calls included), and `prereg-tag2`, before the main run. Any change after `prereg-tag1` is a dated amendment listed in [AMENDMENTS.md](AMENDMENTS.md).
+**Status.** Design frozen on 6 November 2026. This file is registered in tagged commits: `prereg-tag1`, before the first paid call of the study (the Lead-plan calls included); `prereg-tag2`, before the main run; and `prereg-tag2b`, after the main run's data collection and before any main-run citation is labelled (amendment no. 5). Any change after `prereg-tag1` is a dated amendment listed in [AMENDMENTS.md](AMENDMENTS.md).
 
 **Authors.** Withheld during peer review.
 
@@ -38,9 +38,11 @@ The study asks whether the way an AI agent team is set up changes two things whe
 5. **After data collection.** The verifier looks up every logged citation and labels it by the first check it fails. The lookup has three steps (amended, see [AMENDMENTS.md](AMENDMENTS.md), no. 2):
    1. Crossref.
    2. A frozen local copy of the OpenAlex records of the 34 approved journals, publication years 2010–2024: 24,944 records, fetched on 29 October 2026 at 15:17 UTC. Its content SHA-256 is 1f35f8200f0e183d655a838cc5673e131a39ca3c6e9a99049fc23825626b8c97, and the file's SHA-256 is 8e45bf7a4b5d1bf438deaa31878cdca9860e6b348c1f4e145c1e2e990dd9f2b6.
-   3. A live OpenAlex search, only for a citation with no real match and no near match after steps 1 and 2 (a title similarity of 0.80 or more goes to adjudication instead) whose Journal field names a journal outside the 34, names no journal, or names a poorly indexed approved journal. Poorly indexed means that the frozen ISSN file (`data/reference/approved_journal_issns.yaml`, hashed at `prereg-tag1`) gives the journal no ISSN or marks it low-coverage, or that the local copy holds fewer than 100 of its records for 2010–2024. Four journals meet this: Data Base for Advances in Information Systems, Journal of Information Technology Theory and Application, Knowledge Management Research and Practice, and Scandinavian Journal of Information Systems.
+   3. A live OpenAlex search, only for a citation with no real match and no near match after steps 1 and 2 (a title similarity of 0.80 or more goes to adjudication instead) whose Journal field names a journal outside the 34, names no journal, or names a poorly indexed approved journal. Poorly indexed means that the frozen ISSN file (`data/reference/approved_journal_issns.yaml`, hashed at `prereg-tag1`) gives the journal no ISSN or marks it low-coverage, or that the local copy holds fewer than 100 of its records for 2010–2024. Four journals meet this: Data Base for Advances in Information Systems, Journal of Information Technology Theory and Application, Knowledge Management Research and Practice, and Scandinavian Journal of Information Systems. From amendment no. 5, a citation that names a journal outside the 34 or no journal, and that Crossref and the local copy do not find, is labelled fabricated without a live search; the live search runs for the four poorly indexed journals and for the check below.
 
-   A citation that names any other approved journal and is found in neither Crossref nor the local copy is labelled fabricated without a live search. So a real paper that neither source finds, cited under an approved journal but published outside the 34 journals or outside 2010–2024 (for example, a work with no DOI), is labelled fabricated instead of misplaced, year-mismatched or off-window. This can raise `fabrication_rate` and lower `misplacement_rate` and `rehomed_rate`. The share of `fabricated` labels set without a live search is reported by cell (DV specification, section 6). A check measures this. The group checked is the citations that name an approved journal that is not poorly indexed and that are labelled fabricated from Crossref and the local copy alone. In each Doer and format arm, 10% of that group (rounded up) is drawn at random with seed 20261107 by a short draw script, named by its SHA-256 in [AMENDMENTS.md](AMENDMENTS.md) before the draw is run, and each drawn citation gets a live search. The check is labelled in a separate directory and changes no label used for a DV. It reports, by Doer and format arm, the share of drawn citations that the live search finds to be real papers, and the labels those papers would get.
+   A citation that names any other approved journal and is found in neither Crossref nor the local copy is labelled fabricated without a live search. So a real paper that neither source finds, cited under an approved journal but published outside the 34 journals or outside 2010–2024 (for example, a work with no DOI), is labelled fabricated instead of misplaced, year-mismatched or off-window. This can raise `fabrication_rate` and lower `misplacement_rate` and `rehomed_rate`. The share of `fabricated` labels set without a live search is reported by cell (DV specification, section 6). A check measures this. The group checked is the citations that name an approved journal that is not poorly indexed and that are labelled fabricated from Crossref and the local copy alone. In each Doer and format arm, 10% of that group (rounded up) is drawn at random with seed 20261107 by a short draw script, named by its SHA-256 in [AMENDMENTS.md](AMENDMENTS.md) before the draw is run, and each drawn citation gets a live search. The check is labelled in a separate directory and changes no label used for a DV. It reports, by Doer and format arm, the share of drawn citations that the live search finds to be real papers, and the labels those papers would get. From amendment no. 5, the check also covers the citations that name a journal outside the 34 or no journal and are labelled fabricated without a live search. It is drawn within each Doer, each list type (citations that appear in a draft; citations that first appear in a revision) and each kind of miss. If more than 3% of the drawn citations of the second kind in a Doer and list type are real works, every such citation in that Doer and list type gets the live search and its label.
+
+   Near misses (a title similarity of 0.80 to 0.90, or a short title) are settled by a fixed rule that the analysis code applies on top of the verifier's labels (amendment no. 5; DV specification, section 2).
 
    Scripts then build every dependent variable (DV) from those labels and the run logs. No model ever sees a rate or a label.
 
@@ -161,7 +163,7 @@ With four tests at raw p, the chance of a false "supported" verdict is roughly 1
 
 ## 7. Open-weight arm (OpenRouter)
 
-**Analysed on its own.** The open-weight arm is analysed as its own study, with its own verdicts and no pooling with the API-hosted arm.
+**Exploratory (amendment no. 5).** The open-weight arm failed its stage-3 gate and is now an exploratory boundary-condition check: how review and the other factors behave when the Doer can recall almost no real paper. It is reported on its own and descriptively: every registered DV for every cell, with mini-track cluster-bootstrap 95% intervals, in a section after the confirmatory results. It tests no hypothesis and has no verdict, gate, p-value or pooled estimate, and it is never pooled with the API-hosted arm. In the main run it runs the full grid on the 50 full-grid mini-tracks only. Its citations are labelled from Crossref and the local copy alone, with no live search. Its spending has its own ledger and cap, and a spend stop in this arm does not affect the API-hosted arm. Before amendment no. 5 the arm was to be analysed as its own study, with its own verdicts.
 
 **What is the same.** Everything not listed in this section works exactly as in the API-hosted arm:
 - the run flow, goals 3 and 10, must-fill and may-report, and review on high-Lead drafts only;
@@ -236,10 +238,10 @@ Price is considered only after those are met. A replacement is recorded as an am
 | Pilot stage 1 | 1 pilot mini-track | 24 | 48 |
 | Pilot stage 2 (three formats, 120 each) | 10 pilot | 360 | — |
 | Pilot stage 2b (two formats, 120 each; amendment no. 3; gate failed, amendment no. 4) | 10 pilot | 240 | — |
-| Pilot stage 3 | 10 pilot | 240 | 480 |
+| Pilot stage 3 (gate failed, amendment no. 5) | 10 pilot | 240 | 480 |
 | Review tolerance repeat (stage 3, run a second time) | 10 pilot | — | 480 |
-| Main, full grid | 50 drawn | 1,200 | 2,400 |
-| Main, drafts only | 29 drawn | 696 | — |
+| Main, full grid (exploratory, amendment no. 5) | 50 drawn | 1,200 | 2,400 |
+| Main, drafts only (not run, amendment no. 5) | 29 drawn | — | — |
 
 **Pilot additions in this arm:**
 - **Stage 0.** Counts every goal-10 review prompt with each model's own tokenizer, and reports the share that would be trimmed or stopped. Checks every sampling value against the model card.
@@ -250,7 +252,7 @@ Price is considered only after those are met. A replacement is recorded as an am
 - **Stages 1 and 3.** Reports the truncated, salvaged, repeat and untitled shares, the share of readable replies that stopped at the output limit, and the window-full stops, for each Doer and goal.
 - **Pause gate.** If more than 10% of the drafts in any Doer-and-goal cell fail outright, with no usable paper, the run pauses. Any change, for example a lower top goal in this arm, is made only as a dated amendment before the main run.
 
-**H4a in this arm.** The primary H4a contrast is Qwen3-32B minus Qwen3-14B, matching the arm's low and high levels. Qwen3.8-27B is a third Doer level; it is reported against both but does not decide H4a.
+**H4a in this arm.** The primary H4a contrast is Qwen3-32B minus Qwen3-14B, matching the arm's low and high levels. Qwen3.8-27B is a third Doer level; it is reported against both but does not decide H4a. Since amendment no. 5 these are descriptive comparisons, not tests.
 
 ## 8. Dependent variables
 
@@ -299,8 +301,8 @@ The honest option should remove re-homing, which means moving a real paper under
 | Stage 1, readiness | Every reply parses or is a recorded refusal. The served model names match the planned IDs and are logged. Cost per run is within ±30% of the planning estimate. Auditor rulings on papers outside the current list are under 1% of audited papers. Current papers still without a ruling after the repair turn are also under 1%. |
 | Stage 2, formats | For every Doer, `rehomed_rate` in the honest format is at most half that of the same-time old-format arm. Against that arm, pooled over the arm's Doers: `fabrication_rate` may be no more than 3 points higher; the refusal rate no more than 5 points higher; the parse rate no more than 2 points worse. Each Doer's own difference is reported beside the pooled one. The APA-kept arm shows whether a leftover rate comes from swaps or from memory errors. Stage 2 ran on 7 November 2026 and failed this gate; the pilot moved to stage 2b (amendment no. 3). |
 | Stage 2b, honest option (amendment no. 3) | The stage-2 gate, applied to the honest-option format against the same-time control arm of stage 2b. For every Doer, `rehomed_rate` in the honest-option format is at most half that of the control arm. Against the control arm, pooled over the arm's Doers: `fabrication_rate` may be no more than 3 points higher; the refusal rate no more than 5 points higher; the parse rate no more than 2 points worse. Each Doer's own difference is reported beside the pooled one, with the `honest_option` shares (section 9). The drafts are verified as in stage 2, including the 10% live-search check for each Doer and arm (amendment no. 2). Stage 2b ran on 7 November 2026 and failed this gate. The honest-option format was kept, and DeepSeek Flash and DeepSeek V4-Pro are flagged (amendment no. 4; see "Main run" below). |
-| Stage 3, full-grid pilot | At most 3% of replacements keep a rejected paper and only move it to another approved journal. The projected main-run cost is under the arm's spending cap. No new failure types appear. The 160 honest-option high-Lead drafts (120 in the open-weight arm) are drafted again; the stage-2b and stage-3 copies give the run-to-run tolerance (section 13). |
-| Hand checks before `prereg-tag2` | Two checks on B1 pilot data must finish before `prereg-tag2`: 100 venue-matching cases, and 100 `title_only` citations. The `title_only` check decides whether an author rule joins `year_mismatch_rate`. A third check, 100 citations coded blind by two coders, validates the verifier and changes no rule, so it can run alongside the main run. |
+| Stage 3, full-grid pilot | At most 3% of replacements keep a rejected paper and only move it to another approved journal. The projected main-run cost is under the arm's spending cap. No new failure types appear. The 160 honest-option high-Lead drafts (120 in the open-weight arm) are drafted again; the stage-2b and stage-3 copies give the run-to-run tolerance (section 13). Stage 3 ran on 7 and 8 November 2026. The API-hosted arm passed the first and third lines; its cost line is settled by the main-run cap at `prereg-tag2`. The open-weight arm failed the first line and became exploratory (amendment no. 5). |
+| Hand checks before `prereg-tag2b` | Three checks on B1 pilot data must finish before `prereg-tag2b` (amendment no. 5). They may run during the main run; until `prereg-tag2b`, no main-run citation is labelled and no main-run DV is computed. The checks are: 100 venue-matching cases; 100 `title_only` citations; and 100 near-miss citations, 50 with a cited author on the matched record and 50 without (amendment no. 5). The `title_only` check decides whether an author rule joins `year_mismatch_rate`: it joins if at least 90 of the 100 are real works cited with wrong authors (amendment no. 5). The near-miss check decides which branches of the near-miss rule are used: a branch is used if a person agrees with it in at least 45 of its 50 cases (DV specification, section 2). After the main run, 100 citations decided by the near-miss rule, 50 per branch, are checked by hand and the agreement is reported; this changes no label. A further check, 100 citations coded blind by two coders, validates the verifier and changes no rule, so it can run alongside the main run. |
 | Main run | Each Doer's ceiling is the upper end of the 95% interval of its pilot honest-option `rehomed_rate` (stage 2b), from a mini-track cluster bootstrap. The formula is frozen at `prereg-tag1`; the numbers are added at `prereg-tag2`. A Doer above its ceiling stays in the primary verdicts and is flagged, and results without it are a sensitivity check. DeepSeek Flash and DeepSeek V4-Pro, whose re-homing was not halved in stage 2b, are flagged from the start in the same way: every verdict is also reported without them (amendment no. 4). After the first wave of 10 mini-tracks, a spend projection stops the run if it would pass the arm's spending cap. |
 
 If a gate fails, the pilot stops. Any fix, and any repeated stage, is recorded as a dated amendment before the pilot continues.
@@ -317,9 +319,11 @@ If a gate fails, the pilot stops. Any fix, and any repeated stage, is recorded a
   - *Unreadable (a cut-off reply):* it gets no repair turn.
     - *Cut-off draft:* every complete, well-formed paper before the cut is kept, and the draft is flagged truncated.
     - *Cut-off revision:* the run ends. The Doer's last complete list is the output, flagged `revise_truncated`.
+    - *Cut-off audit:* the run ends. The Doer's current list is the output, flagged `review_truncated` (amendment no. 5).
 - **Other unreadable replies.** Any other unreadable reply gets one repair turn that shows the parse error.
   - *Draft still unreadable:* its complete, well-formed papers are kept in the same way, and it is flagged salvaged. With none, it is a failed draft and is treated like an empty draft.
   - *Revision still unreadable:* it changes nothing, and the run goes on.
+  - *Audit still unreadable:* the run ends. The Doer's current list is the output, flagged `review_parse_error` (amendment no. 5).
   - Every flag is reported by cell.
 - **Repeated papers.** Within one list, a paper whose title matches an earlier paper's title is a repeat. Titles are compared lower-cased, with punctuation and spacing removed. Every DV counts only the first appearance, and the repeat share is reported by cell.
 - **Untitled papers.** A paper with no title cannot be checked. It counts 0 in `compliant_count` and is left out of the rate DVs, like an empty slot. The untitled share is reported by cell.
@@ -363,7 +367,7 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 
 - **Data.** In pilot stage 3, the honest-option high-Lead drafts of stage 2b are drafted a second time with the same models, prompts, Lead plans and settings: 160 drafts in the API-hosted arm and 120 in the open-weight arm. The stage-2b and stage-3 copies are then compared mini-track by mini-track (amendment no. 3).
 - **Tolerance.** For each Doer and each primary DV, the tolerance is the 95% range of (second copy − first copy) across the 10 pilot mini-tracks.
-- **Open-weight review DVs.** The arm's review tolerance repeat, which runs the 480 stage-3 reviewed runs again, gives the same range for the review DVs.
+- **Open-weight review DVs.** The arm's review tolerance repeat, which runs the 480 stage-3 reviewed runs again, gives the same range for the review DVs. Since amendment no. 5, the open-weight numbers are descriptive.
 - **Comparison rule for a future replication.** A replication matches this study if each hypothesis' estimate falls inside this study's 95% interval, widened by that run-to-run spread.
 - **Timing.** The rule is frozen at `prereg-tag1`. The numbers are added at `prereg-tag2`, before any main-run data exist.
 
@@ -379,12 +383,18 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 
 **Changed by amendment no. 4:** three of these files changed: the honest-option prompt file, the runner and the prompt code. [registration/amendment4\_hashes.sha256](registration/amendment4_hashes.sha256) lists all 70.
 
+**Changed by amendment no. 5:** no hashed file changes. The open-weight arm became exploratory. The live-search and near-miss rules are applied by the analysis code added at `prereg-tag2`.
+
 **Added at `prereg-tag2`, before the main run:**
 - the hashes of the Lead-plan files;
-- the pilot-set values: each Doer's `rehomed_rate` ceiling, the `title_only` author-rule decision, and the tolerance numbers;
-- each arm's spending cap for the main run;
-- the analysis code;
+- the pilot-set values: each Doer's `rehomed_rate` ceiling and the tolerance numbers;
+- each arm's spending cap for the main run, and the cap on live searches;
+- the analysis code, with every possible outcome of the hand checks built in (amendment no. 5);
 - a hash file (SHA-256) of every frozen file.
+
+**Added at `prereg-tag2b`, after the main run's data collection and before any main-run citation is labelled (amendment no. 5):**
+- the results of the three hand checks on pilot data, and the `title_only` author-rule decision and near-miss branches they set by the bars fixed in amendment no. 5;
+- a list of every main-run output file with its SHA-256. No main-run verification output exists before this tag.
 
 ## 15. Known limits at registration
 
@@ -393,7 +403,9 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 - **Seeds and sampling.** The API-hosted models take no request seed, and Claude models run at the provider's default sampling.
 - **Single provider.** The open-weight arm relies on one pinned provider.
 - **Format chosen after a failed gate.** The study format was changed after pilot stage 2 failed its gate (amendment no. 3). Neither stage-2b format has a full-reference entry. In stage 2, dropping that entry raised `fabrication_rate` sharply, so fabrication may be high in every cell, and the stage-2b gate compares two formats that share this. The honest-option format was then kept although stage 2b failed its own gate on two Doers' re-homing line (amendment no. 4).
-- **Open-weight arm at the floor.** In pilot stage 2b, no open-weight draft held a compliant paper in either format, and almost every paper was invented (99.9%). The open-weight arm's contrasts on `compliant_count`, and its review and abstention contrasts, may therefore have no room to move (amendment no. 4).
+- **Open-weight arm at the floor.** In pilot stage 2b, no open-weight draft held a compliant paper in either format, and almost every paper was invented (99.9%). The open-weight arm's contrasts on `compliant_count`, and its review and abstention contrasts, may therefore have no room to move (amendment no. 4). Stage 3 confirmed this, and the arm became exploratory (amendment no. 5).
+- **Off-list misses labelled fabricated.** A citation naming a journal outside the 34 or no journal that Crossref and the local copy miss is labelled fabricated without a live search. In the pilot, 1.59% of such API-hosted citations were real works, which would overstate `fabrication_rate` by about 0.6 points. The widened 10% check measures this in the main data (amendment no. 5).
+- **Near-miss rule.** Near misses are settled by a fixed rule, not case by case. The rule is checked on 100 pilot cases before `prereg-tag2b` and on 100 main-run cases afterwards (amendment no. 5).
 
 ---
 
@@ -429,3 +441,4 @@ The models are not fully repeatable. The tolerance answers one question: how lar
 - **DV scripts.** `build_dvs.py`, including `field_kind`, and the `rehomed_rate` step run on the stored labels. The B1 DV script counts the `honest_option` field per list and never uses it for a label or a DV (amendment no. 3).
 - **Runner (amendment no. 4).** `--drafts-prompt-file` lets a review reuse drafts made under an earlier prompt file. It works only if that file's SHA-256 equals the source run's prompt hash and the file gives the same Doer draft prompt as the current file, by a hash of the draft role and every block it uses. Both hashes are recorded in the run's configuration record. Any other case is refused, as before.
 - **Config.** The study config points to the study prompt file, the study's own Lead plans by hash, and the drawn mini-track lists.
+- **Analysis code (amendment no. 5).** On top of the stored verifier labels, it applies the fabricated label to off-list and no-journal misses that got no live search, the near-miss rule and the `title_only` decision. The verifier and its stored labels are unchanged.
