@@ -25,3 +25,66 @@ Changes to [PREREGISTRATION.md](PREREGISTRATION.md) or to any frozen file made a
 **Addendum to the note on pilot stage 3 (2026-11-07, US Eastern).** The stage-3 caps are rebalanced, and their total stays $64.00 at most. $1.00 moves from the API-hosted ledger to the open-weight ledger, so the caps become $49.00 API-hosted, with about $28–34 still expected, and $6.00 open-weight. The 9,000 live searches, costing $9.00, are unchanged. The reason is the measured open-weight cost. The 240 open-weight drafts cost about $0.84, and a reviewed run costs about $0.0037, so the open-weight arm, the registered review tolerance repeat included, is now expected to cost about $4.30–5.10, against the $2.50–3.50 the note expected. Under a $5.00 cap, the ledger's worst-case reservations could have stopped the last runs of the repeat, so the runner held the repeat until this change was recorded. About $39–48 is now expected in all. Nothing else in stage 3 changes, and no hashed file changes. When this addendum was written, at 10:00 PM US Eastern, pilot stage 3 was under way. In the open-weight arm, all 240 drafts and their 240 runs without review existed, with 472 of the 480 reviewed runs; the review tolerance repeat had not started. In the API-hosted arm, all 320 drafts existed, 11 of them refused, with their 320 runs without review and 158 of the 640 reviewed runs. No stage-3 labels, gate results or main-run data existed.
 
 **Note to amendment no. 5 (2026-11-08, US Eastern).** The draw script for the hand checks before `prereg-tag2b` is `draw_handchecks.py`, SHA-256 `33bfef83a7e74e9256e88c103e8ff7f0815435361fed2d5ddc3b9adcae0fa8d5`. It was fixed before the draw was run and is published with the replication package. From the 16,447 unique citations of the stage-3 API-hosted runs it draws, with one `random.Random(20261107)` and no citation drawn twice: 50 near-miss citations with a cited author on the matched record and 50 without; 100 `title_only` citations; and 100 venue-matching cases. The venue-matching cases are 40 that the verifier judged the same journal by ISSN-L or an alternate name (all 17 such matches to an approved journal and 23 of the 298 to journals off the list), 40 it judged a different journal, and 20 whose journal name it marked uncertain. Within each check, half the cases go to each of the two coders, and the coding sheets show neither the verifier's label, the rule's prediction, the Doer nor the cell.
+
+**Note at `prereg-tag2` (2026-11-08, US Eastern).** This commit adds what section 14 lists for `prereg-tag2`, before the main run. No frozen file changes, and the registered design does not change.
+
+*Lead plans.* [registration/lead\_plan\_hashes.sha256](registration/lead_plan_hashes.sha256) lists the SHA-256 of the six Lead-plan files, one per arm and vendor lane. They hold 476 plans: 60 for the 10 pilot mini-tracks (20 Claude, 20 DeepSeek and 20 open-weight), and for the main run 158 Claude and 158 DeepSeek plans for the 79 API-hosted mini-tracks and 100 open-weight plans for the 50 full-grid mini-tracks. No plans exist for the 29 open-weight drafts-only mini-tracks, which do not run (amendment no. 5). The main-run plans were made on 8 November 2026 from code commit 37832fb, with the pilot's plan prompt (SHA-256 `8931c853a1b2630f9165c4ebfd5b850b30c63a8ce089b80b161600687e9d366f` in all six files), models, settings and seed rule. They cost $0.69 under a $4.00 cap: $0.67 API-hosted and $0.02 open-weight. Two driver scripts made them. `run_main_plans.sh` (SHA-256 `9fafff55f3964a31619ceb1695b09e86839fdd763dc092ba6568986f65c5871b`) made the 158 Claude plans through the Batch API. It then stopped before its DeepSeek lane at the runner's clean-tree check, because the analysis code below had been added to the checkout, uncommitted. The analysis code was set aside, and `run_main_plans_rest.sh` (SHA-256 `d0a75facf6f939d687a68e48f6685d21c787910d3f552277a1f6ed20e48ae81f`) made the DeepSeek and open-weight plans on the clean commit, with the same commands, ledgers and caps. The Claude lane started on a clean checkout. Its 158 requests went to the Batch API in five batches: the first at 17:53 UTC, and the other four between 19:01 and 19:09 UTC, after the analysis code had entered the checkout. The lane's closing provenance records that state (diff SHA-256 `c2172814746014b693bd56fe136d924da3c877652dbf52f5a0a29ffab351fd37`, which is exactly the analysis code). The driver had loaded its code at the start, and no run code reads the analysis files. Rebuilt offline from the clean commit, all 158 Claude requests have the same system prompt, user turns and output limit as the requests sent.
+
+*Analysis code.* Code commit 6069c884ed1fc7c846400bac8ad7f578db79d966 adds the analysis code (version b1-analysis-2; labelling rules b1-am5-rules-1):
+- `study_b1/dv/apply_label_rules.py` applies the labelling rules of amendment no. 5 on top of the verifier's stored labels;
+- `study_b1/dv/build_dvs_b1_rules.py` runs the frozen DV code on those labels;
+- `study_b1/dv/secondary_dvs_b1.py` computes the secondary DVs;
+- `study_b1/analysis/analysis_b1.py` and `study_b1/analysis/b1stats.py` fit the section-12 models and give the verdicts;
+- `study_b1/analysis/tag2_values.py` computes the values below.
+
+`study_b1/write_hashes.py` now also hashes the analysis directory. [registration/tag2\_hashes.sha256](registration/tag2_hashes.sha256) lists all 76 hashed files: the 70 of amendment no. 4, unchanged, and the six new code files. The hand-check decisions file `study_b1/dv/handcheck_decisions.yaml` holds no results (SHA-256 `d9d121a6e0e17ae15a4fae34fff591c451f29d50a15fc1cc5301b53f6596aed7`). The code refuses to label until the file is filled at `prereg-tag2b`, which records the filled version's hash, so the file is not in the frozen list and every hand-check outcome is built in.
+
+The code fixes these choices:
+- **Data.** A draft is the final list of its no-review run. Refused and empty drafts are kept. Failed runs are left out and listed. Only complete mini-tracks are analysed.
+- **Models.** Models D1 and D2 use the drafts, with mini-track fixed effects. Models R1 and R2 use the five lists of each high-Lead draft, with draft fixed effects and a dummy for each review level and Doer vendor.
+- **Tests.** Standard errors are CR1, clustered by mini-track, with t on G − 1 degrees of freedom. The non-inferiority check uses the 90% interval.
+- **Robustness.** The Poisson model keeps the OLS fixed effects. The fractional logit uses mini-track fixed effects with the draft factors. The cluster bootstrap uses 2,000 resamples with seed 20261107.
+- **Labelling rules.** The near-miss branch is set by the verifier's top candidate. The author rule counts as `year_mismatch`.
+- **Named secondaries.** They are reported without verdicts: `realized_false_rejection` for H3 and H9; H2, H3, H5 and H9 on the list without open objections; and H7 on cost, tokens, calls, cost per valid paper and working time. Measures that exist only for reviewed runs use same-L as the reference, so their H3 and H9 contrasts are estimable and their H2 and H5 contrasts are not. Working time counts only for runs with no Batch model as Doer or Auditor.
+
+*Ceilings and tolerance.* [registration/tag2\_values.md](registration/tag2_values.md) (SHA-256 `7011229df53b8d6e170553557284181464c91c3969c1e9b730b89f34d76d0754`) and its machine-readable copy [registration/tag2\_values.json](registration/tag2_values.json) (SHA-256 `9f34f529e2a151cea8212d6079d423744b9bc15e7907bc1a36f0513b1444a8f2`) cover each of the eight possible hand-check outcomes. For each outcome they give:
+- each API-hosted Doer's `rehomed_rate` ceiling (section 10);
+- the API-hosted tolerance (section 13);
+- the open-weight tolerance, which is descriptive;
+- the stage-3 unresolved share.
+
+The analysis code reads the JSON copy. It was computed with Python 3.14; Python before 3.12 changes the last digit of a few values. `prereg-tag2b` picks the row that the hand-check results select. The pilot labels behind these values follow the main run's route under amendment no. 5: Crossref and the local copy, the off-list default label, and the stored live-search answers for misses under the four poorly indexed journals. When both near-miss branches and the author rule apply, the stage-3 unresolved share is 0.6%, against 13.1% when none applies, and the ceilings are:
+
+| Doer | Ceiling |
+| --- | --- |
+| Claude Haiku 5.5 | 0.353 |
+| Claude Sonnet 5.5 | 0.098 |
+| DeepSeek Flash | 0.304 |
+| DeepSeek V4-Pro | 0.294 |
+
+*Caps.* The two run caps each allow 50% over the expected cost:
+- **API-hosted main run:** $225.00, with about $150 expected.
+- **Open-weight exploratory run:** $22.50, with about $15 expected.
+
+Live searches are capped at 23,000 searches, costing $23.00, for the main-run labels and the widened 10% check. About 9,400 searches are expected. The cap covers the worst case of the 3% trigger of amendment no. 5, about 19,400 searches. The ledgers reserve each call's worst-case cost before it is sent, as in the pilot. After the first wave of 10 mini-tracks, the spend projection of section 10 applies to each arm.
+
+*Hand checks and the main-run 10% draw.* The draw script of amendment no. 5 wrote the hand-check key in draw order (SHA-256 `3a6cc39e540a1b5fd202a30dfcffd1060c4f905c7700451445a92571aa248885`). `shuffle_handchecks.py` (SHA-256 `95a4408d45f75923b57f9c59033c2308c0cfd7e74ce3bbecb4f555dd58ed840d`), with seed 20261107, then reordered and renumbered the cases within each check, so neither row position nor case ID shows the stratum. Each coder keeps the same cases. The final key has SHA-256 `b951672952e29d08f7c085b4e0d0994cb5bcef1c136a0cc1f471c1b4152d38b6`, and the six final coding sheets are listed below. When this note was written, the sheets and the key were held unsent. The sheets go to the two coders after the `prereg-tag2` release.
+
+The main-run 10% draw script is `sample_openalex_main.py`, SHA-256 `382cdab2736862adff17adf3e8261ea0e713adb9af580cf8688594e8743eaa74`. It runs only after `prereg-tag2b`, on a fresh verification cache. A drawn citation whose Doer and list type the check does not trigger keeps the default label, because the check changes no label used for a DV (section 2, step 5).
+
+| Coding sheet | SHA-256 |
+| --- | --- |
+| Near miss, PC | `b492cf3151ec32ccdf8211ddc119ab87d0bd906761b33d42f1324f7e1845e267` |
+| Near miss, Rain | `cc37243332eb7241335a86e00b9448ffbe905e84e8520e8696a0153f2a15c4cb` |
+| `title_only`, PC | `68c1b6bbcdba3773f8c6262ce7234d118250a679f56c4a4efe9b6689172b4c34` |
+| `title_only`, Rain | `69fba3e75114deecb0d25462db336cd482f9dcfbeb02f75b6f0ecaab5c84a77d` |
+| Venue, PC | `fa1dc70ed9ac6b60a22658d3e130ef53be7eb6b28a5d9e25bd59932a025a1066` |
+| Venue, Rain | `925797100820079fefb39111ead20e54e7c5a93ad170bd45beeaf2c9bca40a0f` |
+
+When this note was written, these data existed:
+- the Lead plans for the 10 pilot mini-tracks and the main-run mini-tracks;
+- pilot stages 1, 2, 2b and 3, with their labels, their 10% checks and the open-weight review tolerance repeat;
+- the amendment-4 review check;
+- the hand-check sheets and key.
+
+No main-run drafts or other main-run data existed.
