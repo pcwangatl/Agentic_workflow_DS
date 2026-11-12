@@ -256,3 +256,46 @@ descriptive A\* share of compliant citations, so no DV changes, and the labels a
 No registered rule, bar or hashed file changes. The merge rule was set at 04:31 and the script's hash was named at
 04:35. The script was read and confirmed at 04:38, and the merge ran at 04:38. This note was pushed afterwards,
 before any rule, DV or analysis output existed.
+
+**Note on the verifier validation (2026-11-12, US Eastern).** Times are UTC. Section 10 registers a validation of
+the verifier: 100 citations coded blind by two coders, changing no rule. This note fixes how the 100 are drawn, coded
+and reported, before the draw.
+
+*The draw.*
+- **The frame** is the unique API-hosted main-run citations whose final label, after the registered rules, is real
+  (11,287) or fabricated (85,130). The labels file is `rules_api/labels.jsonl` of the main-run analysis, sha256
+  `b7190f51d0bb131a31d3394b56e6fc892c26f454bfa020a5c300250ccfaa1c59`. The 7,029 citations left unresolved are not in
+  it, because no rate uses them. Every citation in the frame has a title.
+- **The cells.** Fifty are drawn with `existence` fabricated and fifty with `existence` real. Each Doer has 25 cases:
+  13, 13, 12 and 12 fabricated and 12, 12, 13 and 13 real, for Haiku, Sonnet, Flash and V4-Pro in that order.
+  - A citation is eligible for every Doer that cited it, and it can be drawn once.
+  - There is no quota by labelling route. The key records each case's route.
+- **The procedure.** One `random.Random(20261107)` draws the eight cells in that order: fabricated first, then real.
+  In each cell it draws from the sorted keys not yet drawn. Then it shuffles the 100 once for sheet order.
+- **The script** is `draw_verifier_validation.py`, SHA-256
+  `8683f76bec6c31211a5f68e5fcdea29ae0ac0f7bdc1f3dd87146e0fd3c0481b0`. It runs on the frozen code (`cc939c70`) and
+  makes no request.
+
+*The coding.*
+- The sheet shows each citation's title, authors, year and journal as the Doer wrote them. No Doer gave a DOI. It
+  shows no database record and no verifier label.
+- Both coders code all 100, blind to each other and to the key. They look each citation up themselves and do not use
+  the study's run files.
+- The question is the test of the pilot hand checks: "Would a librarian hand you this exact paper from what the Doer
+  wrote?" The answers are:
+  - **S**: a real published work this citation identifies, even with wrong authors, year or journal;
+  - **N**: it does not exist, or only a different paper shares some of its words;
+  - **U**: cannot settle.
+
+*The report.*
+- Raw agreement and Cohen's kappa, with 95% intervals.
+- For each stratum, the verifier's precision, counted over the cases where both coders gave the same S or N, with a
+  Wilson 95% interval: for verifier-fabricated, the share agreed N; for verifier-real, the share agreed S.
+- Overall accuracy, weighting the two strata by their sizes in the frame.
+- Precision by labelling route, as a description.
+- Cases with a U or a disagreement are counted and listed, not adjudicated.
+
+The validation changes no rule and no label.
+
+*When this was fixed.* When this note was written, the main-run labels and the main-run analysis existed. The draw
+script had been written and hashed at 12:44, and no validation case had been drawn.
