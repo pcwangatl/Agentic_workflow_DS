@@ -1,0 +1,14 @@
+# Study B1, amendment no. 5: the hand-check results that set the labelling rules.
+#
+# Frozen at prereg-tag2 with every value null ("pending"). prereg-tag2b replaces the nulls with the scored results;
+# apply_label_rules.py turns them into decisions by the registered bars and refuses to run while any is null, unless
+# every switch is given on the command line (the tag-2 what-if tables do that, and their output says so).
+#
+#   nearmiss_author_agree     coder answers matching the rule (S) in the 50 author-branch cases      bar: 45 of 50
+#   nearmiss_noauthor_agree   coder answers matching the rule (N) in the 50 no-author-branch cases   bar: 45 of 50
+#   title_only_real           cases coded S (the same work, wrong authors) out of 100                bar: 90 of 100
+#   venue_agree               answers matching the verifier out of 100: reported, sets nothing       (under 90: review)
+nearmiss_author_agree: 16
+nearmiss_noauthor_agree: 50
+title_only_real: 71
+venue_agree: 68

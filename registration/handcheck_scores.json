@@ -1,0 +1,151 @@
+{
+ "problems": [],
+ "files": {
+  "nearmiss_PC.csv": {
+   "filled_sha256": "5c9951b475894ec876e976c4d5f6767993e128fb945d4871e524dd995753307e",
+   "handed_sha256": "b492cf3151ec32ccdf8211ddc119ab87d0bd906761b33d42f1324f7e1845e267"
+  },
+  "nearmiss_Rain.csv": {
+   "filled_sha256": "ed69d42dfe2d3c8ef74097786ba413676f2d3402d308def2a7afb55c78be66bb",
+   "handed_sha256": "cc37243332eb7241335a86e00b9448ffbe905e84e8520e8696a0153f2a15c4cb"
+  },
+  "title_only_PC.csv": {
+   "filled_sha256": "3cb6b2a672e6d67f64dfe0ed999fa9ff550d3112f79816f346cc949d548b39f9",
+   "handed_sha256": "68c1b6bbcdba3773f8c6262ce7234d118250a679f56c4a4efe9b6689172b4c34"
+  },
+  "title_only_Rain.csv": {
+   "filled_sha256": "be1adec66a2a45db731acabbafdcd2bf46141dbebebc749bb532574238532af2",
+   "handed_sha256": "69fba3e75114deecb0d25462db336cd482f9dcfbeb02f75b6f0ecaab5c84a77d"
+  },
+  "venue_PC.csv": {
+   "filled_sha256": "c0ed9295ba772f666bb63ab6b71c6185b93b5d47049a7dc799a629ea237d774d",
+   "handed_sha256": "fa1dc70ed9ac6b60a22658d3e130ef53be7eb6b28a5d9e25bd59932a025a1066"
+  },
+  "venue_Rain.csv": {
+   "filled_sha256": "3ecf8cbc9d5413187e891a95d11d80d374459543924e8b78d8fe36530cf0aee2",
+   "handed_sha256": "925797100820079fefb39111ead20e54e7c5a93ad170bd45beeaf2c9bca40a0f"
+  }
+ },
+ "key_sha256": "b951672952e29d08f7c085b4e0d0994cb5bcef1c136a0cc1f471c1b4152d38b6",
+ "scores": {
+  "nearmiss_author_agree": 16,
+  "nearmiss_author_n": 50,
+  "nearmiss_noauthor_agree": 50,
+  "nearmiss_noauthor_n": 50,
+  "title_only_real": 71,
+  "title_only_n": 100,
+  "venue_agree_decided": 68,
+  "venue_decided_n": 80,
+  "venue_agree_of_100_uncertain_as_mismatch": 68,
+  "venue_agree_of_100_uncertain_U_as_agreement": 68,
+  "venue_uncertain_answers": {
+   "Y": 7,
+   "N": 13,
+   "U": 0,
+   "blank": 0
+  }
+ },
+ "decisions": {
+  "near-miss author branch": "not used (its citations stay unresolved)",
+  "near-miss no-author branch": "used",
+  "author rule (title_only)": "does not join (title_only stays unresolved)",
+  "venue matching": "under 90 of 100: design reviews the venue matching"
+ },
+ "by_stratum": {
+  "nearmiss_author": {
+   "U": 2,
+   "S": 16,
+   "N": 32
+  },
+  "nearmiss_noauthor": {
+   "N": 50
+  },
+  "title_only": {
+   "S": 71,
+   "N": 26,
+   "U": 3
+  },
+  "venue_different": {
+   "N": 32,
+   "Y": 8
+  },
+  "venue_same/approved": {
+   "Y": 15,
+   "N": 2
+  },
+  "venue_same/off_list": {
+   "Y": 21,
+   "N": 2
+  },
+  "venue_uncertain": {
+   "Y": 7,
+   "N": 13
+  }
+ },
+ "by_stratum_coder": {
+  "nearmiss_author | PC": {
+   "S": 9,
+   "N": 15,
+   "U": 1
+  },
+  "nearmiss_author | Rain": {
+   "U": 1,
+   "N": 17,
+   "S": 7
+  },
+  "nearmiss_noauthor | PC": {
+   "N": 25
+  },
+  "nearmiss_noauthor | Rain": {
+   "N": 25
+  },
+  "title_only | PC": {
+   "S": 33,
+   "U": 1,
+   "N": 16
+  },
+  "title_only | Rain": {
+   "S": 38,
+   "N": 10,
+   "U": 2
+  },
+  "venue_different | PC": {
+   "N": 16,
+   "Y": 4
+  },
+  "venue_different | Rain": {
+   "N": 16,
+   "Y": 4
+  },
+  "venue_same/approved | PC": {
+   "Y": 10,
+   "N": 1
+  },
+  "venue_same/approved | Rain": {
+   "Y": 5,
+   "N": 1
+  },
+  "venue_same/off_list | PC": {
+   "Y": 8,
+   "N": 1
+  },
+  "venue_same/off_list | Rain": {
+   "Y": 13,
+   "N": 1
+  },
+  "venue_uncertain | PC": {
+   "N": 7,
+   "Y": 3
+  },
+  "venue_uncertain | Rain": {
+   "Y": 4,
+   "N": 6
+  }
+ },
+ "cases_with_a_note": {
+  "nearmiss": 89,
+  "title_only": 84,
+  "venue": 47
+ },
+ "script_sha256": "ba7ce8fae17088814d4093288df2ddb6ed130c8d319f054a7085d4e47471162e"
+}

@@ -88,3 +88,127 @@ When this note was written, these data existed:
 - the hand-check sheets and key.
 
 No main-run drafts or other main-run data existed.
+
+**Note at `prereg-tag2b` (2026-11-11, US Eastern).** This commit adds what section 14 lists for `prereg-tag2b`. It comes after the main run's data collection and before any main-run citation is labelled or any main-run DV is computed. No frozen file changes, and the registered design does not change. Times are UTC.
+
+*Main run.* The main run used code commit 6069c884ed1fc7c846400bac8ad7f578db79d966, on a clean tree throughout, under `prereg-tag2` (2e116bfe050da37887569f4a5f0fa6ddcff46e88). It ran from 19:36 on 8 November to 17:59 on 9 November 2026, in eight waves.
+- **Waves.** Wave 1 was lines 1–10 of `study_b1/minitracks_main_full_grid.txt`. Waves 2 to 8 dealt the remaining mini-tracks out in drawn order and in proportion:
+  - waves 2 to 7 each took six full-grid mini-tracks (lines 11–46) and four drafts-only mini-tracks (lines 1–24 of `study_b1/minitracks_main_drafts_only.txt`);
+  - wave 8 took full-grid lines 47–50 and drafts-only lines 25–29.
+
+  The open-weight arm ran each wave's full-grid mini-tracks only. Each wave's list is a file in the main-run file list below.
+- **Starting each wave.** Each wave after the first started on its own only if:
+  - the previous wave's lanes had ended cleanly;
+  - served-model mismatches were at most 1% of calls;
+  - the next wave's expected cost, plus one round of ledger reservations, fitted under the arm's cap.
+
+  Each arm was checked on its own ledger, and every check is logged with its numbers.
+- **Spend projection.** The projection of section 10 after wave 1 used a formula fixed before the wave-1 numbers were in. Spend so far was added to the wave-1 cost per full-grid mini-track times 40, plus the wave-1 draft-lane cost per mini-track times 29, which is the cost of a drafts-only mini-track. It gave $134.45 against the API-hosted cap of $225.00 (25.30 + 101.21 + 7.94) and $16.38 against the open-weight cap of $22.50 (3.276 + 13.106). Both passed.
+- **Concurrency.** The Claude lanes ran with `--concurrency 16` in wave 1 and 64 in waves 2 to 8, to cut the number of Batch rounds. The DeepSeek and open-weight lanes ran with 16 throughout. This is a command-line setting. No hashed file changed, and the seeded cell order is the same.
+- **DeepSeek peak hours.** Lanes that call DeepSeek were paused (SIGSTOP) from 5 minutes before each weekday peak window (01:00–04:00 and 06:00–10:00) until it ended. Two pauses ran on 9 November: 00:55–04:00 and 05:55–10:00, both in wave 1's review lanes.
+  - Of 7,216 DeepSeek calls, none started inside a peak window.
+  - No run in any lane ended on the task deadline.
+  - All 284 runs that finished after a pause began have a Claude Doer or Auditor, so they carry no working time (H7).
+  - The open-weight lanes were never paused.
+
+| Arm | Mini-tracks | Runs | Outcomes | Calls | Spend |
+| --- | --- | --- | --- | --- | --- |
+| API-hosted, Claude Doers | 79 (50 full grid, 29 drafts only) | 2,864 of 2,864 | 2,025 success, 97 refused, 742 forced exit | 7,240 | $139.95 of $225.00, both API-hosted vendors |
+| API-hosted, DeepSeek Doers | the same 79 | 2,864 of 2,864 | 2,006 success, 51 refused, 807 forced exit | 7,388 | in the line above |
+| Open-weight, exploratory | 50 full grid | 3,600 of 3,600 | 3,151 success, 449 forced exit | 5,780 | $15.77 of $22.50 |
+
+Every mini-track has all of its planned runs, and no failed run remains (see below). None of the 20,408 calls had a served model other than the planned one. The log check found no problem in the API-hosted run directories. In the open-weight directories it flags only Qwen3-14B and Qwen3-32B replies that carry a one-token empty thinking block, as in pilot stage 3. The Lead plans of the tag-2 note cost $0.67 API-hosted and $0.02 open-weight, on their own ledgers.
+
+*Main-run files.* [registration/main\_run\_files.sha256](registration/main_run_files.sha256) lists the SHA-256 of every main-run output file: 553 files, and the list's own SHA-256 is `1c5f41be136c49df2e3ced90f5ac5aa99e364d396686acbcf3a5c0e55f2645a1`. It was recomputed at 02:06 on 12 November, after the code commit below, by `hash_main_run.sh` (SHA-256 `ce48ac2f21c755b5d854d738a0ddaabcea9bfe14f04832f20e412c2811f8f9ea`), with the same result as before the commit. The files are hashed exactly as collected. Local paths inside the run configurations, provenance records and invocation logs are left as they are. The replication package replaces them with a neutral root and gives a table of hashes before and after.
+
+*Crossref lookups before this tag.* The frozen verifier's fetch-only mode filled a Crossref cache before this tag (`labels --prefetch crossref`, `src/agentic_workflow/verify/cli.py` SHA-256 `bc9823ee13f1f8dc89af8248511bb32b730d30c8e38e93644c09374aa0a5d271`, code 6069c884 on a clean tree, default pacing). This mode writes no label. It ran from 18:12 on 9 November to 17:12 on 10 November 2026, in 24 passes, one run directory each, one at a time, after the main run had ended.
+- **Coverage.** It covered 159,611 citations: 108,929 API-hosted and 50,682 open-weight. Every one was cached, none had no title, and no source error occurred. It made 146,266 requests, 379 of them rate-limited and retried.
+- **Nothing computed.** No label, match, similarity score or DV was computed, and no cached answer was read. The verifier's 24 output directories are empty, so no main-run verification output exists before this tag (section 14); the cache holds only Crossref's answers.
+- **The cache at this tag.** It is a new cache holding 145,687 files, all Crossref answers and none from OpenAlex. Its sorted manifest of file hashes is [registration/main\_crossref\_cache\_manifest.sha256.gz](registration/main_crossref_cache_manifest.sha256.gz). The file is gzip-compressed, and the unpacked manifest's SHA-256 is `7c530afd3c567aeadfd4aad056c0b3ad7e9021af9f22a5524a831bdc5ddcd9a2`. It was recomputed at 02:06 on 12 November and is byte-identical to the manifest made when the prefetch ended.
+- **Dating.** The label pass answers from this cache, so the Crossref answers date from 9 and 10 November 2026.
+
+*Failed items.* Server errors that still failed after the 3 registered retries occurred only in the open-weight arm. They were HTTP 429 replies from the provider to the burst of Qwen3-32B draft calls at the start of a wave. Section 11's single rerun ran right after each wave ended, with the same code, configuration and concurrency, and each item had one rerun only.
+- **Counts.** 18 failed rows: 1 in wave 4 and 17 in wave 5. All 18 were rerun once: 16 ended in success, and 2 ended as forced exits (`review_truncated`). The API-hosted arm had no failed item.
+- **One run kept as recorded.** In wave 3 run `leadhigh_capqwen3-32b_goal10_audsame-H_ins0` (mini-track `hicss59-electric-energy-sy…`), a review call still failed after its three retries.
+  - The frozen code ended the run as a forced exit (`review_http`), with the Doer's list after two audits and two revisions as the output. This is how it ends a run whose Auditor reply is cut off or unreadable (amendment no. 5).
+  - Section 11 would call this run failed and rerun it once. Because the frozen code did not mark it failed, the rerun did not take it, and a rerun now would mean replacing a collected row by hand.
+  - The run is kept as recorded and is listed, with its exit reason, beside the failure table.
+  - It is the only such run in either arm. The API-hosted arm, which carries every confirmatory test, has none.
+
+*Hand checks (amendment no. 5).*
+- **Sheets and instructions.** The six coding sheets of the tag-2 note and the coder instructions (SHA-256 `ea4b1a18804d00699a9d490ed4d25badc158f8efb2d7d9057414bba8bd137a82`) went to PC and Rain at 19:31 on 8 November, after the `prereg-tag2` release. The instructions give the questions and answer letters, and they do not say what the rule predicts.
+- **The coding page.** The coders worked on a coding page that holds only the sheet columns. It was published five times:
+  1. 19:57 on 8 November: the instructions' questions and answers, with saving and export;
+  2. 22:38 on 8 November: a note box with four note tags;
+  3. 18:57 on 9 November: a way to remove an answer;
+  4. 03:05 on 10 November: a coding manual with a rule and examples for each sheet, and a request to re-check earlier answers;
+  5. 03:19 on 10 November: a one-sentence key rule for each sheet.
+
+  The text of each version, with SHA-256 sums, is kept for the replication package. 59 of PC's answers and 3 of Rain's were last changed before version 4. The page does not record whether those cases were re-read.
+- **Two rule questions.** Two coder-rule questions were left at their stated defaults: a U with a note stays U, and a preprint record is judged as shown.
+  - Counting all five U answers as agreement would give 18 and 74, still under both bars.
+  - Two venue cases whose record is a preprint server (venue-096, venue-058) were coded Y from where the paper appeared, not from the record as shown. They are scored as given. The venue check sets no rule.
+- **Who coded what.** Each case was coded by one coder, half by each, as the draw assigned them. No case was coded by both, so these checks report no inter-rater statistic. Three answers PC entered under Rain's case IDs were stored under PC's own account. They are on neither sheet and were not scored.
+- **Filed sheets.** PC's last save was at 19:22 on 11 November and Rain's at 01:35 on 12 November. The filled sheets were filed at 01:41 on 12 November. Each one differs from its handed-out sheet only in the answer and note columns.
+
+| Filled sheet | SHA-256 |
+| --- | --- |
+| Near miss, PC | `5c9951b475894ec876e976c4d5f6767993e128fb945d4871e524dd995753307e` |
+| Near miss, Rain | `ed69d42dfe2d3c8ef74097786ba413676f2d3402d308def2a7afb55c78be66bb` |
+| `title_only`, PC | `3cb6b2a672e6d67f64dfe0ed999fa9ff550d3112f79816f346cc949d548b39f9` |
+| `title_only`, Rain | `be1adec66a2a45db731acabbafdcd2bf46141dbebebc749bb532574238532af2` |
+| Venue, PC | `c0ed9295ba772f666bb63ab6b71c6185b93b5d47049a7dc799a629ea237d774d` |
+| Venue, Rain | `3ecf8cbc9d5413187e891a95d11d80d374459543924e8b78d8fe36530cf0aee2` |
+
+*Scores.* `score_handchecks.py` (SHA-256 `ba7ce8fae17088814d4093288df2ddb6ed130c8d319f054a7085d4e47471162e`) scored the sheets at 01:43 on 12 November against the key (`b951672952e29d08f7c085b4e0d0994cb5bcef1c136a0cc1f471c1b4152d38b6`), with no sheet problem. In the near-miss and `title_only` checks a U is not agreement with the rule. Its output is [registration/handcheck\_scores.md](registration/handcheck_scores.md), with a machine-readable copy [registration/handcheck\_scores.json](registration/handcheck_scores.json).
+
+| Check | Answers (PC; Rain) | Score | Bar | Decision |
+| --- | --- | --- | --- | --- |
+| Near miss, cited author on the record (rule: same work) | S 9, N 15, U 1; S 7, N 17, U 1 | 16 of 50 | 45 of 50 | Not used: its citations stay `unresolved` |
+| Near miss, no cited author on the record (rule: not the same work) | N 25; N 25 | 50 of 50 | 45 of 50 | Used: its citations are `fabricated` |
+| `title_only` (same work, wrong authors) | S 33, N 16, U 1; S 38, N 10, U 2 | 71 of 100 | 90 of 100 | The author rule does not join: `title_only` stays `unresolved` |
+| Venue (agreement with the verifier) | Y 25, N 25; Y 26, N 24 | 68 of 100 | none; under 90, the venue matching is reviewed | Reported only |
+
+*Decisions file.* Code commit cc939c70f1706bfbf7be317a57bc49e448cd97ec (on 6069c884; no hashed file changes, and `study_b1/HASHES.sha256` is still `8bcce5ca11b32a622dbe18b010e35f8fd08eeea70141f353dbc7806b8d15e474`) fills `study_b1/dv/handcheck_decisions.yaml` with 16, 50, 71 and 68 (SHA-256 `1a5529044670679946a9b0438e0b7cc062d97f7c39485dcaff3e1897a23bf7b5`). [registration/handcheck\_decisions\_tag2b.yaml](registration/handcheck_decisions_tag2b.yaml) is a copy. It differs from the frozen null file (`d9d121a6e0e17ae15a4fae34fff591c451f29d50a15fc1cc5301b53f6596aed7`) only in those four values. The frozen code reads it as: near-miss branch with a cited author off, branch without one on, and the author rule off. This selects the registered row `author=not_used, noauthor=used, title_only=does_not_join` of [registration/tag2\_values.md](registration/tag2_values.md):
+
+| Doer | Ceiling |
+| --- | --- |
+| Claude Haiku 5.5 | 0.300 |
+| Claude Sonnet 5.5 | 0.025 |
+| DeepSeek Flash | 0.201 |
+| DeepSeek V4-Pro | 0.146 |
+
+The tolerances are those of the same row. In pilot stage 3 this row leaves 6.4% of API-hosted citations unresolved, from 0% to 13.6% by cell. Before the file was filled, the full test suite passed as at tag 2 (324 passed, 2 skipped). After the code commit it gives 322 passed, 2 skipped and 2 failed. The two failures are the tests that assume the tag-2 null file (`test_decisions_follow_the_registered_bars` and `test_rules_refuse_pending_decisions_but_take_a_full_what_if`). They fail as designed, and neither is edited.
+
+*Venue check.* `venue_agree` uses the definition frozen in the null file: answers matching the verifier, out of 100. A match is Y on a case the verifier judged the same journal, N on one it judged a different journal, and U on one whose journal name it marked uncertain. No coder used U, so the score equals the agreement on the 80 decided cases: 68 of 80, or 85% (Wilson 95% interval 76% to 91%). Being under 90, the venue matching was reviewed case by case.
+- **Same journal, coded N (4 of 40).**
+  - One is a coder slip: "Human Factors", whose record carries its subtitle. It is described, not corrected.
+  - The verifier also marked the other three uncertain, and they keep its label (amendment no. 5).
+  - Without those three, the matches by ISSN-L or alternate name agree in 33 of 34 cases (85% to 99.5%).
+  - All 13 cases the verifier labelled compliant were coded Y, so no matching error reaches `compliant_count`.
+- **Different journal, coded Y (8 of 40).**
+  - Six are real proceedings papers cited under a short form of their real proceedings name: CHI, CSCW, FAT* twice, EMNLP and NAACL-HLT. The DV specification counts such a citation as `off_venue`. The verifier labels it `misplaced`, because it does not expand conference acronyms. That is 6 of 40 sampled `misplaced` labels, or 15% (7% to 29%).
+  - The other two are the preprint records above. The specification lets the published record decide, and the verifier follows it.
+- **What the gap moves.** It moves citations between two non-compliant labels only. `misplacement_rate` (one of H9's four DVs) is overstated, and the exploratory `venue_violation_rate` is understated. `compliant_count`, `fabrication_rate`, `year_mismatch_rate`, `rehomed_rate` and the ceilings do not depend on it.
+- **No fix.** The verifier and every labelling rule stay as frozen. The registered `misplacement_rate` tolerance was computed with this verifier, and a change made because of this check would be post hoc. No reclassification analysis is added. The paper reports, beside H9's `misplacement_rate` result:
+
+  > The verifier does not expand conference acronyms, so a real proceedings paper cited under a short form of its proceedings name (for example "CHI" or "EMNLP") is labelled misplaced, while the DV specification counts it as off-venue. In the pre-registered venue hand check on pilot data, 6 of 40 sampled misplaced labels (15%; Wilson 95% interval 7% to 29%) were such papers. misplacement_rate is therefore overstated and venue_violation_rate understated, and the H9 contrast on misplacement_rate is affected only as far as Auditor tiers differ in how many such papers stay in final lists. compliant_count, fabrication_rate, year_mismatch_rate and rehomed_rate do not depend on this distinction.
+
+*After this tag.*
+- **Labelling.** Labelling follows amendment no. 5 and the tag-2 note:
+  - the Crossref and local-copy label pass;
+  - the 10% draw by `sample_openalex_main.py` (SHA-256 `382cdab2736862adff17adf3e8261ea0e713adb9af580cf8688594e8743eaa74`);
+  - the live searches within the cap of 23,000 searches, or $23;
+  - the final cache-only pass;
+  - the labelling rules with the decisions above.
+
+  The OpenAlex top-up approved on 8 November comes before any paid search. A new key with a prepaid balance has been in use since 12 November.
+- **Main-run near-miss check.** After the label pass, a person checks citations decided by the near-miss rule, and the agreement is reported. This changes no label. Only the branch without a cited author decides citations, so the check is that branch's 50. They are drawn with seed 20261107 from the main-run API-hosted citations the branch decided, by a draw script named by its SHA-256 in a dated note before the draw. They are coded blind on the same sheet design as the pilot check.
+- **Verifier validation.** The registered validation of the verifier, 100 citations double-coded blind by two coders, has not run. It changes no rule and is done before the verifier's results are reported.
+
+When this note was written, these data existed:
+- the main-run drafts and reviewed runs of both arms;
+- the Crossref cache above;
+- the hand-check sheets, filled sheets and scores.
+
+No main-run label or DV existed.
