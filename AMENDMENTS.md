@@ -212,3 +212,47 @@ When this note was written, these data existed:
 - the hand-check sheets, filled sheets and scores.
 
 No main-run label or DV existed.
+
+**Note on the main-run final label pass (2026-11-11, US Eastern).** Times are UTC, on 12 November. The live searches of
+amendment no. 5 ran as registered. The cap was 23,000 searches, and 16,187 were billed. The 3% trigger fired for every
+Doer's revision list and for no draft list.
+
+The chain's final check was fixed before labelling began, and it stopped the chain at 04:26. It had found 2,596
+citations whose final-pass label used an OpenAlex answer, although the registered route gives them no live search. The
+cause is in the frozen verifier. It keys its OpenAlex cache by title, and whenever OpenAlex is among its sources, it
+reads any cached answer for a citation's title, whatever the citation's route. So in the cache-only final pass, a
+citation outside the searched sets read the answer of a searched citation with the same title. By kind of miss, the
+2,596 were:
+- 1,387 approved-journal misses;
+- 1,089 off-list misses outside the triggered lists;
+- 120 others.
+
+Had those answers been kept, 222 of the 2,596 would have counted as real works instead of fabricated or unresolved.
+
+The labels used for the DVs follow amendments no. 2 and 5 as written. Each citation's label row is one of two unedited
+outputs of the frozen verifier, chosen by registered set:
+- the 762 poorly indexed misses and the 9,832 citations of the triggered lists take their final-pass label;
+- every other citation takes its label from the first pass, made with Crossref and the local copy before any OpenAlex
+  answer existed (sha256 `4e7d6681cdafab79d2c4190e698b42df9e87b8f9bb8e55f2ee342684b5664ca3`).
+
+The merge script is `merge_final_labels.py`, SHA-256 `ba736b6a1655864b5414ab291058d0b89ceafda08121329b6a4d8c979404e78e`.
+It computes no label. It stops, writing nothing, unless every row outside the two sets that changed between the passes
+is one of the 2,596. On the merged labels, the final check finds no stray answer. The merged labels used for the DVs
+have sha256 `51d01385634374583bf598935de9e8d3cbcf93f3e198eeab74f31ca9fe73545a`. The script, its report and the 2,596
+citations, with the labels they would have had, are published with the replication package.
+
+**The two source errors.** In the final pass, two triggered citations had a source error instead of an answer. Each was
+searched once more, as section 11 does for a failed item:
+- the V4-Pro revision citation got an answer and its label;
+- the Flash revision citation got a source error again. It keeps the label the frozen rules give an off-list miss with
+  no answer, and it is listed as a technical failure.
+
+**One tier difference.** Comparing the merged labels before and after that retry showed one further difference. One
+poorly indexed citation's record carries the ISSNs of two approved journals of different tiers. The frozen verifier
+gave it tier A\* in one pass and A in the other, because it takes the first approved ISSN from a set whose order
+depends on the Python process. The citation is outside the year window in both passes. The tier enters only the
+descriptive A\* share of compliant citations, so no DV changes, and the labels are used as written.
+
+No registered rule, bar or hashed file changes. The merge rule was set at 04:31 and the script's hash was named at
+04:35. The script was read and confirmed at 04:38, and the merge ran at 04:38. This note was pushed afterwards,
+before any rule, DV or analysis output existed.
