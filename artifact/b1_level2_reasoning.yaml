@@ -1,0 +1,638 @@
+# Level 2 reasoning front-end: Study B1
+#
+# Version 9, 2026-11-16. Built from the Level 2 draft of 2026-11-12, amendment no. 6 as committed (ecdb3790,
+# 2026-11-15), the verifier validation scores (AMENDMENTS.md, note in f2decec8) and Author A's comments and decisions
+# of 2026-11-16. Placeholders in angle brackets (<...>) are filled before submission.
+# - Built only from Study B1's own record: PREREGISTRATION.md, AMENDMENTS.md, docs/dv_specification.md and the
+#   design-decision log draft (decision IDs D01-D37 refer to that log; D38-D42 are the prereg-tag2b steps; D43-D45 the
+#   final-label-pass steps, from the dated note c8986072; D46-D52 and V-am6 the steps of amendment no. 6; D53 the
+#   paper's framing of the question).
+#   No other study is described or compared.
+# - Main-run verdicts come from the registered analysis (results.json, via b1_level1_config.yaml). Each positioning
+#   relation was set mechanically by `positioning_relation_rules`, written before any result; where a verdict differs
+#   without the flagged Doers, both relations are given.
+# - The post-registration constructs of amendment no. 6 are added beside the registered ones, marked
+#   `status: post_registration`. They carry no verdict and set no positioning relation.
+# - Sources for the positioning entries and the construct terms are given in the manuscript, not in this file.
+# - Structure: motivations; theoretical positioning with typed relationships (extends, contradicts, bounds,
+#   synthesizes, replicates); a typed concept graph; the reasoning journey as an exploration tree (node kinds
+#   question, decision, experiment, dead_end, pivot); extension directions with scope conditions.
+# - Level 1 companion: b1_level1_config.yaml. Field paths in `vary_in_level1` point into that file.
+
+front_end:
+  kind: level2_reasoning_front_end
+  version: b1-level2-version-9 (2026-11-16)
+  study_code: B1
+  companion_level1: b1_level1_config.yaml
+  authors: withheld during review
+  status: "registered verdicts and relations as set on 2026-11-12; amendment no. 6 constructs as committed; reportable: the registered verifier validation was scored on 2026-11-13"
+  references:
+    registration:
+      record: <anonymous link to the pre-registration repository>
+      latest_tag: {name: prereg-tag2b, commit: 1f69b314c5ce519ddc4ad2d13b77d7026c57d96c, released_utc: "2026-11-12T02:12:02Z"}
+      earlier_tags: {prereg-tag1: c36c7898016bc7344751b4963549e21655a2e0c6, prereg-tag2: 2e116bfe050da37887569f4a5f0fa6ddcff46e88}
+      amendment_6: {commit: ecdb3790511d5acf608d38e1bd8ad495988a7057, committed_utc: "2026-11-16T00:55:22Z", date: "2026-11-15 (US Eastern)", file: AMENDMENTS.md, agreed_by: both authors}
+      dated_note_after_tag2b: {commit: c8986072d61796ee74a2beb3a6de6ad242111bf0, committed_utc: "2026-11-12T04:46:44Z", subject: "final label pass: merge by registered set, two-search retry, one tier difference", before: "any rule, DV or analysis output existed"}
+      verifier_validation_notes:
+        - {commit: dda421f7aedfbd2927a9a96ca2f44c7eeb028acd, committed_utc: "2026-11-12T15:08:51Z", subject: "frame, draw, coding and report fixed before the draw"}
+        - {commit: f2decec83c1a770cb6cfa42468a87c3f007a5b90, committed_utc: "2026-11-16T20:33:11Z", subject: "the scores, with the Level 1 file and the Artifact Note"}
+      files: [PREREGISTRATION.md, AMENDMENTS.md, docs/dv_specification.md, registration/tag2_hashes.sha256, registration/tag2_values.json, registration/main_run_files.sha256, registration/main_crossref_cache_manifest.sha256.gz, registration/handcheck_decisions_tag2b.yaml, registration/handcheck_scores.md]
+    code:
+      record: <anonymous link to the B1-only code copy>
+      main_run_commit: 6069c884ed1fc7c846400bac8ad7f578db79d966
+      labelling_and_analysis_commit: cc939c70f1706bfbf7be317a57bc49e448cd97ec
+      check: "sha256sum -c registration/tag2_hashes.sha256 from the code root (76 files)"
+    data:
+      main_run_outputs: {list: registration/main_run_files.sha256, files: 553, sha256: 1c5f41be136c49df2e3ced90f5ac5aa99e364d396686acbcf3a5c0e55f2645a1}
+      crossref_cache: {manifest: registration/main_crossref_cache_manifest.sha256.gz, unpacked_sha256: 7c530afd3c567aeadfd4aad056c0b3ad7e9021af9f22a5524a831bdc5ddcd9a2}
+      labels_and_analysis_outputs:
+        hashes: b1_level1_config.yaml, analytical_targets.results.output_files
+        labels_used_for_dvs: 51d01385634374583bf598935de9e8d3cbcf93f3e198eeab74f31ca9fe73545a
+        runs_csv: a72d918c1d90542274c62fa69564ee549dbc47df40e78a9cb1ddf1f70845e020
+        results_json: e6685474f48fc22c7d7081ecbbb720756061320bf508a4a0648736276397dc6f
+        results_md: f4778113d6c5de31af36d814709197d1031efec6e7f5af697779a8e3de0a966f
+      post_registration_outputs:   # every dated note, script and output is listed with its hash in amendment no. 6, Part 1
+        construct_estimates: {file: factual_faithful_loose.json, sha256: 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1}
+        author_rule_counts: {file: author_loose.json, sha256: d3cef9be1e2c588fef7198ab24c1b0e76363853a3d28de30a845b1b046f8554e}
+      archive: {doi: 10.5281/zenodo.24292422, concept_doi: 10.5281/zenodo.24292421, record: "https://zenodo.org/records/24292422", version: "1.0", published: "2026-11-16", files: 9, sha256sums_sha256: 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab, manifest_sha256: 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600, details: DATA_ARCHIVE.md}
+      record_during_review: <journal upload or anonymous data link, per the Author Guide>
+    licences:
+      code: MIT
+      data_and_documentation: CC BY 4.0
+      not_covered: "the conference mini-track titles and descriptions used as topics: third-party public text, shared in full with source URLs under its own terms"
+      ai_generated_notice: all model replies in the logs are AI-generated
+
+# ---------------------------------------------------------------------------------------------------------------
+# 1. Motivations and research objectives
+# ---------------------------------------------------------------------------------------------------------------
+motivations:
+  information_retrieval: >   # the term is defined once, here, at its first use; everywhere else the bare term is used
+    Information retrieval, in this study, means the user obtaining information from the model itself: the model
+    answers from its own memory, with no search or document collection involved.
+  research_question: >   # one question; the registered form is reasoning_journey Q0, unchanged; objectives map it to HP1-HP5 and task cost
+    Which team structures and model choices reduce hallucination in information retrieval from a language model, and
+    at what cost?
+  boundary_condition: >   # Author A's assumption, stated as the study's boundary condition
+    Our boundary condition is that when the model needs to make a quick decision (without online search or tool
+    calling), offline, with limited resources (by design or by constraint), it may have to recall its own memory. Our
+    research examines the agentic workflow in this context.
+  knowledge_retrieval: >
+    When we say knowledge retrieval, we mean the model-only database: it is more like the model's memory, the
+    knowledge in the model parameters.
+  broad_problem: >
+    Our initial goal is to see how different team set-ups (workflows) perform information retrieval; that is the
+    broad problem we aim to solve. Literature search is how we operationalize it: information retrieval has a broader
+    impact, and literature search is one of its uses.
+  practical_motivation: >   # beside the theoretical motivation (phenomenon, gap); Author A, 2026-11-16
+    Some of the motivation is practical. Why the agents have no tool calling, and the boundary condition, were
+    inspired by practitioners: Author B presented an earlier project on hallucination in agentic workflows at an
+    industry event, the HCSC Fall AIS All Hands Meeting (17 September 2026), and we got those suggestions from the
+    industry people there. The theoretical motivation is in phenomenon and gap.
+  operationalisation: >
+    Literature search fits this purpose because each retrieved item is a discrete claim that can be checked against an
+    outside record (Crossref, OpenAlex and a frozen local copy): whether the work exists, whether its authors, journal
+    and year are right, and whether it meets the constraints stated in the task prompt. Most information retrieval
+    tasks have no such record at this scale, so here every retrieval error can be counted, item by item, without a
+    model ever seeing the score. References are long-tail items with several attributes, so recall rates and effect
+    sizes need not carry over to other information retrieval tasks; EXT12 states what a transfer needs.
+  phenomenon: >
+    Organisations increasingly hand information retrieval and other knowledge work to teams of AI agents in which one
+    agent plans, another produces and a third checks. When such a team must produce a list of real literature
+    references from memory, it can invent papers, misstate their year or authors, or move a real paper under a journal
+    it never appeared in to satisfy a rule. These errors are hard for the people who rely on the list to see, and each
+    is a decision failure: the team reports something as a fact that it cannot support.
+  gap: >
+    Hallucination in information retrieval has been measured mostly for single models answering single prompts, and
+    reference fabrication is its best-documented case. The set-up choices a manager actually makes when configuring an
+    agent team have not been varied together in one controlled design: whether an Auditor is added, which role gets
+    the stronger model, how hard the task is (how much output is asked for, and whether the team may say "too few
+    known"), and whether the Auditor comes from the same vendor or another. Nor have their effects on hallucination
+    been set against what they cost.
+  error_kinds: >   # post-registration (amendment no. 6)
+    A retrieval error can be factual, when the cited work or its details conflict with the bibliographic record, or
+    faithful, when a real, correctly described work falls outside the constraints stated in the task prompt (the
+    approved journals and the publication window). An off-list work is a faithful hallucination even when the Doer
+    used the honest option: the option was given to the Doer only as an option, and the returned result is still off
+    the list, so it violates the general goal of the task prompt. The two kinds are counted apart because a team's
+    set-up can trade one for the other.
+  decision_architecture_claim: >
+    The study is not a substitution of an agent for a prior system. The unit of analysis is the team's decision
+    architecture: a Lead's plan constrains what a Doer can answer; a quantity goal and a must-fill rule create
+    pressure to answer; an Auditor's objections and the Doer's dispositions decide what reaches the final list; and
+    an explicit honest option changes which rule-breaking move (inventing, re-homing, or disclosing) is cheapest for
+    the Doer. Each of these is a design lever with a measurable effect on error and on usable output.
+  objectives:
+    - id: O1
+      objective: estimate how much adding an Auditor reduces hallucination, and what it adds to the cost of a run
+      paper_hypothesis: HP1
+      hypotheses: [H2]
+    - id: O2
+      objective: estimate where model capability matters, in the Doer, the Lead or the Auditor, since the strongest model cannot be used in every role
+      paper_hypothesis: HP2
+      hypotheses: [H4a, H8, H9]
+    - id: O3
+      objective: estimate how task difficulty (the number of goals; may-report versus must-fill) changes hallucination and usable output
+      paper_hypothesis: HP3
+      hypotheses: [H1, H6, H6x]
+    - id: O4
+      objective: estimate whether an Auditor from another vendor lowers fabrication more than one from the same vendor (model heterogeneity)
+      paper_hypothesis: HP4
+      hypotheses: [H3]
+    - id: O5
+      objective: estimate whether adding an Auditor helps more when the task is harder
+      paper_hypothesis: HP5
+      hypotheses: [H5]
+    - id: O6
+      objective: put every effect on a cost basis, so a configuration can be chosen under a budget
+      paper_construct: task cost
+      hypotheses: [H7]
+      exploratory: the cost-effectiveness measure of amendment no. 6, Part 5
+    - id: O7
+      objective: provide a pre-registered, hash-frozen agent experiment that another agent can rerun and compare within a stated tolerance
+  applies_when:
+    - "the agents must answer from the models' own memory: offline, without web search or tool calls, with resources limited by design or by constraint (boundary_condition)"
+    - the task asks for verifiable factual items (references, records, identifiers), so each retrieved item can be checked against an outside record
+    - a rule constrains which items count (a list of venues, a time window), so a rule-breaking item can be disguised as compliant
+    - the team has separable roles that a designer can staff with different models
+  does_not_apply_when:
+    - agents can search the web, call tools or query an outside database, so recall from the models' own memory is no longer the binding constraint
+    - output is judged only for fluency or relevance, not for whether each item exists
+
+# ---------------------------------------------------------------------------------------------------------------
+# 2. Theoretical positioning (typed relationships)
+# ---------------------------------------------------------------------------------------------------------------
+theoretical_positioning:
+  - id: P1
+    relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: bounds
+    relation_planned_before_results: extends
+    relation_basis: {all_doers: "H1 supported", without_flagged_doers: "H1 not_supported"}
+    report_both: "the relation differs without the flagged Doers; the text reports both and says so (positioning_relation_rules.flagged_doers)"
+    target: goal setting and its side effects on misreporting in organisations
+    sources: given in the manuscript
+    how: >
+      Carries the claim that a specific, demanding quantity goal can induce misreporting from human employees to agent
+      teams, where the goal (3 or 10 papers per subtopic) is set by the designer and the misreport is a fabricated or
+      re-homed reference.
+    hypotheses: [H1]
+    result_dependent: true   # per positioning_relation_rules
+    construct: {name: task difficulty, item: "1, number of goals (coded 1 = goal 3, so the sign of H1 is flipped)", paper_hypothesis: HP3, status: post_registration}
+  - id: P2
+    relation: synthesizes   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_qualifier: "fabrication falls, but usable output is lost"
+    relation_without_flagged_doers: synthesizes
+    relation_without_flagged_doers_qualifier: "fabrication falls, but usable output is lost"
+    relation_planned_before_results: synthesizes
+    relation_basis: {all_doers: "H6 partly_supported (H6x not_supported, moderator only)", without_flagged_doers: "H6 partly_supported (H6x not_supported, moderator only)"}
+    target: abstention and calibration in language models, with output-pressure design
+    sources: given in the manuscript
+    how: >
+      Joins the argument that models guess when a task rewards an answer over an admission of not knowing with the
+      design lever a manager controls: permission to report too few (may-report) against a must-fill rule, crossed
+      with the goal size.
+    hypotheses: [H6, H6x]
+    result_dependent: true   # per positioning_relation_rules
+    construct: {name: task difficulty, item: "2, reporting format (coded 1 = may-report)", within_construct_interaction: "H6x, items 1 x 2 (sign flipped)", paper_hypothesis: HP3, note: "the two items keep their own registered verdicts", status: post_registration}
+  - id: P3
+    relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: extends
+    relation_planned_before_results: extends
+    relation_basis: {all_doers: "does not depend on a verdict", without_flagged_doers: "does not depend on a verdict"}
+    target: audits of fabricated and erroneous citations produced by language models
+    sources: given in the manuscript
+    how: >
+      Moves from one model and one prompt to role-structured teams under a factorial design, and separates three
+      kinds of reference error (fabricated, year mismatch, misplaced) from a rule break (off-venue), each labelled by
+      a frozen verifier with a registered check order.
+    hypotheses: [H1, H4a, H8]
+    result_dependent: false
+    post_registration_how: "The post-registration outcome constructs split each resolved citation in the same way: factual hallucination (conflict with the bibliographic record: the work does not exist, or its authors, journal or year are wrong) or faithful hallucination (a real, correctly described work outside the constraints stated in the task prompt, counted whether or not the Doer used the honest option: the option was given only as an option, and the result is still off the list, so it violates the general goal of the task prompt). The year tolerance and the author rule are this study's own measurement rules."
+  - id: P4
+    relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: extends
+    relation_planned_before_results: bounds
+    relation_basis: {all_doers: "H2 supported, H9 supported", without_flagged_doers: "H2 supported, H9 supported"}
+    rule_note: "the earlier possible-relations list for P4 omitted extends; positioning_relation_rules, written before any result, governs"
+    target: multi-agent debate and review as a route to more factual output
+    sources: given in the manuscript
+    how: >
+      Tests review where the reviewer has no tools and must judge existence from its own memory, the case in which a
+      checker can only add knowledge it already holds. The design names in advance how review gains are measured
+      (compliant_count, fabrication, realized false rejection).
+    hypotheses: [H2, H5, H9]
+    result_dependent: true
+    construct: {name: adding an Auditor, paper_hypothesis: HP1, registered: H2, interaction: "HP5, adding an Auditor x task difficulty (H5, sign flipped)", status: post_registration}
+  - id: P5
+    relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: contradicts
+    relation_planned_before_results: extends
+    relation_basis: {all_doers: "H3 supported", without_flagged_doers: "H3 opposite"}
+    report_both: "the relation differs without the flagged Doers; the text reports both and says so (positioning_relation_rules.flagged_doers)"
+    target: limits of a model correcting its own output
+    sources: given in the manuscript
+    how: >
+      Extends the self-correction question to review by a different model of the same vendor against review by a
+      model of another vendor, holding the draft fixed, so shared blind spots within a family can be separated from
+      review as such.
+    hypotheses: [H3]
+    result_dependent: true
+    construct: {name: model heterogeneity, mechanism: error independence, paper_hypothesis: HP4, registered: H3, note: "re-frames the registered H3 rationale (a different model family brings more diverse knowledge); not a new prediction", tension: "check B3 splits the contrast by Doer vendor and points to an Auditor-vendor effect (a Claude Auditor does better whatever the Doer); with two vendors the design cannot separate the two, and the paper reports B3 beside the pooled estimate (amendment no. 6, Part 4)", status: post_registration}
+  - id: P6
+    relation: synthesizes   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: contradicts
+    relation_planned_before_results: synthesizes
+    relation_basis: {all_doers: "H3 supported, H9 supported", without_flagged_doers: "H3 opposite, H9 supported"}
+    report_both: "the relation differs without the flagged Doers; the text reports both and says so (positioning_relation_rules.flagged_doers)"
+    target: diversity versus ability in group problem solving
+    sources: given in the manuscript
+    how: >
+      Puts the two staffing choices for a checker side by side on the same drafts: a reviewer from another model
+      family (diversity, H3) and a stronger reviewer from either family (ability, H9).
+    hypotheses: [H3, H9]
+    result_dependent: true
+    construct: {H3: "model heterogeneity", H9: "model capability, item 3, Auditor tier", note: "the diversity-versus-ability comparison of this entry is the comparison of these two constructs on the same drafts", status: post_registration}
+  - id: P7
+    relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: extends
+    relation_planned_before_results: extends
+    relation_basis: {all_doers: "H4a supported, H8 supported; H7 cost reported beside it", without_flagged_doers: "H4a supported, H8 partly_supported; H7 cost reported beside it"}
+    target: where capability should sit in a planning-and-execution pipeline
+    sources: given in the manuscript
+    how: >
+      Varies the planner's and the producer's capability independently within vendor, so the effect of a better plan
+      (H8) and of a better producer (H4a) on fabrication are estimated on the same topics, with cost alongside (H7).
+    hypotheses: [H4a, H8, H7]
+    result_dependent: false
+    construct: {name: model capability, items: ["1, Doer (H4a)", "2, Lead (H8)", "3, Auditor tier (H9; see P6)"], paper_hypothesis: HP2, note: "each item keeps its registered verdict; no merged verdict", task_cost: "tokens and US dollars; the registered H7 also keeps calls, cost per valid paper and working time", status: post_registration}
+  - id: P8
+    relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
+    relation_without_flagged_doers: extends
+    relation_planned_before_results: extends
+    relation_basis: {all_doers: "does not depend on a verdict", without_flagged_doers: "does not depend on a verdict"}
+    target: pre-registration and agent-native research practice
+    sources: given in the manuscript
+    how: >
+      Applies pre-registration to stochastic agent subjects: prompts, configs, code and plans frozen by SHA-256 at
+      tagged releases; staged pilot gates; every possible outcome of the validation checks built into the frozen
+      analysis code; and a measured run-to-run tolerance as the comparison rule for replication.
+    hypotheses: []
+    result_dependent: false
+
+positioning_relation_rules:   # written 2026-11-12, before any main-run label or result; applied mechanically to the verdicts
+  P1: {hypotheses: [H1], supported: extends, not_supported: bounds, opposite: contradicts}
+  P2: {hypotheses: [H6, H6x], supported: synthesizes, partly_supported: "synthesizes (fabrication falls, but usable output is lost)", not_supported: bounds, opposite: contradicts, note: "H6x reported as a moderator only"}
+  P4: {hypotheses: [H2, H9], both_supported: extends, H2_only: "extends (review helps; checker tier does not matter)", H9_only_or_mixed: bounds, neither: bounds, any_opposite: contradicts}
+  P5: {hypotheses: [H3], supported: extends, partly_supported: "extends, with the output-loss qualifier", not_supported: bounds, opposite: contradicts}
+  P6: {hypotheses: [H3, H9], both_supported: synthesizes, H3_only: "extends (diversity, not ability, lowers fabrication here)", H9_only: "bounds (ability, not diversity, matters when checkers rely on memory)", neither: bounds, any_opposite: contradicts}
+  P7: {hypotheses: [H4a, H8], relation_stays: extends, note: "the result states where capability matters; H7 cost reported beside it"}
+  P3: {relation_stays: extends, note: "measurement contribution; does not depend on a verdict"}
+  P8: {relation_stays: extends, note: "practice contribution; does not depend on a verdict"}
+  flagged_doers: "if a verdict differs without the flagged Doers, the relation is reported for both and the text says so"
+  post_registration: "the constructs of amendment no. 6 have no relation rule and set no relation; every relation above stays as set on 2026-11-12"
+  applied: {date: "2026-11-12", by: "fill script, from the verdicts in b1_level1_config.yaml (copied from results.json, sha256 e6685474...)", result: "see relation and relation_without_flagged_doers in each theoretical_positioning entry"}
+
+# ---------------------------------------------------------------------------------------------------------------
+# 3. Concept graph (constructs and predicted, registered effects; API-hosted arm)
+# ---------------------------------------------------------------------------------------------------------------
+concept_graph:
+  nodes:
+    - {id: goal, kind: design_lever, level1: study_type_and_design_logic.factors_api_hosted.goal, label: "task difficulty, item 1 (number of goals)"}
+    - {id: permission_to_report_too_few, kind: design_lever, level1: study_type_and_design_logic.factors_api_hosted.instruction, label: "task difficulty, item 2 (reporting format)"}
+    - {id: lead_capability, kind: design_lever, level1: study_type_and_design_logic.factors_api_hosted.lead, label: "model capability, item 2 (Lead)"}
+    - {id: doer_capability, kind: design_lever, level1: study_type_and_design_logic.factors_api_hosted.doer, label: "model capability, item 1 (Doer)"}
+    - {id: review_presence, kind: design_lever, level1: study_type_and_design_logic.factors_api_hosted.review, label: "adding an Auditor"}
+    - {id: reviewer_family_diversity, kind: design_lever, level1: "review: cross versus same", label: "model heterogeneity"}
+    - {id: reviewer_tier, kind: design_lever, level1: "review: H versus L", label: "model capability, item 3 (Auditor tier)"}
+    - {id: honest_option, kind: held_fixed_format, level1: study_type_and_design_logic.held_fixed.paper_format}
+    - {id: fabrication_rate, kind: outcome}
+    - {id: year_mismatch_rate, kind: outcome}
+    - {id: misplacement_rate, kind: outcome}
+    - {id: compliant_count, kind: outcome}
+    - {id: rehomed_rate, kind: manipulation_check}
+    - {id: cost, kind: outcome, dvs: [tokens, cost_usd, calls, cost_per_valid_paper, working_time_s], label: "task cost (tokens and US dollars)"}
+    # post-registration constructs (amendment no. 6); no verdicts. The three outcome constructs are mutually exclusive and
+    # exhaustive over the resolved citations, so their shares sum to 1 on each list; unresolved citations stay out. Order
+    # of checks: exists, year, journal, authors (factual), then list, window (faithful).
+    - {id: task_difficulty, kind: construct, status: post_registration, items: [goal, permission_to_report_too_few], coding: "both items coded 1 = easier (goal 3; may-report)"}
+    - {id: model_capability, kind: construct, status: post_registration, items: [doer_capability, lead_capability, reviewer_tier], coding: "high versus low, one item per role"}
+    - {id: outcome_factual, kind: outcome_construct, status: post_registration, label: factual hallucination, definition: "a resolved citation whose content conflicts with the verifiable bibliographic record: no matching record exists, or the matched record differs on authors (loose author rule), on journal, or on year by two or more", unit: one citation in a returned list}
+    - {id: outcome_faithful, kind: outcome_construct, status: post_registration, label: faithful hallucination, definition: "a resolved citation to a real, correctly described work whose journal is not one of the approved journals listed in the task prompt, or whose year lies outside the prompt's window of 2010 to 2024, whether or not the Doer flagged it", why: "the honest option was given to the Doer only as an option; the returned result is still off the list, so it violates the general goal of the task prompt", unit: one citation in a returned list}
+    - {id: outcome_compliant_checked, kind: outcome_construct, status: post_registration, label: "compliant (author-checked)", definition: "a real work that passes every check, with the loose author rule added; the registered compliant_count stays the confirmatory DV", unit: one citation in a returned list}
+  edges:
+    - {from: goal, to: fabrication_rate, sign: "+", hypothesis: H1, test: two-sided, verdict: {all_doers: supported, without_flagged_doers: not_supported}}
+    - {from: review_presence, to: compliant_count, sign: "+", hypothesis: H2, verdict: {all_doers: supported, without_flagged_doers: supported}}
+    - {from: reviewer_family_diversity, to: fabrication_rate, sign: "-", hypothesis: H3, verdict: {all_doers: supported, without_flagged_doers: opposite}}
+    - {from: doer_capability, to: fabrication_rate, sign: "-", hypothesis: H4a, verdict: {all_doers: supported, without_flagged_doers: supported}}
+    - {from: "goal x review_presence", to: fabrication_rate, sign: "review helps more at goal 10", hypothesis: H5, status: secondary, verdict: {all_doers: not_supported, without_flagged_doers: not_supported}}
+    - {from: permission_to_report_too_few, to: fabrication_rate, sign: "-", hypothesis: H6, joint_condition: "compliant_count non-inferior at 10%", verdict: {all_doers: partly_supported, without_flagged_doers: partly_supported}}
+    - {from: "permission_to_report_too_few x goal", to: fabrication_rate, sign: "no direction predicted", hypothesis: H6x, status: secondary, verdict: {all_doers: not_supported, without_flagged_doers: not_supported}}
+    - {from: lead_capability, to: fabrication_rate, sign: "-", hypothesis: H8, verdict: {all_doers: supported, without_flagged_doers: partly_supported}}
+    - {from: reviewer_tier, to: [compliant_count, fabrication_rate, year_mismatch_rate, misplacement_rate], sign: "better on each", hypothesis: H9, verdict: {all_doers: supported, without_flagged_doers: supported}}
+    - {from: every_lever, to: cost, sign: "reported", hypothesis: H7, status: secondary, verdict: "none registered; reported (working time not estimable for H2, H3 and H9)"}
+    - {from: honest_option, to: rehomed_rate, sign: "-", role: "manipulation check (pilot stage 2b against a same-time control)"}
+    # how the post-registration constructs are built (amendment no. 6); no verdicts
+    - {from: goal, to: task_difficulty, kind: item_of, coding: "1 = goal 3"}
+    - {from: permission_to_report_too_few, to: task_difficulty, kind: item_of, coding: "1 = may-report"}
+    - {from: doer_capability, to: model_capability, kind: item_of}
+    - {from: lead_capability, to: model_capability, kind: item_of}
+    - {from: reviewer_tier, to: model_capability, kind: item_of}
+    - {from: [fabrication_rate, year_mismatch_rate, misplacement_rate], to: outcome_factual, kind: built_from, also: "real works of any other label whose authors fail the loose author rule"}
+    - {from: "registered labels off_venue and off_window, authors pass", to: outcome_faithful, kind: built_from}
+    - {from: "registered label compliant, authors pass", to: outcome_compliant_checked, kind: built_from}
+  results:
+    release_status: "reportable: the registered verifier validation was scored on 2026-11-13 (b1_level1_config.yaml, validation.main_run_hand_checks.verifier_validation)"
+    post_registration: {status: exploratory, verdicts: none, tests: "raw p, labelled uncorrected", reported_in: the manuscript, output: "factual_faithful_loose.json, sha256 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1"}
+    source: "b1_level1_config.yaml, analytical_targets.results (copied from results.json, sha256 e6685474f48fc22c7d7081ecbbb720756061320bf508a4a0648736276397dc6f)"
+    sample: {minitracks: 79, left_out: 0, failed_runs: 0, flagged_doers: [deepseek-flash, deepseek-v4-pro]}
+    manipulation_check: "main-run rehomed_rate above its ceiling for deepseek-flash only (0.2248 against 0.2011); the other three Doers are under theirs"
+    without_flagged_doers_note: "only the Claude Doers remain, so a cross-vendor Auditor there is always a DeepSeek model reviewing a Claude draft"
+
+# ---------------------------------------------------------------------------------------------------------------
+# 4. Reasoning journey (exploration tree)
+# ---------------------------------------------------------------------------------------------------------------
+# Node kinds: question, decision, experiment, dead_end, pivot. Each decision gives the choice, the alternatives not
+# taken and the reason. Children are nested; `also_depends_on` marks where branches meet. Times are UTC.
+reasoning_journey:
+  - id: Q0
+    kind: question
+    when: "2026-11-06"
+    text: Does the way an agent team is set up change how often it invents or misreports references, and how many usable references it returns, when it works from memory without tools?
+    children:
+
+      - id: N-measure
+        kind: question
+        text: What counts as an error, and how is it measured without a model ever seeing the score?
+        children:
+          - {id: D01, kind: decision, when: "2026-11-06T03:45Z", choice: "three reference errors, each its own DV (fabricated, year mismatch, misplaced)", not_taken: ["one summed hallucination rate"], why: "a sum can move because one part moves and hides which failure a treatment changed"}
+          - {id: D02, kind: decision, when: "2026-11-06T04:45Z", choice: "a real work cited under a journal it never appeared in is misplaced (an error); a real work under its real publisher or proceedings name is off-venue (a rule break)", not_taken: ["treating a non-journal work placed under a journal name as off-venue"], why: "putting a work under the wrong journal misstates the record; naming its real venue does not"}
+          - {id: D06, kind: decision, when: "2026-11-06", choice: "year checked before journal; journal-first order as a registered sensitivity table", not_taken: ["journal first"], why: "matches the frozen verifier's gate order"}
+          - {id: D12, kind: decision, when: "2026-11-06", choice: "counts beside rates as secondary DVs", why: "a rate can stay flat while a list shrinks"}
+          - {id: D13, kind: decision, when: "2026-11-06", choice: "empty drafts leave the rate DVs, count 0 in compliant_count; answer, refusal and abstention reported beside every draft contrast", why: "which drafts come back empty can depend on the treatment"}
+
+      - id: N-format
+        kind: question
+        text: How should the Doer give each paper, so that there is one claim to verify and a real paper is not quietly moved under an approved journal?
+        children:
+          - {id: D03, kind: decision, when: "2026-11-06", choice: "separate fields only (title, authors, year, journal, summary); no full-reference entry", not_taken: ["keeping the full-reference entry and scoring only the fields"], why: "two versions of one paper that disagree leave no way to say which was meant"}
+          - {id: D04, kind: decision, when: "2026-11-06", choice: "no Doer flag for 'on the approved list'; the verifier works it out afterwards", not_taken: ["a flag in every format", "letting the pilot decide"], why: "an unscored flag could change what the Doer cites and would show the Auditor the Doer's own label"}
+          - {id: D05, kind: decision, when: "2026-11-06", choice: "manipulation check (rehomed_rate) measured after collection against a same-time control; main-run ceiling per Doer from a cluster bootstrap", not_taken: ["a control arm beside the main run"], why: "leaves the task untouched; a same-time control rules out drift; half, not zero, because honest venue errors remain"}
+          - id: E-stage2
+            kind: experiment
+            when: "2026-11-07"
+            text: "Pilot stage 2: three formats drafted at the same time on 10 pilot mini-tracks: an honest venue format (fields only), the old forced-list format (control), and the honest format with the full-reference entry kept (diagnostic)."
+            children:
+              - id: X-stage2
+                kind: dead_end
+                hypothesis: an instruction to give the real journal, with no full-reference entry, removes re-homing without raising fabrication
+                failure: "gate failed: pooled API-hosted fabrication_rate 91.3% in the honest format against 17.4% in the control (limit +3 points); the diagnostic arm, 11.3%, passed every line"
+                lesson: dropping the full-reference entry, not the honesty instruction, raised fabrication; any fields-only format must be tested against a fields-only control
+                record: AMENDMENTS.md no. 3
+          - id: V-am3
+            kind: pivot
+            when: "2026-11-07T15:15Z"
+            also_depends_on: [D03, X-stage2]
+            trigger: stage-2 gate failure
+            choice: "the honest-option format: fields only, plus a 'however' clause that lets the Doer return a real paper from another journal under its real journal, marked honest_option: true; tested in a new stage 2b against a same-time fields-only control"
+            not_taken: ["the diagnostic format with the full-reference entry, although it passed every stage-2 line"]
+            why: test whether an explicit, honest way out removes re-homing, against a control that shares the paper format
+            cost_stated_in_advance: fabrication may be high in every cell, and the stage-2b gate compares two formats that share this
+            record: AMENDMENTS.md no. 3
+            children:
+              - id: E-stage2b
+                kind: experiment
+                when: "2026-11-07"
+                text: "Pilot stage 2b: honest-option format against the fields-only control, 160 high-Lead drafts each in the API-hosted arm."
+                result: "pooled lines passed (fabrication 87.5% against 94.2%; refusal 1.9% against 4.4%; parse 100% in both); re-homing fell for all four Doers but was not halved for DeepSeek Flash (11.2% against 16.0%) or DeepSeek V4-Pro (7.7% against 15.2%, where half is 7.6%); open-weight arm almost entirely invented in both formats"
+                record: AMENDMENTS.md no. 4
+              - id: D29
+                kind: decision
+                when: "2026-11-07T19:31Z"
+                also_depends_on: [E-stage2b]
+                choice: "keep the honest-option format; flag DeepSeek Flash and DeepSeek V4-Pro so every verdict is also reported without them; add an Auditor paragraph saying the mark is the Doer's claim, not evidence; run a review check on the 157 answered stage-2b drafts before stage 3"
+                not_taken: ["switching to the control format", "the Auditor fix without the review check", "stopping the pilot to rethink the task"]
+                why: "as good as or better than the control on every pooled line; lower re-homing for every Doer; three times as many real papers per answered draft (3.94 against 1.28); the two halving failures rested on few papers"
+                record: AMENDMENTS.md no. 4
+
+      - id: N-review
+        kind: question
+        text: How should review work, so the Auditor contrasts compare reviewers and nothing else?
+        children:
+          - {id: D11, kind: decision, when: "2026-11-06", choice: "Auditor against no Auditor is confirmatory (H2), decided by compliant_count", not_taken: ["deciding it by venue_violation_rate"], why: "the review effect a decision-maker cares about first; keeps a rule-break measure out of the main results"}
+          - {id: D15, kind: decision, when: "2026-11-06T20:15Z", choice: "each audit and each revision is a new request with the full review history, the same for both roles in every review cell; round 1 history is empty", not_taken: ["rounds that see only the current list", "a full multi-turn conversation"], why: "the team works with a memory of its own review; the history adds no difference between review conditions"}
+          - {id: D17, kind: decision, when: "2026-11-06T19:30Z", choice: "the output is the Doer's last list; the Auditor's last verdict only sets a flag; papers still under objection at the cap stay in, flagged", not_taken: ["no output for a capped run", "removing papers still under objection from the primary list"], why: "no run loses its output because of how review went, so no selection enters the comparison"}
+          - id: X-codetest
+            kind: dead_end
+            when: "2026-11-06T20:00Z to 2026-11-07T00:05Z"
+            hypothesis: a history keyed by earlier citation IDs is enough for the Auditor to rule on the current list
+            failure: in a paid code test, an Auditor ruled on IDs that existed only in the history and skipped replacements
+            lesson: build the history around the current list with no outdated ID, say "rule only on the current list", ignore and log off-list rulings, and give one repair turn for unruled papers (stage-1 gate under 1% each)
+            record: "decision log D16; PREREGISTRATION section 4 (test data never enter the analysis)"
+
+      - id: N-inference
+        kind: question
+        text: How are verdicts reached, without room to choose the test after seeing the data?
+        children:
+          - {id: D08, kind: decision, when: "2026-11-06", choice: "one deciding DV per hypothesis (H9 decided on all four primary DVs)", why: "eight hypotheses times four DVs would give 32 tests and no rule for which decides"}
+          - {id: D07, kind: decision, when: "2026-11-06T05:20Z", choice: "two-sided tests at raw p < .05 with stars; no multiplicity adjustment", not_taken: ["Bonferroni across DVs", "Holm within each DV (adopted, then dropped)"], why: "flexibility is limited by naming the contrast and deciding DV in advance; H9's higher false-positive chance (about 10%) is stated"}
+          - {id: D09, kind: decision, when: "2026-11-06T18:20Z", choice: "directional hypotheses (H3, H8, H9); no equivalence tests", not_taken: ["no-difference hypotheses with equivalence margins"], why: "the team predicts these effects; failing to reject is an acceptable, reported result"}
+          - {id: D10, kind: decision, when: "2026-11-06T18:20Z", choice: "written verdict rules, with 'partly supported' when compliant_count fails a 10% non-inferiority check", why: "a fall in fabrication bought by fewer valid papers is not full support"}
+          - {id: D20, kind: decision, when: "2026-11-06T18:20Z", choice: "run-to-run tolerance from re-drafting the 160 honest-option high-Lead pilot drafts", not_taken: ["a repeat of reviewed runs in the API-hosted arm (review-DV tolerance is a stated limit)", "a reworded-prompt arm (prompt-wording sensitivity is a stated limit)"]}
+          - {id: D21, kind: decision, when: "2026-11-06", choice: "a public repository with tagged releases as the registration record", not_taken: ["a private hash file", "an embargoed registry entry"], why: "a private file cannot show a reviewer when the plan was fixed"}
+
+      - id: N-sample
+        kind: question
+        text: Which topics, which models, and in what order?
+        children:
+          - {id: D14, kind: decision, when: "2026-11-07T01:05Z", choice: "89 conference mini-tracks shuffled once (seed 20261107): 10 pilot, 50 full grid, 29 drafts-only; the study's own Lead plan for every mini-track, frozen by hash before any draft", not_taken: ["a full-grid-only main run"], why: "the shuffle makes the split a random assignment; the drafts-only set adds power for draft hypotheses at low cost; own plans let H8 test the Lead"}
+          - {id: D22, kind: decision, when: "prereg-tag1", choice: "fixed model IDs; thinking off as each provider allows (Sonnet 5.5 uses between_tools because disabled is rejected, with no tools); DeepSeek at temperature 0; Claude at provider default; no request seed", why: "the closest each provider allows to thinking off and fixed sampling; asymmetries held fixed within vendor and stated as limits"}
+          - id: D18
+            kind: decision
+            when: "2026-11-06T21:15Z"
+            choice: "open-weight arm on one pinned provider (DeepInfra via OpenRouter, fallbacks off, zero data retention) under a provider rule; no presence penalty"
+            not_taken: ["endpoints with 4-bit weights or without seed support"]
+            why: "one pinned endpoint keeps precision and serving fixed; a presence penalty would tune one arm toward a better result"
+            children:
+              - {id: X-qwen-thinking, kind: dead_end, hypothesis: "a request setting turns thinking off for Qwen3-14B and Qwen3-32B on this provider", failure: "no request setting did; thinking left on could use up the output limit", lesson: "end every Qwen3-14B and Qwen3-32B prompt with /no_think; use the reasoning switch for Qwen3.8-27B", record: "decision log D16; PREREGISTRATION section 7"}
+              - {id: X-greedy, kind: dead_end, hypothesis: "greedy decoding is the cleanest fixed setting for the open-weight models", failure: "the Qwen models repeated themselves", lesson: "each model card's non-thinking sampling values with a per-call seed", record: "PREREGISTRATION section 7"}
+          - {id: D19, kind: decision, when: "2026-11-07, before prereg-tag1", choice: "fixed rules for cut-off, unreadable, repeated and untitled entries; goal 10 kept in the open-weight arm", why: "fixing the rules before data keeps them from being chosen after the results are seen"}
+
+      - id: E-stage1
+        kind: experiment
+        when: "2026-11-07"
+        text: "Pilot stage 1, readiness, one pilot mini-track, both arms."
+        result: passed; showed that the registered text and the frozen code differed on readable replies that stop at the output limit
+        children:
+          - {id: D24, kind: decision, when: "2026-11-07T02:38Z", choice: "bring the text in line with the hashed code: a readable reply at the limit is used normally, and its share is reported", not_taken: ["changing the code so any reply at the limit counts as cut off (new hashes, rerun stages 0 and 1, valid lists discarded)"], record: "AMENDMENTS.md no. 1"}
+          - {id: D25, kind: decision, when: "2026-11-07T03:29Z", choice: "verification order: Crossref, frozen local copy, live search only for unmatched off-list, no-journal or poorly indexed citations; a seeded 10% live-search check measures how many approved-journal misses are real", not_taken: ["a live search for every miss", "the local copy with no check"], why: "read literally, the registered order sent every Crossref miss to a paid search", record: "AMENDMENTS.md no. 2"}
+
+      - id: E-stage3
+        kind: experiment
+        when: "2026-11-07 to 2026-11-08"
+        also_depends_on: [D29]
+        text: "Pilot stage 3: full grid in the honest-option format on 10 pilot mini-tracks; the 160 honest-option high-Lead drafts drafted again for the tolerance."
+        result: "API-hosted arm passed its first and third lines (115 of 16,533 replacements, 0.70%, only moved a rejected paper to another approved journal; no new failure type). Open-weight arm failed the replacement line twice (4.9%, then 3.5% in its review repeat; limit 3%), with a different Doer behind the failure each time. 17% of API-hosted citations went to adjudication."
+        record: AMENDMENTS.md no. 5
+        children:
+          - {id: V-am5a, kind: pivot, when: "2026-11-08T17:36Z", trigger: "open-weight gate failure; 99.6-99.9% of its papers invented and no compliant paper in any list", choice: "open-weight arm becomes an exploratory boundary-condition check: descriptive only, full grid on 50 mini-tracks, own ledger, no live search", not_taken: ["stopping the arm at the pilot", "keeping it confirmatory but flagged", "dropping one Doer (the failing Doer changed between runs)", "changing its settings (tuning a treatment after seeing pilot data)"], record: "AMENDMENTS.md no. 5"}
+          - {id: V-am5b, kind: pivot, when: "2026-11-08T17:36Z", trigger: "off-list misses would need a paid search for about a third of all citations", choice: "off-list and no-journal misses labelled fabricated without a search; four poorly indexed approved journals keep the search; a widened 10% check with a 3% trigger", not_taken: ["searching every such miss", "leaving them unresolved, which drops about a third of the papers, nearly all invented"], why: "in the pilot's paid searches 1.59% of such API-hosted citations were real, about +0.6 points of fabrication_rate, and the widened check measures it in the main data", record: "AMENDMENTS.md no. 5"}
+          - {id: V-am5c, kind: pivot, when: "2026-11-08T17:36Z", trigger: "about 26,000 near-miss cases at main-run scale; left unresolved, their share of final lists ran from 3.2% to 29.1% across cells, so the two bounds of the Auditor contrasts could differ by up to about 25 points", choice: "a fixed near-miss rule (fuzzy or short title with a cited author on the record -> real with a minor title error; without -> fabricated), each branch used only if a coder agrees in at least 45 of 50 pilot cases", not_taken: ["deciding every case by hand", "leaving them unresolved as first registered"], record: "AMENDMENTS.md no. 5"}
+          - {id: V-am5d, kind: pivot, when: "2026-11-08T17:36Z", trigger: "hand checks on the main run's critical path", choice: "the pilot hand checks finish before a new tag, prereg-tag2b, after collection and before any main-run labelling; every outcome built into the frozen code", why: "keeps the checks independent of main-run results: pilot data only, bars fixed in advance, no main-run label before the results are recorded", record: "AMENDMENTS.md no. 5"}
+          - {id: D32, kind: decision, when: "2026-11-08T19:28Z", choice: "prereg-tag2: Lead-plan hashes, ceilings and tolerance for all eight hand-check outcomes, main-run caps with 50% headroom, the analysis code, the empty decisions file, the main-run 10% draw script, the hand-check key and sheet hashes", record: "AMENDMENTS.md, note at prereg-tag2"}
+
+      - id: E-main
+        kind: experiment
+        when: "2026-11-08T19:36Z to 2026-11-09T17:59Z"
+        also_depends_on: [D32]
+        text: "Main run on code 6069c884: API-hosted 79 mini-tracks (5,728 runs), open-weight 50 mini-tracks (3,600 runs); all replies from the planned models."
+        result: "collection complete: 0 served-model mismatches of 20,408 replies; failed items only in the open-weight arm (18 after three retries, each rerun once: 16 succeeded, 2 forced exits); spend $139.95 API-hosted and $15.77 open-weight; 553 output files hashed as collected at prereg-tag2b"
+        children:
+          - {id: D33, kind: decision, choice: "wave composition fixed and hashed before wave 2; automatic checks between waves (clean lanes, served-model mismatches at most 1%, spend projection under the cap)", not_taken: ["a human go between waves, which the plan does not register"]}
+          - {id: D34, kind: decision, choice: "higher concurrency for the Batch-API lanes from wave 2, by a logged flag only", why: "working time is a DV only for non-Batch lanes, whose setting was left alone"}
+          - {id: D35, kind: decision, choice: "the one registered rerun of a failed item runs right after its wave", why: "the plan fixes 'once before analysis' but not when"}
+          - {id: D36, kind: decision, when: "2026-11-09T18:10Z", choice: "a fetch-only Crossref prefetch into a new, empty cache before prereg-tag2b; no labels, matches or scores, and nobody reads it", why: "the registration bars labelling and DVs before the tag, not fetching; Crossref answers do not depend on the hand checks"}
+          - {id: D37, kind: decision, when: "2026-11-10T03:05Z", choice: "a coding manual added to the coder instructions during coding (one shared identity test, a key rule per sheet, outside examples only); version 1 kept", why: "a written shared rule makes the two coders' answers comparable and the rule reportable", settled: "at prereg-tag2b both open points were left at their stated defaults: a U with a note stays U, and a preprint record is judged as shown"}
+
+      - id: E-handchecks
+        kind: experiment
+        when: "2026-11-08T19:31Z to 2026-11-12T01:43Z"
+        also_depends_on: [V-am5c, V-am5d, D37]
+        text: "The three registered hand checks on pilot stage-3 citations (100 near-miss, 100 title_only, 100 venue-matching), coded blind by two coders, half each; scored against the withheld key."
+        result: "near-miss branch with a cited author on the record 16 of 50 (bar 45); branch without one 50 of 50 (bar 45); title_only same work with wrong authors 71 of 100 (bar 90); venue agreement with the verifier 68 of 100 (68 of 80 decided cases), reported only"
+        record: "AMENDMENTS.md, note at prereg-tag2b; registration/handcheck_scores.md"
+        children:
+          - {id: D38, kind: decision, when: "2026-11-12T01:43Z", choice: "the registered bars set the rules mechanically: the with-author near-miss branch is not used (its citations stay unresolved), the without-author branch is used (fabricated), and the title_only author rule does not join (title_only stays unresolved); this selects the tag-2 row author=not_used, noauthor=used, title_only=does_not_join and its ceilings (Haiku 0.300, Sonnet 0.025, Flash 0.201, V4-Pro 0.146)", not_taken: ["counting the five U answers as agreement (18 and 74, still under both bars)"], why: "the bars and every outcome were fixed before the coders saw the sheets", record: "AMENDMENTS.md, note at prereg-tag2b"}
+          - id: X-venue
+            kind: dead_end
+            hypothesis: the venue-matching fix maps every real venue name the Doer gives to the right venue
+            failure: "venue agreement 68 of 80 decided cases (85%), under the 90% review line; 6 of 40 sampled misplaced labels were real proceedings papers cited under a short proceedings name (CHI, CSCW, FAT*, EMNLP, NAACL-HLT), which the verifier does not expand"
+            lesson: a verifier for venue claims needs conference-acronym expansion; the gap moves citations only between two non-compliant labels (misplaced, off_venue)
+            record: "AMENDMENTS.md, note at prereg-tag2b"
+            children:
+              - {id: D39, kind: decision, when: "2026-11-12", choice: "no fix: the verifier and every labelling rule stay as frozen; the paper reports the caveat beside H9's misplacement_rate result", not_taken: ["adding acronym expansion to the verifier", "a reclassification analysis"], why: "the registered misplacement_rate tolerance was computed with this verifier, and a change made because of this check would be post hoc; compliant_count, fabrication_rate, year_mismatch_rate and rehomed_rate do not depend on it"}
+          - {id: D40, kind: decision, when: "2026-11-12", choice: "the main-run near-miss check uses 50 citations of the only branch that decides citations (without a cited author), drawn with seed 20261107 by a script named by hash before the draw, coded blind; it changes no label. The 100-citation double-coded verifier validation runs before the verifier's results are reported", not_taken: ["50 cases per branch, since the with-author branch decides no citation"]}
+      - id: D41
+        kind: decision
+        when: "2026-11-12"
+        also_depends_on: [D35]
+        choice: "one open-weight run that the frozen code ended as forced_exit review_http (a review call still failing after three retries) is kept as recorded and listed beside the failure table"
+        not_taken: ["rerunning it now, which would mean replacing a collected row by hand"]
+        why: "the frozen code did not mark it failed, so the registered single rerun did not take it; it is the only such run, and the API-hosted arm, which carries every test, has none"
+      - id: D42
+        kind: decision
+        when: "2026-11-12T02:12Z"
+        also_depends_on: [D38, D39, D40, D41]
+        choice: "prereg-tag2b: the hand-check results and decisions, the filled decisions file (code cc939c70, no hashed file changed), the SHA-256 of all 553 main-run output files hashed as collected, and the Crossref cache manifest, released before any main-run citation was labelled"
+        record: "AMENDMENTS.md, note at prereg-tag2b; release prereg-tag2b"
+        children:
+          - id: E-labels-analysis
+            kind: experiment
+            when: "2026-11-12, after prereg-tag2b to 04:50Z"
+            text: "main-run labelling (label pass, 10% draw, live searches within the cap, cache-only pass, labelling rules) and the registered analysis on code cc939c70"
+            result: "16,187 live searches billed (cap 23,000); the 3% trigger fired for every Doer's revision list and no draft list. Verdicts: with all Doers H1, H2, H3, H4a, H8, H9 supported; H6 partly supported; H5, H6x not supported; without the flagged Doers H2, H4a, H9 supported; H6, H8 partly supported; H1, H5, H6x not supported; H3 opposite. Main-run rehomed_rate above its ceiling for DeepSeek Flash only. Positioning relations set by positioning_relation_rules (section 2)"
+            record: "results.json (sha256 e6685474...); AMENDMENTS.md, note c8986072"
+            children:
+              - id: X-stray
+                kind: dead_end
+                when: "2026-11-12T04:26Z"
+                hypothesis: a cache-only final pass of the frozen verifier gives live-search answers only to the citations the registered route searched
+                failure: "the chain's final check, fixed before labelling began, stopped the chain: 2,596 citations outside the searched sets had read the OpenAlex answer of a searched citation with the same title, because the verifier keys that cache by title and reads it whatever the route; 222 of them would have counted as real"
+                lesson: a verifier cache keyed by title carries answers across routes; check route membership after any cache-only pass, or key the cache by citation
+                record: "AMENDMENTS.md, note c8986072"
+                children:
+                  - {id: D43, kind: decision, when: "2026-11-12T04:31Z", choice: "merge by registered set: the 762 poorly indexed misses and the 9,832 triggered-list citations take their final-pass label, every other citation its first-pass label (Crossref and local copy only); the merge script computes no label and stops unless every other changed row is one of the 2,596", not_taken: ["keeping the same-title answers, which would search untriggered groups in part, depending only on whether a title matched a searched one"], why: "every label row stays an unedited output of the frozen verifier, and the registered route decides which one applies", record: "AMENDMENTS.md, note c8986072; merge script sha256 ba736b6a..."}
+              - {id: D44, kind: decision, when: "2026-11-12, after the live searches ended at 04:21Z", choice: "the two triggered citations whose search returned a source error are searched once more, as section 11 does for a failed item; a repeat failure keeps the frozen label and is listed as a technical failure, with no second retry", not_taken: ["leaving both without the search amendment no. 5 gives every triggered citation"], result: "one answered and labelled; one failed again and is a technical failure", record: "AMENDMENTS.md, note c8986072"}
+              - {id: D45, kind: decision, when: "2026-11-12, after the integrity check stopped at 04:43:55Z", choice: "one poorly indexed citation's venue tier differed between two passes (A* and A: its record carries the ISSNs of two approved journals and the verifier takes the first from an unordered set); the check stays as written and the labels are used as written", not_taken: ["widening the check after it fired", "editing the row"], why: "the citation is outside the year window in both passes and the tier enters only the descriptive A* share, so no DV changes", record: "AMENDMENTS.md, note c8986072"}
+              - id: E-verifier-validation
+                kind: experiment
+                when: "2026-11-12T15:08Z to 2026-11-13T23:36Z"
+                also_depends_on: [D40]
+                text: "the registered verifier validation: 100 main-run citations (50 labelled fabricated, 50 real), drawn by a script named by hash in a dated note before the draw, coded blind by both coders"
+                result: "scored as registered on 2026-11-13T23:36Z: agreement 95 of 100 (Cohen's kappa 0.902); verifier precision 0.980 for fabricated (48 of 49) and 0.957 for real (44 of 46); weighted accuracy 0.977; 5 cases with a U or a disagreement, listed and not adjudicated (b1_level1_config.yaml, validation.main_run_hand_checks.verifier_validation)"
+                record: "AMENDMENTS.md, notes dda421f7 (before the draw) and f2decec8 (the scores)"
+              - id: V-am6
+                kind: pivot
+                when: "2026-11-16T00:55Z"
+                decided_by: Author A; Author B agreed before the commit
+                trigger: "the registered DVs keep each citation check apart; for the paper, the authors group them in the terms of the hallucination literature, after the main results were seen"
+                choice: "amendment no. 6: post-registration constructs reported beside the registered DVs, never in place of them, with no verdict: factual hallucination, faithful hallucination, compliant (author-checked) and task cost; the registered hypotheses grouped under factor constructs, including model heterogeneity for H3; in the same commit the two authors are called Author A and Author B in the repository's files. The registered labels, rules, DVs, contrasts and verdicts do not change"
+                not_taken: ["re-cutting the registered DVs", "cross-vendor Auditor as the name of the H3 construct"]
+                why: "the registered labels stay confirmatory; the constructs are a reading of the same labels for the paper, written down and dated before each was computed"
+                record: "AMENDMENTS.md, amendment no. 6 (2026-11-15, commit ecdb3790)"
+                children:
+                  - {id: D46, kind: decision, when: "2026-11-12T21:17Z", choice: "the grouping is explored offline first, under a dated definition note written before any computation, and not reported until it is part of amendment no. 6", not_taken: ["adopting a grouping on the day the results were seen"], record: "dated note, sha256 4108514f0d4a7077a03a783ac40afd33bad466b686768dc35ef0a2616128b3bd"}
+                  - {id: D47, kind: decision, when: "2026-11-13T16:56Z", choice: "a looser author test for real works: names normalised (case, accents, hyphens, initials, name order; compound surnames split); a citation fails if any cited author matches nobody on the record; authors the citation leaves out never count, and order is not checked", not_taken: ["a first-author-only test"], result: "1,262 of 11,287 real works fail; 545 of them move into factual hallucination; compliant (author-checked) is 797 against the registered 904", why: "the registered compliant label does not check authors, and the author rule did not join the registered labels", record: "dated note, sha256 eb043f19e032d6681fbd06c4d80deb11b9e3a2f92b6f130c4e497d5f59825b86"}
+                  - {id: D48, kind: decision, when: "2026-11-13 to 2026-11-15", choice: "factor constructs: task difficulty with two items (number of goals, reporting format; both coded 1 = easier) and model capability with one item per role (Doer, Lead, Auditor tier); every item keeps its registered verdict, and a sign flips only where a factor is recoded", not_taken: ["one merged verdict per construct"]}
+                  - {id: D49, kind: decision, when: "2026-11-13", decided_by: Author A, choice: "title_only citations stay unresolved; the looser author rule gets no hand check unless a reviewer asks; the registered main-run near-miss hand check is not run (23:40Z), a deviation that would have changed no label", why: "the title_only hand check scored 71 of 100, under its bar of 90; the pilot check of the near-miss branch in use agreed on all 50 cases"}
+                  - {id: D50, kind: decision, when: "2026-11-14T00:10Z", decided_by: Author A, choice: "task cost is tokens and US dollars per run; wall time is left out of the construct", why: "wall time varies with server load and is not recorded for Batch API runs; the registered H7 still reports working time, as registered"}
+                  - {id: D51, kind: decision, when: "2026-11-14T00:04Z to 00:26Z", choice: "exploratory additions, each defined in a dated note before it ran: one cost-effectiveness measure; robustness set A (the registered checks, read out, not refitted) and set B (three exploratory checks of the constructs); every check that ran is reported; tests at raw p, labelled uncorrected", record: "amendment no. 6, Part 1 (dated notes and hashes)"}
+                  - {id: D52, kind: decision, when: "2026-11-13 to 2026-11-15", decided_by: both authors, choice: "a real, correctly described work off the approved journals or off the window is a faithful hallucination, whether or not the Doer used the honest option", why: "the honest option was given to the Doer only as an option; the returned result is still off the list, so it violates the general goal of the task prompt", record: "AMENDMENTS.md, amendment no. 6, Part 2"}
+              - {id: D53, kind: decision, when: "2026-11-16T17:10Z to 20:02Z", decided_by: Author A, choice: "the paper states one research question that shows the tension between hallucination and cost (motivations.research_question, picked from drafted variants), framed as how the workflow set-up of an agent team changes information retrieval, with literature search as the operationalisation; the term is kept and defined once, at first use, as the user obtaining information from the model itself, which answers from its own memory; the boundary condition is stated as an assumption (motivations.information_retrieval, research_question, boundary_condition)", why: "the registered question (Q0) already fixes recall from memory without tools; the framing names the broader problem it is an instance of and changes no label, DV, test or verdict"}
+
+# ---------------------------------------------------------------------------------------------------------------
+# 5. Extension directions (each with scope conditions and the Level 1 fields to vary)
+# ---------------------------------------------------------------------------------------------------------------
+extension_directions:
+  - id: EXT1
+    direction: give the Auditor, the Doer or both a search tool
+    implied_by: every review effect here is bounded by what a reviewer can recall (P4); a tool separates knowing from checking
+    vary_in_level1: [actors_and_information_flows.tools, actors_and_information_flows.retrieval_sources]
+    scope: leaves the boundary condition (motivations.boundary_condition); fabrication then measures tool use and trust in results, not recall
+  - id: EXT2
+    direction: put a human, or a human with an agent, in the Auditor role
+    implied_by: the review contrasts and realized_false_rejection measure how much a checker adds and how often it removes good work, the core questions of reliance and override (Cluster 2)
+    vary_in_level1: [actors_and_information_flows.actors.auditor]
+    scope: needs consent for open data to stay eligible for agent-accessible release
+  - id: EXT3
+    direction: choose the cheapest configuration that meets an error target
+    implied_by: H7 puts every contrast on a cost basis, so the effects can feed a budgeted choice of where to place the stronger model (Lead, Doer or Auditor); the exploratory cost-effectiveness measure of amendment no. 6 is a first step
+    vary_in_level1: [study_type_and_design_logic.factors_api_hosted, spending]
+    scope: valid for the price file and model versions of the run; prices and models change
+  - id: EXT4
+    direction: other fields, journal lists and publication windows
+    implied_by: the error taxonomy and verifier route are field-neutral, but recall and index coverage are not
+    vary_in_level1: [data_provenance.inputs.approved_journals, data_provenance.inputs.local_record_copy, key_parameters.workflow_settings.year_min, key_parameters.workflow_settings.year_max]
+    scope: needs a frozen local record copy for the new list and a check of poorly indexed venues
+  - id: EXT5
+    direction: prompt-wording sensitivity
+    implied_by: one wording per condition is a stated limit
+    vary_in_level1: [key_parameters.prompts]
+    scope: reworded prompts must keep the same requirement text in different words, drafted at the same time as the original
+  - id: EXT6
+    direction: run-to-run tolerance for the review hypotheses
+    implied_by: the API-hosted review tolerance is not measured
+    vary_in_level1: [agent_experiment.stochastic_variation]
+    scope: repeat reviewed runs on the same drafts
+  - id: EXT7
+    direction: the same design on later model versions
+    implied_by: results hold for the logged access dates; the Level 1 file and the tolerance give a comparison rule for drift over time
+    vary_in_level1: [agent_experiment.models]
+    scope: compare within the registered tolerance; exact duplication is not expected
+  - id: EXT8
+    direction: thinking or reasoning turned on
+    implied_by: thinking was off in every role; reasoning may change both recall and checking
+    vary_in_level1: [agent_experiment.models]
+    scope: changes cost and output length; output limits must be re-set
+  - id: EXT9
+    direction: the paper format as a factor
+    implied_by: in pilot stage 2, dropping the full-reference entry raised fabrication sharply, so format is a strong lever in its own right
+    vary_in_level1: [study_type_and_design_logic.held_fixed.paper_format, key_parameters.prompts]
+    scope: each format needs a same-time control and its own manipulation check
+  - id: EXT10
+    direction: open-weight models above the recall floor
+    implied_by: the open-weight arm sat at the fabrication ceiling, so its contrasts had no room to move
+    vary_in_level1: [agent_experiment.models]
+    scope: pick models whose pilot fabrication is clearly below the ceiling, under the same provider rule
+  - id: EXT11
+    direction: cross-vendor review with more than two vendors and Doers of similar recall
+    implied_by: "H3 is supported with all Doers and opposite without the flagged Doers, where a cross-vendor Auditor is always a DeepSeek model on a Claude draft; with two vendors, family diversity cannot be separated from the partner family's recall (P5, P6)"
+    vary_in_level1: [agent_experiment.models, study_type_and_design_logic.factors_api_hosted.review]
+    scope: needs a third vendor whose models pass the same provider rule and pilot gates
+  - id: EXT12
+    direction: other information retrieval tasks
+    implied_by: literature search is how this study operationalises information retrieval (motivations.operationalisation); the workflow levers and the factual and faithful split are not specific to references, but recall and the outside record are
+    vary_in_level1: [data_provenance.inputs, key_parameters.prompts]
+    scope: needs an outside record that can check every retrieved item, and constraints stated in the task prompt that define faithful hallucination for that task
+
+open_items:
+  - sources for the positioning entries, the construct terms and the information-retrieval framing are given in the manuscript
+  - the anonymous links for the registration, code and data (on hold until the authors restart the anonymity setup)

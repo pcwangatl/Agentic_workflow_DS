@@ -1,7 +1,8 @@
 # Level 1 research configuration: Study B1
 #
-# Version 4, 2026-11-16. Draft 3 of 2026-11-12 with amendment no. 6 (commit ecdb3790) and the verifier validation
-# scores (AMENDMENTS.md, note of 2026-11-16) added. Every registered value of draft 3 is unchanged.
+# Version 5, 2026-11-16. Draft 3 of 2026-11-12 with amendment no. 6 (commit ecdb3790), the verifier validation
+# scores (AMENDMENTS.md, note in f2decec8) and the data archive's DOI added. Every registered value of draft 3 is
+# unchanged.
 # - Every value is taken from the registration (PREREGISTRATION.md, AMENDMENTS.md, docs/dv_specification.md,
 #   registration/*) or from the frozen code and configs at commits 6069c884 and cc939c70. If this file ever differs from
 #   PREREGISTRATION.md, PREREGISTRATION.md wins. Paths to those registration files are from the root of this
@@ -11,13 +12,13 @@
 #   its output (results.json, SHA-256 e6685474...) in the shape fixed by draft 2's `result_slots`.
 # - Fields named post_registration come from amendment no. 6. They were written after the results, are exploratory,
 #   carry no verdict, and are reported beside the registered results, never in place of them.
-# - Placeholders in angle brackets (<...>) are filled before submission (anonymous links, archive DOI, the Level 2 file).
+# - Placeholders in angle brackets (<...>) are filled before submission (anonymous links, the code archive).
 # - The field names follow the list in the Decision Sciences Track A call (Level 1, plus the extra fields for
 #   experiments with agents as subjects). No official schema is published in the call.
 
 artifact:
   kind: level1_research_configuration
-  config_version: b1-level1-version-4 (2026-11-16)
+  config_version: b1-level1-version-5 (2026-11-16)
   study_code: B1
   title: "Agent-team set-up and literature-reference errors"
   track: A
@@ -32,7 +33,7 @@ artifact:
     dated_notes_after_tags:
       - {commit: c8986072d61796ee74a2beb3a6de6ad242111bf0, committed_utc: "2026-11-12T04:46:44Z", file: AMENDMENTS.md, title: "Note on the main-run final label pass: merge by registered set, two-search retry, one tier difference", before: "any rule, DV or analysis output existed", changes: "no registered rule, bar or hashed file"}
       - {commit: dda421f7aedfbd2927a9a96ca2f44c7eeb028acd, committed_utc: "2026-11-12T15:08:51Z", file: AMENDMENTS.md, title: "Note on the verifier validation: frame, draw, coding and report fixed before the draw", before: "any validation case was drawn", changes: "no rule and no label"}
-      - {commit: "the commit that adds this file", file: AMENDMENTS.md, title: "Note on the verifier validation scores (2026-11-16)", reports: validation.main_run_hand_checks.verifier_validation, changes: "no rule and no label"}
+      - {commit: f2decec83c1a770cb6cfa42468a87c3f007a5b90, committed_utc: "2026-11-16T20:33:11Z", file: AMENDMENTS.md, title: "Note on the verifier validation scores (2026-11-16)", reports: validation.main_run_hand_checks.verifier_validation, changes: "no rule and no label"}
     amendment_after_tag2b:
       - {number: 6, commit: ecdb3790511d5acf608d38e1bd8ad495988a7057, committed_utc: "2026-11-16T00:55:22Z", file: AMENDMENTS.md, adds: "post-registration constructs and a looser author rule, reported beside the registered DVs; the paper's grouping of the registered hypotheses; one exploratory cost-effectiveness measure; the main-run near-miss hand check not run; the authors called Author A and Author B", changes: "no registered label, rule, DV, contrast or verdict", fields_here: [key_parameters.outcome_variables.post_registration, data_provenance.transformations, analytical_targets.post_registration, scope_conditions.known_limits, validation.main_run_hand_checks]}
     code_commit_main_run: 6069c884ed1fc7c846400bac8ad7f578db79d966
@@ -47,8 +48,9 @@ artifact:
       - {file: registration/main_run_files.sha256, files_listed: 553, sha256: 1c5f41be136c49df2e3ced90f5ac5aa99e364d396686acbcf3a5c0e55f2645a1, made_at: prereg-tag2b}
       - {file: registration/main_crossref_cache_manifest.sha256.gz, cache_files: 145687, unpacked_sha256: 7c530afd3c567aeadfd4aad056c0b3ad7e9021af9f22a5524a831bdc5ddcd9a2, made_at: prereg-tag2b}
   companion_files:
-    reasoning_front_end: <b1_level2_reasoning.yaml, added later>
+    reasoning_front_end: b1_level2_reasoning.yaml
     artifact_note: ARTIFACT_NOTE.md
+    data_archive: DATA_ARCHIVE.md
     design_text: PREREGISTRATION.md
     dv_formulas: docs/dv_specification.md
     amendments: AMENDMENTS.md
@@ -1216,5 +1218,6 @@ spending:
 release:
   during_review: <journal-approved upload of this file, the Artifact Note and a code-and-data archive; anonymous link if the Author Guide allows>
   on_acceptance: <stable public archive with a DOI>
+  data_archive: {doi: 10.5281/zenodo.24292422, concept_doi: 10.5281/zenodo.24292421, record: "https://zenodo.org/records/24292422", version: "1.0", published: "2026-11-16", licence: CC BY 4.0, files: 9, sha256sums_sha256: 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab, manifest_sha256: 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600, details: DATA_ARCHIVE.md}
   licences: {code: MIT, data_and_docs: CC BY 4.0, decided: "authors, 11 Nov 2026", excluded: "third-party text (the conference mini-track titles and descriptions in the task file), shared with source URLs under its own terms"}
   ai_generated_content_notice: all model replies in the logs are AI-generated

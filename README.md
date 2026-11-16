@@ -15,6 +15,8 @@ Authors are withheld during peer review.
 | [AMENDMENTS.md](AMENDMENTS.md) | Every dated change made after the first registration tag |
 | [artifact/b1_level1_config.yaml](artifact/b1_level1_config.yaml) | The Level 1 research configuration: the design, actors, parameters, data provenance, analytical targets, replication requirements and scope conditions as structured fields |
 | [artifact/ARTIFACT_NOTE.md](artifact/ARTIFACT_NOTE.md) | A short note on what the Level 1 file holds and how to use it, with the licence statement |
+| [artifact/b1_level2_reasoning.yaml](artifact/b1_level2_reasoning.yaml) | The Level 2 reasoning front-end: motivations, typed positioning, a concept graph, the reasoning journey and extension directions |
+| [artifact/DATA_ARCHIVE.md](artifact/DATA_ARCHIVE.md) | The data archive on Zenodo: DOI, record and the SHA-256 of every file |
 
 The prompt file, config, verifier version and analysis code are added as the registration tags below require. A hash file (SHA-256) of every frozen file is added at the second tag.
 
