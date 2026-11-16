@@ -1,0 +1,1220 @@
+# Level 1 research configuration: Study B1
+#
+# Version 4, 2026-11-16. Draft 3 of 2026-11-12 with amendment no. 6 (commit ecdb3790) and the verifier validation
+# scores (AMENDMENTS.md, note of 2026-11-16) added. Every registered value of draft 3 is unchanged.
+# - Every value is taken from the registration (PREREGISTRATION.md, AMENDMENTS.md, docs/dv_specification.md,
+#   registration/*) or from the frozen code and configs at commits 6069c884 and cc939c70. If this file ever differs from
+#   PREREGISTRATION.md, PREREGISTRATION.md wins. Paths to those registration files are from the root of this
+#   repository; other file paths are in the code at the named commits.
+# - prereg-tag2b (1f69b31, released 2026-11-12T02:12:02Z) and the dated note on the final label pass (c8986072) are
+#   recorded below. The registered analysis ran on code cc939c70; `analytical_targets.results` is copied by script from
+#   its output (results.json, SHA-256 e6685474...) in the shape fixed by draft 2's `result_slots`.
+# - Fields named post_registration come from amendment no. 6. They were written after the results, are exploratory,
+#   carry no verdict, and are reported beside the registered results, never in place of them.
+# - Placeholders in angle brackets (<...>) are filled before submission (anonymous links, archive DOI, the Level 2 file).
+# - The field names follow the list in the Decision Sciences Track A call (Level 1, plus the extra fields for
+#   experiments with agents as subjects). No official schema is published in the call.
+
+artifact:
+  kind: level1_research_configuration
+  config_version: b1-level1-version-4 (2026-11-16)
+  study_code: B1
+  title: "Agent-team set-up and literature-reference errors"
+  track: A
+  cluster: "1: agent behaviour and decision-making (multi-agent coordination; failure modes; norm violation)"
+  authors: withheld during review
+  registration:
+    record: <anonymous link to the pre-registration repository>
+    tags:
+      prereg-tag1: {commit: c36c7898016bc7344751b4963549e21655a2e0c6, released_utc: "2026-11-07T01:54:28Z", fixes: "full design before the first paid call"}
+      prereg-tag2: {commit: 2e116bfe050da37887569f4a5f0fa6ddcff46e88, released_utc: "2026-11-08T19:28:43Z", fixes: "pilot-set values, caps, analysis code, before the main run"}
+      prereg-tag2b: {commit: 1f69b314c5ce519ddc4ad2d13b77d7026c57d96c, released_utc: "2026-11-12T02:12:02Z", fixes: "hand-check results and decisions; SHA-256 of every main-run output file; before any main-run labelling"}
+    dated_notes_after_tags:
+      - {commit: c8986072d61796ee74a2beb3a6de6ad242111bf0, committed_utc: "2026-11-12T04:46:44Z", file: AMENDMENTS.md, title: "Note on the main-run final label pass: merge by registered set, two-search retry, one tier difference", before: "any rule, DV or analysis output existed", changes: "no registered rule, bar or hashed file"}
+      - {commit: dda421f7aedfbd2927a9a96ca2f44c7eeb028acd, committed_utc: "2026-11-12T15:08:51Z", file: AMENDMENTS.md, title: "Note on the verifier validation: frame, draw, coding and report fixed before the draw", before: "any validation case was drawn", changes: "no rule and no label"}
+      - {commit: "the commit that adds this file", file: AMENDMENTS.md, title: "Note on the verifier validation scores (2026-11-16)", reports: validation.main_run_hand_checks.verifier_validation, changes: "no rule and no label"}
+    amendment_after_tag2b:
+      - {number: 6, commit: ecdb3790511d5acf608d38e1bd8ad495988a7057, committed_utc: "2026-11-16T00:55:22Z", file: AMENDMENTS.md, adds: "post-registration constructs and a looser author rule, reported beside the registered DVs; the paper's grouping of the registered hypotheses; one exploratory cost-effectiveness measure; the main-run near-miss hand check not run; the authors called Author A and Author B", changes: "no registered label, rule, DV, contrast or verdict", fields_here: [key_parameters.outcome_variables.post_registration, data_provenance.transformations, analytical_targets.post_registration, scope_conditions.known_limits, validation.main_run_hand_checks]}
+    code_commit_main_run: 6069c884ed1fc7c846400bac8ad7f578db79d966
+    code_commit_labelling_and_analysis: cc939c70f1706bfbf7be317a57bc49e448cd97ec   # on 6069c884; fills the decisions file only; no hashed file changes (study_b1/HASHES.sha256 still 8bcce5ca...)
+    code_commit_pilot_stage3_and_plans: 37832fb95c2ec3a6038886c6c46ca1477a1a11bb
+    hash_lists:
+      - {file: registration/tag1_hashes.sha256, files_listed: 62}
+      - {file: registration/amendment3_hashes.sha256, files_listed: 70}
+      - {file: registration/amendment4_hashes.sha256, files_listed: 70}
+      - {file: registration/tag2_hashes.sha256, files_listed: 76}
+      - {file: registration/lead_plan_hashes.sha256, files_listed: 6, plans: 476}
+      - {file: registration/main_run_files.sha256, files_listed: 553, sha256: 1c5f41be136c49df2e3ced90f5ac5aa99e364d396686acbcf3a5c0e55f2645a1, made_at: prereg-tag2b}
+      - {file: registration/main_crossref_cache_manifest.sha256.gz, cache_files: 145687, unpacked_sha256: 7c530afd3c567aeadfd4aad056c0b3ad7e9021af9f22a5524a831bdc5ddcd9a2, made_at: prereg-tag2b}
+  companion_files:
+    reasoning_front_end: <b1_level2_reasoning.yaml, added later>
+    artifact_note: ARTIFACT_NOTE.md
+    design_text: PREREGISTRATION.md
+    dv_formulas: docs/dv_specification.md
+    amendments: AMENDMENTS.md
+
+# ---------------------------------------------------------------------------------------------------------------
+# 1. Study type and design logic
+# ---------------------------------------------------------------------------------------------------------------
+study_type_and_design_logic:
+  study_type: pre-registered factorial experiment with LLM agent teams as subjects
+  research_question: >
+    When an AI agent team works from memory without tools, does the way the team is set up change (a) how often it
+    invents or misreports literature references and (b) how many usable references it returns?
+  unit_of_assignment: HICSS-59 mini-track (one topic); every cell runs within every mini-track, so every contrast is
+    made on the same topics
+  unit_of_analysis:
+    draft_hypotheses: one draft (the Doer's list with no review)
+    review_hypotheses: one final list, compared with its own draft
+  arms:
+    api_hosted:
+      role: confirmatory
+      vendors: [claude, deepseek]
+    open_weight:
+      role: exploratory boundary-condition check (amendment no. 5); descriptive only, no tests, verdicts or pooling
+      families: [qwen, gemma]
+  factors_api_hosted:
+    lead:
+      levels: [low, high]
+      within: Doer's vendor
+      models: {claude: {low: claude-haiku-5-5, high: claude-sonnet-5-5}, deepseek: {low: deepseek-flash, high: deepseek-v4-pro}}
+      acts_on: subtopic plan
+    doer:
+      levels: [claude-haiku-5-5, claude-sonnet-5-5, deepseek-flash, deepseek-v4-pro]
+      structure: a low and a high model per vendor
+      acts_on: draft and revisions
+    goal:
+      levels: [3, 10]
+      meaning: papers per subtopic (30 or 100 in all, over 10 subtopics)
+      acts_on: draft
+    instruction:
+      levels: [must_fill, may_report]
+      must_fill: "return exactly N papers for each subtopic"
+      may_report: "return up to N papers; set insufficient_known_papers to true for a subtopic with too few known papers"
+      acts_on: draft
+    review:
+      levels: [none, same_L, same_H, cross_L, cross_H]
+      same: Auditor from the Doer's vendor
+      cross: Auditor from the other vendor
+      tier: L = low model of that vendor, H = high model
+      acts_on: final list
+      applies_to: high-Lead drafts only
+  cells_per_minitrack_api_hosted:
+    drafts: 32            # 2 Leads x 4 Doers x 2 goals x 2 instructions
+    reviewed_runs: 64     # 16 high-Lead drafts x 4 review levels
+    total_runs: 96        # 32 drafts (each is also its no-review run) + 64 reviewed runs
+  cells_per_minitrack_open_weight:
+    drafts: 24            # 2 Leads x 3 Doers x 2 goals x 2 instructions
+    reviewed_runs: 48
+    total_runs: 72
+  held_fixed:
+    paper_format: honest_option   # separate fields; no full-reference entry; "however" clause + honest_option field
+    approved_journals: "34 ABDC A* and A Information Systems journals (10 A*, 24 A), shown in the same order every time"
+    publication_window: [2010, 2024]
+    n_subtopics: 10
+    max_audits: 3
+    review_memory: full history of earlier rounds, the same for both roles
+  causal_logic: >
+    Every factor is manipulated within mini-track, and mini-tracks were assigned to pilot, full grid and drafts-only
+    by one seeded shuffle before any paid call. Cells run in a seeded random order within each mini-track, so no factor
+    level runs only early or only late. Contrasts are within-topic differences estimated with mini-track (drafts) or
+    draft (reviewed lists) fixed effects.
+
+# ---------------------------------------------------------------------------------------------------------------
+# 2. Actors and information flows
+# ---------------------------------------------------------------------------------------------------------------
+actors_and_information_flows:
+  actors:
+    lead:
+      kind: agent
+      model: set by the lead factor
+      sees: HICSS-59 mini-track title and description
+      does: chooses the 10 most important and relevant subtopics
+      output: 10 subtopics (one frozen plan per mini-track x vendor x Lead level, made before any draft, frozen by SHA-256)
+      prompt_role: lead_plan
+    doer:
+      kind: agent
+      model: set by the doer factor
+      sees_in_draft: mini-track title, the Lead's subtopics, the three requirements, the approved journal list, the count instruction, the paper format
+      does_in_draft: lists papers for each subtopic from memory
+      output_per_paper: [title, authors, year, journal, honest_option, summary]
+      output_per_subtopic_may_report: insufficient_known_papers (true/false)
+      sees_in_revision: the same inputs, its current list, that round's objections and reasons, and the review history
+      does_in_revision: answers each objection with one disposition (corrected, replaced, not_followed)
+      prompt_roles: [doer_draft, doer_revise]
+    auditor:
+      kind: agent
+      model: set by the review factor (none in no-review runs)
+      sees: mini-track title, subtopics, requirements, journal list, the current list (title and author lines, then journal | year | honest_option), the review history
+      does: gives one decision per citation in the current list (approve, correct, remove, replace) with a reason, and a verdict (pass only if every decision is approve)
+      told_about_honest_option: the mark is the Doer's own claim and not evidence that the paper exists (amendment no. 4)
+      not_told: the 3-audit cap
+      prompt_role: auditor_audit
+    verifier:
+      kind: deterministic software, after data collection only
+      does: looks up each unique citation and labels it by the first check it fails (section 5 of this file)
+      never_seen_by_any_model: true
+    analysis_scripts:
+      kind: deterministic software
+      does: applies the amendment-5 labelling rules, builds DVs, fits the registered models, gives verdicts
+    human_coders:
+      kind: two members of the study team (coder 1, coder 2)
+      does: three blind hand checks on pilot citations; their results choose which pre-registered labelling rules apply
+      also_does: the registered verifier validation, 100 main-run citations that both coders coded blind (validation.main_run_hand_checks.verifier_validation); it changes no rule and no label
+      sees: coding sheets with no verifier label, rule prediction, Doer or cell; may follow DOIs and search the web or a library; never the study's run files
+  tools: none
+  retrieval_sources: none
+  internet_access: none   # every request is checked for tool keys; tools_exposed is logged as false
+  permissions: none
+  flow:
+    - step: 1
+      actor: lead
+      action: writes the subtopic plan (frozen before drafting; hashes in registration/lead_plan_hashes.sha256)
+    - step: 2
+      actor: doer
+      action: writes the draft list
+    - step: 3
+      actor: auditor
+      action: "audit round r (r = 1..3): one decision per current citation; verdict pass or revise"
+      condition: review level is not none
+    - step: 4
+      actor: doer
+      action: revises in answer to the round's objections; then back to step 3
+      condition: verdict is revise and fewer than 3 audits done
+    - step: 5
+      actor: runner
+      action: saves the Doer's last list as the final list; logs every call's prompt and reply
+  request_structure: >
+    Each audit and each revision is a new request that carries the Lead's subtopics, the rules, the journal list,
+    the current list (and, for the revising Doer, that round's objections) plus a history block of every earlier
+    round. Round 1's history is empty, so its prompt equals a prompt without history.
+  review_history:
+    contents: for each earlier round, the Auditor's decision and reason per citation, and the Doer's disposition, note and any replacement
+    built_around: the current list (each current paper carries its own earlier rulings; no outdated ID appears)
+    replacement_shown_as: replaced paper's title, authors, year, journal, round removed, ruling and reason
+    removed_without_replacement: listed by title only
+    same_for_both_roles: true
+  final_output_rule:
+    output: the Doer's last list
+    auditor_last_verdict: sets only the pass or cap flag; never removes a paper
+    at_cap: papers still under objection stay in and are flagged review_cap_reached
+    secondary_list: final list without papers still under objection, computed afterwards from logged decisions
+  information_barriers:
+    - no model ever sees a label, a rate or a DV
+    - the Doer is never told that any rate is measured
+    - the honest_option field never sets a label or a DV
+    - rulings on papers outside the current list are ignored and logged
+
+# ---------------------------------------------------------------------------------------------------------------
+# 3. Key parameters (values an agent could read and vary)
+# ---------------------------------------------------------------------------------------------------------------
+key_parameters:
+  prompts:
+    file: study_b1/prompts_b1_honest_option.yaml
+    version: study-b1-prompts-honest-option-v2-2026-11-07
+    sha256: 629c7e3430f33d45d4d1d303bc3a7d3255c057bbb996bb1da5c7f811cc0f986a
+    lead_plan_prompt_sha256: 8931c853a1b2630f9165c4ebfd5b850b30c63a8ce089b80b161600687e9d366f
+    doer_draft_prompt_sha256: f6e6d8efcc11675add350e1770baace523778e1a86020a6fa96bbf25a4b45fc5
+    roles: [lead_plan, doer_draft, auditor_audit, doer_revise, format_repair]
+    blocks_that_carry_treatments:
+      goal: count_must_fill / count_may_report (${goal}, ${goal_total})
+      instruction: count_must_fill vs count_may_report; subtopic_schema_must_fill vs subtopic_schema_may_report; revise_rules_must_fill vs revise_rules_may_report
+      review: auditor_audit present or absent
+    fixed_blocks: [no_tools, requirements, paper_schema_no_doi, audit_body, review_history_on, review_history_audit_rule, missing_rulings_repair]
+    control_format_for_manipulation_check:
+      file: study_b1/prompts_b1_noline_control.yaml
+      sha256: b2df44188a1621ff34ef675516c9de40703223b2a7a74b33695e729f583618d6
+      used_in: pilot stage 2b only
+    open_weight_difference: every Qwen3-14B and Qwen3-32B prompt ends with "/no_think"; no other wording differs
+  configs:
+    api_claude: {file: study_b1/config_b1_api_claude_honest_option.yaml, sha256: a97c2b9c9264cfc3ecd254af253426f50399cbf5ac5db4f96181c3b2312c6722}
+    api_deepseek: {file: study_b1/config_b1_api_deepseek_honest_option.yaml, sha256: 1a1a1c79b46b355698560a61c35d2c705f598439c7e45673c5ad1ec1e254f468}
+    open_weight: {file: study_b1/config_b1_ow_qwen_honest_option.yaml, sha256: 34657ee8c1ba8e0109328a85a367ac462177da518a87cd03a25e0611ccef6d27}
+  output_limits_api_hosted:
+    lead_max_tokens: 8000
+    doer_max_tokens: 48000
+    auditor_max_tokens: 32000
+    context_budget_tokens: 131072   # so review calls can carry the history
+  output_limits_open_weight:
+    max_tokens_per_call: "min(16384, window - prompt)"
+    window_full_stop: a run stops when its next review call would leave fewer than 4096 tokens for the reply
+  workflow_settings:
+    n_subtopics: 10
+    max_audits: 3
+    format_repair_attempts: 1
+    missing_rulings_reask: true
+    salvage_drafts: true
+    paper_needs_title: true
+    request_doi: false
+    year_min: 2010
+    year_max: 2024
+    journal_order: as_listed
+    task_timeout_s: 3600
+  outcome_variables:
+    primary:
+      compliant_count: {per: run, definition: "unique citations labelled compliant; empty, refused or failed lists count 0"}
+      fabrication_rate: {per: run, definition: "fabricated / resolved unique citations"}
+      year_mismatch_rate: {per: run, definition: "year_mismatch / real works (year off by 2 or more)"}
+      misplacement_rate: {per: run, definition: "misplaced / real works (real work cited under a journal it never appeared in)"}
+    secondary: [fabricated_count, misplaced_count, misattributed_count, top3 versions of the three rates, author_mismatch_rate, minor_error_rate, answer_rate, refusal, abstention_rate, realized_false_rejection, review_net_change, reviewer_miss_rate, reviewer_false_flag_rate, correction_success, miss_correlation, replacement rates per type, review_cap_reached, abstention_targeting, answered_hallucination_gap]
+    exploratory: [venue_violation_rate]
+    reported_not_tested: [window_violation_rate, year_error_rate]
+    manipulation_and_data_checks: [rehomed_rate, journal_field_empty_rate, honest_option shares, unresolved_share, truncated/salvaged/repeat/untitled shares, unreviewed papers, window-full stops]
+    performance_h7: [tokens, calls, cost_usd, cost_per_valid_paper, working_time_s]
+    formulas: docs/dv_specification.md
+    post_registration:   # amendment no. 6 (ecdb3790), Parts 2 and 3; exploratory, no verdict; reported beside the registered DVs above
+      unit: one citation in a returned list
+      outcomes: "every resolved citation (the verifier found its record, or ruled it fabricated) gets exactly one of factual_hallucination, faithful_hallucination and compliant_author_checked, so the three shares add up to 1 on every list"
+      base: resolved citations, the base of fabrication_rate
+      unresolved: "left out of every base, as registered (7,029 unique citations, 4,952 of them title_only)"
+      check_order: [exists, year, journal, authors, list, window]   # first failed check decides; the first four are the factual checks, the last two the faithful ones
+      factual_hallucination:
+        definition: a citation whose content conflicts with the verifiable bibliographic record
+        domain: "fabrication (the work does not exist) and contradiction (the work exists, but its authors, journal or year are wrong)"
+        rule: "no matching record exists, or the matched record differs on authors (author_rule), on journal, or on year by two or more"
+        draws_on: [fabricated, year_mismatch, misplaced, "real works of any other label whose authors fail author_rule"]
+      faithful_hallucination:
+        definition: a citation to a real, correctly described work that departs from the constraints stated in the task prompt
+        domain: "the prompt's explicit constraints: the approved journals and the publication window; topical relevance is not judged"
+        rule: "no factual error, and the journal is not one of the 34 approved journals (off_venue) or the year is outside 2010-2024 (off_window), whether or not the Doer flagged it"
+        draws_on: [off_venue, off_window]   # when the authors pass author_rule
+      compliant_author_checked:
+        rule: "a real paper that passes every check: authors pass author_rule, year within 1, right journal, on the list, 2010-2024; a missing subtitle is allowed"
+        draws_on: compliant   # when the authors pass author_rule
+        beside: compliant_count (registered), unchanged and confirmatory
+      task_cost:
+        measures: [tokens_total, cost_usd]
+        per: run
+        note: "as the registered H7 reads them; wall time is not part of task cost, and the registered H7 still reports working time"
+      honest_option_flag: "plays no part; a real paper cited under its own journal and year is faithful when off the list or window, flagged or not, and a re-homed paper is misplaced, so factual"
+      author_rule:   # "loose A", amendment no. 6 Part 3; applies to real works
+        steps:
+          - "names are lower-cased; accents, hyphens, initials, 'et al.' and name order are ignored; compound surnames are split"
+          - "each cited author's surname parts are compared with all name parts of every author on the matched records (Crossref, OpenAlex and the local copy, joined by DOI)"
+          - "wrong authors: at least one cited author matches nobody on the record; an author the citation leaves out never counts, and author order is not checked"
+        hand_check: "none, by Author A's decision; one will be run if a reviewer asks"
+        under_the_registration: author mismatch stays a flag (author_mismatch_rate, secondary), not a label
+        effect: "1,262 of the 11,287 real works fail it; 545 of them move into factual hallucination (434 off_venue, 4 off_window, 107 compliant), so compliant becomes 797 of 904"
+      frozen_counts: {factual_hallucination: 89631, faithful_hallucination: 5989, compliant_author_checked: 797, resolved: 96417, from: "rules_api/labels.jsonl (sha256 b7190f51...) and author_loose.json (sha256 d3cef9be...)"}
+  assumptions:
+    - A model's answer from memory, with no tools, reflects what it can recall; no retrieval is possible.
+    - The verifier's sources (Crossref, a frozen local copy of the 34 journals' OpenAlex records, live OpenAlex search) are a sufficient record of what exists for the 34 journals in 2010-2024.
+    - The honest_option field is a self-report; it is never treated as evidence.
+    - Run-weighted means are the estimand; citation-weighted figures are secondary.
+
+# ---------------------------------------------------------------------------------------------------------------
+# 4. Data provenance
+# ---------------------------------------------------------------------------------------------------------------
+data_provenance:
+  inputs:
+    task_file: {file: data/tasks/hicss_minitracks_b1.jsonl, sha256: df73a7199e89dab791645cf3cdec6899d042541477172684d3fd21a125d36da1, content: "HICSS-59 mini-track titles and descriptions", release: "full text, unchanged, with each mini-track's source URL; marked as third-party public material (HICSS-59 call for papers) that the study's licence does not cover (authors, 11 Nov 2026)"}
+    approved_journals: {file: data/reference/approved_journals.yaml, sha256: 1a126e4f5a85c07f823b7e2934d911324a10f2ac56bf98b4ea1b51ce24b7d1ed}
+    journal_issns: {file: data/reference/approved_journal_issns.yaml, sha256: 3f7c93d55ada1e7703d71446f67c11c750a385ba73351f9177af07a4dcfe1ff1}
+    local_record_copy:
+      content: OpenAlex records of the 34 approved journals, publication years 2010-2024
+      records: 24944
+      fetched_utc: "2026-10-29T15:17Z"
+      content_sha256: 1f35f8200f0e183d655a838cc5673e131a39ca3c6e9a99049fc23825626b8c97
+      file_sha256: 8e45bf7a4b5d1bf438deaa31878cdca9860e6b348c1f4e145c1e2e990dd9f2b6
+      licence_of_source: CC0 (OpenAlex)
+    minitrack_draw:
+      script: {file: study_b1/draw_minitracks.py, sha256: dded82b83ec88e53a802a821ae9610cb464025c1a81907361ebf21934e88c81e}
+      pool: {file: study_b1/minitracks_pool.txt, sha256: 614a91eb86835082b07201e7f7e389c31b4b655305afe585f4e02ba4eb67a4a6, n: 89}
+      pilot: {file: study_b1/minitracks_pilot.txt, sha256: 1a81c8dd74a158b69c4c3bec3b5d5de80fa35315ef2f712b5f8bb0b2526a6119, n: 10}
+      full_grid: {file: study_b1/minitracks_main_full_grid.txt, sha256: bc22ca75eddcf261c688d9b414f238c3ebf370cb4464a7bc6e98bd034f67223e, n: 50}
+      drafts_only: {file: study_b1/minitracks_main_drafts_only.txt, sha256: b529c7af7735c3c6d8e1b1477fc1594c121142d433a8b87d196eb6c82f97ef80, n: 29}
+    lead_plans: {hashes: registration/lead_plan_hashes.sha256, files: 6, plans: 476, made: "after prereg-tag1, before any draft; main-run plans 2026-11-08 from code 37832fb"}
+  generated:
+    per_run_directory:
+      calls.jsonl: every call's request body (no headers), raw reply, served model, provider build stamp, tokens, stop reason, cost
+      requests.jsonl.gz: the full request bodies
+      drafts.jsonl: parsed draft lists
+      lineage.jsonl: each paper's path from draft to final list
+      run_order.jsonl: the seeded cell order
+      run_config.json: config, prompt, task and journal hashes, factors, workflow, git commit
+      provenance/: start and end snapshots (access date, Python, platform, packages, git commit, clean-tree flag)
+      invocations.jsonl: each command run, with its flags
+      summary.json: run counts and spend
+    main_run_directories: 24 (API-hosted Claude waves 1-8, API-hosted DeepSeek waves 1-8, open-weight waves 1-8)
+    collection_window_utc: ["2026-11-08T19:36:22Z", "2026-11-09T17:59Z"]
+    runs_completed: {api_hosted: "5728 of 5728", open_weight: "3600 of 3600"}
+    calls: {api_hosted: 14628, open_weight: 5780, served_model_mismatches: "0 of 20408 replies, both arms"}
+    output_file_hashes: {file: registration/main_run_files.sha256, files: 553, hashed: "as collected, 2026-11-12T02:06Z", script: {file: hash_main_run.sh, sha256: ce48ac2f21c755b5d854d738a0ddaabcea9bfe14f04832f20e412c2811f8f9ea}}
+    failed_items: "open-weight only: 18 rows failed on provider HTTP 429 after 3 retries (1 in wave 4, 17 in wave 5); each rerun once right after its wave: 16 success, 2 forced exit (review_truncated). API-hosted: none"
+    kept_as_recorded: "one open-weight run (wave 3) ended forced_exit review_http by the frozen code; kept as recorded and listed beside the failure table"
+  verification:
+    when: after data collection; no main-run citation labelled before prereg-tag2b
+    verifier_version: "version 4 (2026-10-29) plus the venue-matching fix, frozen at prereg-tag1"
+    order:
+      - Crossref
+      - frozen local copy (above)
+      - live OpenAlex search, only for the four poorly indexed approved journals (Data Base for Advances in Information Systems; Journal of Information Technology Theory and Application; Knowledge Management Research and Practice; Scandinavian Journal of Information Systems) and for the 10% check
+    default_label: an unmatched citation under any other approved journal, an off-list journal or no journal is fabricated without a live search
+    ten_percent_check:
+      script: {file: sample_openalex_main.py, sha256: 382cdab2736862adff17adf3e8261ea0e713adb9af580cf8688594e8743eaa74}
+      seed: 20261107
+      strata: Doer x list type (draft; first appears in a revision) x kind of miss (approved journal; other or no journal)
+      trigger: "more than 3% of drawn other/no-journal misses real in a Doer and list type -> every such citation in that stratum gets the live search and its label"
+      approved_journal_misses: measured only; labels unchanged
+    crossref_prefetch:
+      what: fetch-only pass of the frozen verifier (labels --prefetch crossref) into a new, empty cache; no labels, matches or scores written; nobody reads it before prereg-tag2b
+      finished_utc: "2026-11-10T17:12Z"
+      citations_looked_up: 159611
+      verifier_cli_sha256: bc9823ee13f1f8dc89af8248511bb32b730d30c8e38e93644c09374aa0a5d271
+    live_search_cap: {searches: 23000, usd: 23.00, expected: 9400}
+    live_search_outcome:
+      billed: 16187
+      trigger_fired: "every Doer's revision list; no draft list"
+      final_pass_sets: {poorly_indexed_misses: 762, triggered_list_citations: 9832}
+      source_errors: "two triggered citations; each searched once more: the V4-Pro one got an answer and its label; the Flash one failed again, keeps the frozen label of an off-list miss with no answer, and is listed as a technical failure"
+      record: "AMENDMENTS.md, note on the main-run final label pass (c8986072)"
+  transformations:
+    - step: verifier labels (first failed check; docs/dv_specification.md section 2)
+      code: src/agentic_workflow/verify/
+    - step: final label pass merged by registered set (note c8986072)
+      why: "the frozen verifier keys its OpenAlex cache by title, so in the cache-only final pass 2,596 citations outside the searched sets read a same-title answer (1,387 approved-journal misses, 1,089 off-list misses outside the triggered lists, 120 others); 222 of them would have counted as real"
+      rule: "the 762 poorly indexed misses and the 9,832 triggered-list citations take their final-pass label; every other citation takes its first-pass label (Crossref and local copy only, sha256 4e7d6681cdafab79d2c4190e698b42df9e87b8f9bb8e55f2ee342684b5664ca3)"
+      code: {file: merge_final_labels.py, sha256: ba736b6a1655864b5414ab291058d0b89ceafda08121329b6a4d8c979404e78e, computes_labels: false, stops_unless: "every changed row outside the two sets is one of the 2,596"}
+      merged_labels_sha256: 51d01385634374583bf598935de9e8d3cbcf93f3e198eeab74f31ca9fe73545a
+      check_after_merge: no stray answer
+      tier_difference: "one poorly indexed citation whose record carries ISSNs of two approved journals got tier A* in one pass and A in the other (set order depends on the Python process); it is outside the year window in both passes and the tier enters only the descriptive A* share, so no DV changes"
+      published_with_package: [the script, its report, the 2,596 citations with the labels they would have had]
+    - step: amendment-5 labelling rules on top of stored labels (off-list default label, near-miss rule, title_only decision)
+      code: {file: study_b1/dv/apply_label_rules.py, sha256: b03d63bc76ab331854c1cadc56b415710d32ba8ba6d42a43f2f4f8a7e76d1c65}
+      decisions_file: {file: study_b1/dv/handcheck_decisions.yaml, empty_sha256: d9d121a6e0e17ae15a4fae34fff591c451f29d50a15fc1cc5301b53f6596aed7, filled_sha256: 1a5529044670679946a9b0438e0b7cc062d97f7c39485dcaff3e1897a23bf7b5, filled_by: cc939c70, values: {nearmiss_author_agree: 16, nearmiss_noauthor_agree: 50, title_only_real: 71, venue_agree: 68}, copy: registration/handcheck_decisions_tag2b.yaml}
+      rules_in_force: {near_miss_with_cited_author: "not used: such citations stay unresolved", near_miss_without_cited_author: "used: such citations are fabricated", title_only_author_rule: "does not join: title_only stays unresolved"}
+    - step: DVs from labels and run logs
+      code: {file: study_b1/dv/build_dvs_b1_rules.py, sha256: 852975d6cfd7879bc1afd027db55b57ccbd211e95142dabefc81baa2bc2f535b}
+    - step: secondary DVs
+      code: {file: study_b1/dv/secondary_dvs_b1.py, sha256: b48d0a1bee5fdc67e380233c7fa29ee4b356348e6f450fd3b60a1eff7e29cded}
+    - step: models, contrasts, verdicts
+      code: [{file: study_b1/analysis/analysis_b1.py, sha256: 07e6017bf416ac4e1f7d4c3d3a3bc23526550abae83bd771c12ae7415ce43483}, {file: study_b1/analysis/b1stats.py, sha256: 398fc2046bfda03a44825c1d484efa098c7f9c42ac9417a082322b08c8822cc9}]
+    - step: post-registration constructs (amendment no. 6, ecdb3790); exploratory
+      what: "the registered labels plus the author_rule test on the stored records (key_parameters.outcome_variables.post_registration); no new labelling and no request"
+      dated_note: {file: NOTE_2026-11-13_factual_faithful_loose.md, sha256: eb043f19e032d6681fbd06c4d80deb11b9e3a2f92b6f130c4e497d5f59825b86, written_utc: "2026-11-13T16:56Z"}
+      input_labels: {file: rules_api/labels.jsonl, sha256: b7190f51d0bb131a31d3394b56e6fc892c26f454bfa020a5c300250ccfaa1c59}
+      code: [{file: author_loose.py, sha256: f133f30fac1a8a4ec3cf5c93fc30689f70b1a2f5d7b982eaa2f6c40c8ec45810}, {file: factual_faithful_loose.py, sha256: 77bb5c356b5352c71f801de3ec5607db370858cae7f953cb23004f2b6f8d956b}]
+      outputs: [{file: author_loose.json, sha256: d3cef9be1e2c588fef7198ab24c1b0e76363853a3d28de30a845b1b046f8554e}, {file: factual_faithful_loose.json, sha256: 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1}]
+  release_transformations:   # planned; each is listed with before/after hashes in the replication package
+    - strip publisher abstracts from the verifier cache and label files; keep DOIs and OpenAlex IDs so anyone can fetch them again
+    - replace local folder paths in run_config.json, provenance/ and invocations.jsonl with a neutral root; publish the script and a before/after hash table so a reader can check that only paths changed
+    - HICSS-59 mini-track texts released in full with source URLs, in the task file and in the logged prompts; a NOTICE file marks them as third-party public material outside the study licence; no file is edited, so every hash still matches
+    - no API keys, credentials or contact e-mail addresses in any file (secret scan before release)
+
+# ---------------------------------------------------------------------------------------------------------------
+# 5. Analytical targets
+# ---------------------------------------------------------------------------------------------------------------
+analytical_targets:
+  arm: api_hosted (the open-weight arm has no hypotheses or verdicts)
+  label_check_order: [fabricated, year_mismatch, misplaced, off_venue, off_window, compliant]   # first failed check decides; year before journal
+  models:
+    D1: {data: "drafts, 79 mini-tracks", fixed_effects: mini-track, terms: "goal 10; may-report; one dummy per Doer but the first; a high-Lead dummy per vendor"}
+    D2: {data: "drafts, 79 mini-tracks", terms: "D1 + may-report x goal 10"}
+    R1: {data: "the five lists of each high-Lead draft, 50 mini-tracks", fixed_effects: draft, terms: "one dummy per review level (same-L, same-H, cross-L, cross-H) and Doer vendor; no review is the reference"}
+    R2: {data: as R1, terms: "R1 + each level-by-vendor dummy x goal 10"}
+    estimator: OLS
+    standard_errors: CR1, clustered by mini-track, t on G - 1 degrees of freedom
+    test: two-sided, raw p < .05, no multiplicity adjustment; stars * .05, ** .01, *** .001
+  verdict_rules:
+    supported: deciding DV significant in the predicted direction
+    not_supported: deciding DV not significant (an acceptable, reported result)
+    opposite: deciding DV significant in the other direction
+    partly_supported: deciding DV moves as predicted but compliant_count fails its 10% non-inferiority check (lower end of the 90% interval below -10% of the comparison mean); applies to H3, H4a, H6, H8
+    h9_rule: "supported if >= 1 of the four primary DVs is significantly better and none worse; mixed if some better and some worse; opposite if only worse; not supported otherwise (false-supported chance about 10%)"
+    flagged_doers: every verdict is also reported without DeepSeek Flash and DeepSeek V4-Pro (amendment no. 4) and without any Doer above its rehomed_rate ceiling
+  hypotheses:
+    - {id: H1, prediction: "higher goals raise fabrication", estimand: "goal 10 minus goal 3, drafts", model: D1, deciding_dv: fabrication_rate, direction: two-sided, status: confirmatory, result: {all_doers: supported, without_flagged_doers: not_supported, detail: analytical_targets.results.per_hypothesis.H1}}
+    - {id: H2, prediction: "an Auditor improves the list", estimand: "any Auditor (four levels averaged) minus none, each final list against its own draft", model: R1, deciding_dv: compliant_count, direction: up, status: confirmatory, result: {all_doers: supported, without_flagged_doers: supported, detail: analytical_targets.results.per_hypothesis.H2}}
+    - {id: H3, prediction: "an other-vendor Auditor lowers fabrication more than a same-vendor one", estimand: "cross minus same, averaged over tiers and vendors", model: R1, deciding_dv: fabrication_rate, direction: down, named_secondary: realized_false_rejection, status: confirmatory, result: {all_doers: supported, without_flagged_doers: opposite, detail: analytical_targets.results.per_hypothesis.H3}}
+    - {id: H4a, prediction: "a more capable Doer lowers fabrication", estimand: "high minus low Doer within vendor, averaged over vendors", model: D1, deciding_dv: fabrication_rate, direction: down, status: confirmatory, result: {all_doers: supported, without_flagged_doers: supported, detail: analytical_targets.results.per_hypothesis.H4a}}
+    - {id: H5, prediction: "review helps most at high goals", estimand: "(goal 10 minus 3) x (any Auditor minus none)", model: R2, deciding_dv: fabrication_rate, status: secondary, result: {all_doers: not_supported, without_flagged_doers: not_supported, detail: analytical_targets.results.per_hypothesis.H5}}
+    - {id: H6, prediction: "permission to report too few lowers fabrication without losing valid papers", estimand: "may-report minus must-fill, drafts", model: D1, deciding_dv: fabrication_rate, direction: down, joint_condition: "compliant_count non-inferior at a 10% margin (both: supported; fabrication only: partly supported)", status: confirmatory, result: {all_doers: partly_supported, without_flagged_doers: partly_supported, detail: analytical_targets.results.per_hypothesis.H6}}
+    - {id: H6x, prediction: "the H6 effect depends on the goal", estimand: "(may-report minus must-fill) at goal 10 minus the same at goal 3", model: D2, deciding_dv: fabrication_rate, direction: two-sided, status: secondary, result: {all_doers: not_supported, without_flagged_doers: not_supported, detail: analytical_targets.results.per_hypothesis.H6x}}
+    - {id: H7, prediction: "efficiency: every confirmatory contrast repeated on cost", dvs: [tokens, cost_usd, calls, cost_per_valid_paper, working_time_s], note: "working time not measured for runs with a Batch-API model", status: secondary, result: {verdict: none registered, detail: analytical_targets.results.named_secondaries.h7_cost}}
+    - {id: H8, prediction: "a more capable Lead lowers fabrication", estimand: "high minus low Lead within vendor, averaged over vendors", model: D1, deciding_dv: fabrication_rate, direction: down, status: confirmatory, result: {all_doers: supported, without_flagged_doers: partly_supported, detail: analytical_targets.results.per_hypothesis.H8}}
+    - {id: H9, prediction: "a higher-tier Auditor improves overall performance more than a lower-tier one", estimand: "high minus low tier, averaged over families and vendors", model: R1, deciding_dvs: {compliant_count: up, fabrication_rate: down, year_mismatch_rate: down, misplacement_rate: down}, verdict_rule: h9_rule, named_secondary: realized_false_rejection, status: confirmatory, result: {all_doers: supported, without_flagged_doers: supported, detail: analytical_targets.results.per_hypothesis.H9}}
+  robustness:
+    - Poisson for counts (OLS fixed effects kept)
+    - fractional logit for rates (mini-track fixed effects with draft factors)
+    - mini-track cluster bootstrap, percentile, 2000 resamples, seed 20261107
+    - unresolved citations counted all valid, then all fabricated (both bounds reported for every deciding contrast)
+    - journal-first check order (sensitivity table)
+  manipulation_check:
+    measure: rehomed_rate (real papers cited under an approved journal they never appeared in), per Doer
+    ceiling: upper end of the 95% cluster-bootstrap interval of the Doer's pilot stage-2b honest-option rehomed_rate
+    values: {file: registration/tag2_values.json, sha256: 9f34f529e2a151cea8212d6079d423744b9bc15e7907bc1a36f0513b1444a8f2, rows: 8, selected_row: "author=not_used, noauthor=used, title_only=does_not_join", selected_at: prereg-tag2b}
+    ceilings_selected: {claude-haiku-5-5: 0.300, claude-sonnet-5-5: 0.025, deepseek-flash: 0.201, deepseek-v4-pro: 0.146}
+    above_ceiling: Doer stays in primary verdicts, flagged; results without it are a sensitivity check
+    main_run_rehomed_rate:   # results.json ceiling_check
+      claude-haiku-5-5: {rehomed: 82, real: 892, rate: 0.0919, ceiling: 0.3, above_ceiling: false}
+      claude-sonnet-5-5: {rehomed: 93, real: 4525, rate: 0.0206, ceiling: 0.0247, above_ceiling: false}
+      deepseek-flash: {rehomed: 469, real: 2086, rate: 0.2248, ceiling: 0.2011, above_ceiling: true}
+      deepseek-v4-pro: {rehomed: 334, real: 3551, rate: 0.0941, ceiling: 0.1461, above_ceiling: false}
+      above_ceiling_doers: [deepseek-flash]
+  interpretation_rules:
+    - rate DVs read as "when the team answers"; answer_rate, refusal and abstention are reported beside every draft contrast
+    - a fall in fabrication bought by fewer valid papers is not full support (partly supported)
+    - open-weight results are descriptive and are never pooled with the API-hosted arm
+  post_registration:   # amendment no. 6 (ecdb3790), Parts 1, 4 and 5; written after the results
+    status: "exploratory: no verdict; reported beside the registered results, never in place of them; each change was written down and dated before it was computed"
+    outcomes: key_parameters.outcome_variables.post_registration (the three construct shares, tokens_total and cost_usd)
+    models: the registered models and contrasts (D1, D2, R1, R2), on all Doers and without the flagged Doers
+    report: "estimates, 95% intervals and raw p, labelled uncorrected; no multiple-comparison adjustment, by Author A's decision (as for the registered tests)"
+    registered_hypotheses: "the registered H numbers, deciding DVs, tests and verdict rules do not change; each item keeps its own verdict; a sign flips only where a factor is recoded"
+    paper_hypotheses:
+      - {id: HP1, construct: "adding an Auditor", item: "any Auditor (four levels averaged) vs none", registered: H2}
+      - {id: HP2, construct: "model capability (one construct, three items, one per role)", items: ["item 1: high vs low Doer within vendor (H4a)", "item 2: high vs low Lead within vendor (H8)", "item 3: high vs low Auditor tier (H9)"]}
+      - {id: HP3, construct: "task difficulty (one construct, two items, both coded 1 = easier)", items: ["item 1: goal 3 (= 1) vs goal 10 (H1, sign flipped)", "item 2: may-report (= 1) vs must-fill (H6)", "item 1 x item 2 (H6x, sign flipped)"]}
+      - {id: HP4, construct: "model heterogeneity (mechanism: error independence)", item: "other-vendor vs same-vendor Auditor", registered: H3, note: "re-frames the registered H3 rationale, 'a different model family brings more diverse knowledge'; not a new prediction; check B3 splits it by Doer vendor and is reported beside the pooled estimate"}
+      - {id: HP5, construct: "adding an Auditor x task difficulty (HP1 x HP3)", item: "any Auditor x goal", registered: "H5 (sign flipped)"}
+      - {id: none, construct: "task cost", item: "every contrast above, on tokens and US dollars", registered: H7}
+    without_flagged_doers: every estimate is also reported without DeepSeek Flash and DeepSeek V4-Pro (amendment no. 4)
+    cost_effectiveness:   # Part 5; exploratory, no verdict; reported beside the registered H7 measures
+      per_contrast: "the drop in factual-hallucination points per US dollar and per 1,000 tokens of added cost per run; given only where the cost rises and its 95% interval excludes 0"
+      per_configuration: "the configurations that no other configuration beats on both mean factual rate and mean US dollars per run"
+    robustness:   # Part 1, item 4; every check that ran is reported
+      set_a: "the registered checks of section 12, read out from results.json, not refitted"
+      set_b: ["B1: a fractional multinomial logit on each list's three shares, compliant as the base, clustered by mini-track", "B2: misplaced citations matched to a proceedings paper left out of each list's base", "B3: the cross-vendor Auditor contrast within each Doer vendor, on the constructs, tokens and US dollars"]
+    files:   # all in the replication package
+      constructs: {dated_note: {file: NOTE_2026-11-13_factual_faithful_loose.md, sha256: eb043f19e032d6681fbd06c4d80deb11b9e3a2f92b6f130c4e497d5f59825b86}, script: {file: factual_faithful_loose.py, sha256: 77bb5c356b5352c71f801de3ec5607db370858cae7f953cb23004f2b6f8d956b}, output: {file: factual_faithful_loose.json, sha256: 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1}}
+      cost_effectiveness: {dated_note: {file: NOTE_2026-11-14_cost_effectiveness.md, sha256: 603b77c0aa78a274733716ec169a93791bcec52d3e602725f40e970a4d9536ed}, script: {file: cost_effectiveness.py, sha256: dc1f44402eac760c7852dee0e2d11927af3441f13a01105299b3158b01f15d49}, output: {file: cost_effectiveness.json, sha256: 61a20dfb2e503fa3fc7b2837b74432c9e523d73d0f6afe2f387a02d4e220a3e1}}
+      robustness: "amendment no. 6, Part 1, item 4 (dated note, scripts and outputs, each with its SHA-256)"
+    estimates_in_this_file: none (the paper reports them from the output files above)
+  results:   # copied by fill script from results.json; shape as registered in draft 2's result_slots
+    release_status: "reportable: the registered verifier validation was scored on 2026-11-13 (validation.main_run_hand_checks.verifier_validation)"
+    source: {file: results.json, sha256: e6685474f48fc22c7d7081ecbbb720756061320bf508a4a0648736276397dc6f, report: results.md, report_sha256: f4778113d6c5de31af36d814709197d1031efec6e7f5af697779a8e3de0a966f, analysis_version: b1-analysis-2 (2026-11-08), copied: 'by script from results.json; estimates to 4 decimals (1 for values of 100 or more), p to 3 significant figures; full precision in results.json'}
+    sample:
+      minitracks_analysed: 79
+      minitracks_left_out: 0
+      failed_runs: 0
+      flagged_doers: [deepseek-flash, deepseek-v4-pro]
+      why_flagged: amendment no. 4 names both; deepseek-flash is also above its rehomed_rate ceiling (manipulation_check.main_run_rehomed_rate)
+      without_flagged_doers_note: without the two flagged Doers only the Claude Doers remain, so a cross-vendor Auditor there is always a DeepSeek model reviewing a Claude draft
+    verdict_summary:
+      H1: {all_doers: supported, without_flagged_doers: not_supported}
+      H2: {all_doers: supported, without_flagged_doers: supported}
+      H3: {all_doers: supported, without_flagged_doers: opposite}
+      H4a: {all_doers: supported, without_flagged_doers: supported}
+      H5: {all_doers: not_supported, without_flagged_doers: not_supported}
+      H6: {all_doers: partly_supported, without_flagged_doers: partly_supported}
+      H6x: {all_doers: not_supported, without_flagged_doers: not_supported}
+      H8: {all_doers: supported, without_flagged_doers: partly_supported}
+      H9: {all_doers: supported, without_flagged_doers: supported}
+    per_hypothesis:
+      H1:
+        model: D1
+        status: confirmatory
+        deciding_dv: fabrication_rate
+        estimate: 0.033
+        se_cr1: 0.0076
+        ci95: [0.0179, 0.0481]
+        df: 78
+        p_two_sided: 4.09e-05
+        stars: '***'
+        n_lists: 2177
+        clusters: 79
+        measure_note: on the 2177 of 2528 lists that have this measure
+        verdict: supported
+        verdict_without_flagged_doers:
+          verdict: not_supported
+          estimate: 0.0078
+          ci95: [-0.0168, 0.0323]
+          p_two_sided: 0.532
+          stars: ''
+          n_lists: 1082
+          clusters: 79
+        unresolved_bounds:
+          all_valid: {estimate: 0.0308, p: 0.000162, stars: '***'}
+          all_fabricated: {estimate: 0.0275, p: 0.000364, stars: '***'}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: 0.2298, p: 1.77e-05, stars: '***', converged: true}
+            bootstrap_ci95: [0.0181, 0.0474]
+        answer_rate_by_group:
+          goal10: {answer_rate: 0.8528, refusal_share: 0.0506, abstention_rate: 0.6853}
+          goal3: {answer_rate: 0.8695, refusal_share: 0.0, abstention_rate: 0.5785}
+        supporting_dvs:
+          compliant_count: {estimate: 0.1891, p: 0.000775, stars: '***'}
+          year_mismatch_rate: {estimate: 0.0192, p: 0.0822, stars: ''}
+          misplacement_rate: {estimate: -0.0094, p: 0.386, stars: ''}
+      H2:
+        model: R1
+        status: confirmatory
+        deciding_dv: compliant_count
+        estimate: 0.8103
+        se_cr1: 0.122
+        ci95: [0.5651, 1.0555]
+        df: 49
+        p_two_sided: 2.39e-08
+        stars: '***'
+        n_lists: 4000
+        clusters: 50
+        verdict: supported
+        verdict_without_flagged_doers:
+          verdict: supported
+          estimate: 0.9344
+          ci95: [0.6369, 1.2318]
+          p_two_sided: 7.7e-08
+          stars: '***'
+          n_lists: 2000
+          clusters: 50
+        unresolved_bounds:
+          all_valid: {estimate: 0.3309, p: 0.00302, stars: '**'}
+          all_fabricated: {estimate: 0.8103, p: 2.39e-08, stars: '***'}
+        robustness:
+          compliant_count:
+            poisson_or_fractional_logit: {family: poisson, scale: log rate, estimate: 0.7277, p: 6.39e-33, stars: '***', converged: true}
+            bootstrap_ci95: [0.5959, 1.055]
+        answer_rate_by_group: {cross-H: 0.8, cross-L: 0.7738, none: 0.8675, same-H: 0.7975, same-L: 0.785}
+        supporting_dvs:
+          fabrication_rate: {estimate: -0.2921, p: 1.07e-35, stars: '***'}
+          year_mismatch_rate: {estimate: -0.0249, p: 0.00163, stars: '**'}
+          misplacement_rate: {estimate: -0.0796, p: 1.66e-08, stars: '***'}
+      H3:
+        model: R1
+        status: confirmatory
+        deciding_dv: fabrication_rate
+        estimate: -0.0319
+        se_cr1: 0.0102
+        ci95: [-0.0523, -0.0114]
+        df: 49
+        p_two_sided: 0.00295
+        stars: '**'
+        n_lists: 3219
+        clusters: 50
+        measure_note: on the 3219 of 4000 lists that have this measure
+        noninferiority_compliant_count: {estimate: -0.0306, lower_90: -0.1221, comparison_mean: 1.4944, bound: -0.1494, passed: true}
+        verdict: supported
+        verdict_without_flagged_doers:
+          verdict: opposite
+          estimate: 0.2285
+          ci95: [0.1922, 0.2647]
+          p_two_sided: 4.64e-17
+          stars: '***'
+          n_lists: 1593
+          clusters: 50
+          noninferiority_compliant_count: {estimate: -0.8988, lower_90: -1.1927, comparison_mean: 2.1313, bound: -0.2131, passed: false}
+        unresolved_bounds:
+          all_valid: {estimate: -0.0278, p: 0.00364, stars: '**'}
+          all_fabricated: {estimate: -0.026, p: 0.0151, stars: '*'}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.1243, p: 0.014, stars: '*', converged: true}
+            bootstrap_ci95: [-0.0523, -0.0125]
+          compliant_count:
+            poisson_or_fractional_logit: {family: poisson, scale: log rate, estimate: 0.057, p: 0.0851, stars: '', converged: true}
+            bootstrap_ci95: [-0.1313, 0.0831]
+        answer_rate_by_group: {cross-H: 0.8, cross-L: 0.7738, none: 0.8675, same-H: 0.7975, same-L: 0.785}
+        supporting_dvs:
+          compliant_count: {estimate: -0.0306, p: 0.577, stars: ''}
+          year_mismatch_rate: {estimate: -0.0064, p: 0.238, stars: ''}
+          misplacement_rate: {estimate: -0.0164, p: 0.0366, stars: '*'}
+      H4a:
+        model: D1
+        status: confirmatory
+        deciding_dv: fabrication_rate
+        estimate: -0.1166
+        se_cr1: 0.0131
+        ci95: [-0.1427, -0.0905]
+        df: 78
+        p_two_sided: 1.71e-13
+        stars: '***'
+        n_lists: 2177
+        clusters: 79
+        measure_note: on the 2177 of 2528 lists that have this measure
+        noninferiority_compliant_count: {estimate: 0.8078, lower_90: 0.6172, comparison_mean: 0.303, bound: -0.0303, passed: true}
+        verdict: supported
+        verdict_without_flagged_doers:
+          verdict: supported
+          estimate: -0.2219
+          ci95: [-0.2597, -0.184]
+          p_two_sided: 9.06e-19
+          stars: '***'
+          n_lists: 1082
+          clusters: 79
+          noninferiority_compliant_count: {estimate: 1.3639, lower_90: 1.0524, comparison_mean: 0.1487, bound: -0.0149, passed: true}
+        unresolved_bounds:
+          all_valid: {estimate: -0.1163, p: 1.02e-13, stars: '***'}
+          all_fabricated: {estimate: -0.1068, p: 1.99e-13, stars: '***'}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.7346, p: 1.36e-13, stars: '***', converged: true}
+            bootstrap_ci95: [-0.1427, -0.0902]
+          compliant_count:
+            poisson_or_fractional_logit: {family: poisson, scale: log rate, estimate: 1.3789, p: 1.73e-27, stars: '***', converged: true}
+            bootstrap_ci95: [0.591, 1.0332]
+        answer_rate_by_group:
+          high_doer: {answer_rate: 0.9509, refusal_share: 0.0008, abstention_rate: 0.4677}
+          low_doer: {answer_rate: 0.7714, refusal_share: 0.0498, abstention_rate: 0.796}
+        supporting_dvs:
+          compliant_count: {estimate: 0.8078, p: 6.14e-10, stars: '***'}
+          year_mismatch_rate: {estimate: -0.0789, p: 1.27e-06, stars: '***'}
+          misplacement_rate: {estimate: -0.0709, p: 0.000126, stars: '***'}
+      H5:
+        model: R2
+        status: secondary
+        deciding_dv: fabrication_rate
+        estimate: 0.0168
+        se_cr1: 0.0133
+        ci95: [-0.0099, 0.0436]
+        df: 49
+        p_two_sided: 0.212
+        stars: ''
+        n_lists: 3219
+        clusters: 50
+        measure_note: on the 3219 of 4000 lists that have this measure
+        verdict: not_supported
+        verdict_without_flagged_doers:
+          verdict: not_supported
+          estimate: -0.0036
+          ci95: [-0.0418, 0.0346]
+          p_two_sided: 0.851
+          stars: ''
+          n_lists: 1593
+          clusters: 50
+        unresolved_bounds:
+          all_valid: {estimate: 0.0244, p: 0.0855, stars: ''}
+          all_fabricated: {estimate: 0.0183, p: 0.161, stars: ''}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: 0.0709, p: 0.428, stars: '', converged: true}
+            bootstrap_ci95: [-0.0094, 0.0431]
+        answer_rate_by_group: {cross-H: 0.8, cross-L: 0.7738, none: 0.8675, same-H: 0.7975, same-L: 0.785}
+        supporting_dvs:
+          compliant_count: {estimate: 0.4494, p: 0.00015, stars: '***'}
+          year_mismatch_rate: {estimate: -0.0089, p: 0.452, stars: ''}
+          misplacement_rate: {estimate: 0.013, p: 0.47, stars: ''}
+      H6:
+        model: D1
+        status: confirmatory
+        deciding_dv: fabrication_rate
+        estimate: -0.1055
+        se_cr1: 0.0097
+        ci95: [-0.1248, -0.0861]
+        df: 78
+        p_two_sided: 2.83e-17
+        stars: '***'
+        n_lists: 2177
+        clusters: 79
+        measure_note: on the 2177 of 2528 lists that have this measure
+        noninferiority_compliant_count: {estimate: -0.1954, lower_90: -0.2604, comparison_mean: 0.8046, bound: -0.0805, passed: false}
+        verdict: partly_supported
+        verdict_without_flagged_doers:
+          verdict: partly_supported
+          estimate: -0.1225
+          ci95: [-0.1497, -0.0953]
+          p_two_sided: 1.3e-13
+          stars: '***'
+          n_lists: 1082
+          clusters: 79
+          noninferiority_compliant_count: {estimate: -0.3797, lower_90: -0.4821, comparison_mean: 1.0206, bound: -0.1021, passed: false}
+        unresolved_bounds:
+          all_valid: {estimate: -0.1163, p: 6.47e-17, stars: '***'}
+          all_fabricated: {estimate: -0.0913, p: 2.63e-17, stars: '***'}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.7347, p: 1.63e-33, stars: '***', converged: true}
+            bootstrap_ci95: [-0.1249, -0.0865]
+          compliant_count:
+            poisson_or_fractional_logit: {family: poisson, scale: log rate, estimate: -0.2782, p: 1.26e-05, stars: '***', converged: true}
+            bootstrap_ci95: [-0.2674, -0.1187]
+        answer_rate_by_group:
+          may: {answer_rate: 0.7888, refusal_share: 0.0, abstention_rate: 0.6319}
+          must: {answer_rate: 0.9335, refusal_share: 0.0506, abstention_rate: null}
+        supporting_dvs:
+          compliant_count: {estimate: -0.1954, p: 3.38e-06, stars: '***'}
+          year_mismatch_rate: {estimate: 0.0015, p: 0.864, stars: ''}
+          misplacement_rate: {estimate: -0.0559, p: 3.26e-05, stars: '***'}
+      H6x:
+        model: D2
+        status: secondary
+        deciding_dv: fabrication_rate
+        estimate: -0.0015
+        se_cr1: 0.0171
+        ci95: [-0.0355, 0.0324]
+        df: 78
+        p_two_sided: 0.928
+        stars: ''
+        n_lists: 2177
+        clusters: 79
+        measure_note: on the 2177 of 2528 lists that have this measure
+        verdict: not_supported
+        verdict_without_flagged_doers:
+          verdict: not_supported
+          estimate: 0.0313
+          ci95: [-0.0258, 0.0884]
+          p_two_sided: 0.278
+          stars: ''
+          n_lists: 1082
+          clusters: 79
+        unresolved_bounds:
+          all_valid: {estimate: 0.0096, p: 0.596, stars: ''}
+          all_fabricated: {estimate: -0.0035, p: 0.827, stars: ''}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.107, p: 0.365, stars: '', converged: true}
+            bootstrap_ci95: [-0.0346, 0.0338]
+        answer_rate_by_group:
+          may_goal10: {answer_rate: 0.8386, refusal_share: 0.0, abstention_rate: 0.6853}
+          may_goal3: {answer_rate: 0.7389, refusal_share: 0.0, abstention_rate: 0.5785}
+          must_goal10: {answer_rate: 0.8671, refusal_share: 0.1013, abstention_rate: null}
+          must_goal3: {answer_rate: 1.0, refusal_share: 0.0, abstention_rate: null}
+        supporting_dvs:
+          compliant_count: {estimate: -0.144, p: 0.0602, stars: ''}
+          year_mismatch_rate: {estimate: -0.0082, p: 0.652, stars: ''}
+          misplacement_rate: {estimate: 0.0119, p: 0.623, stars: ''}
+      H8:
+        model: D1
+        status: confirmatory
+        deciding_dv: fabrication_rate
+        estimate: -0.0204
+        se_cr1: 0.0089
+        ci95: [-0.038, -0.0027]
+        df: 78
+        p_two_sided: 0.0247
+        stars: '*'
+        n_lists: 2177
+        clusters: 79
+        measure_note: on the 2177 of 2528 lists that have this measure
+        noninferiority_compliant_count: {estimate: 0.0483, lower_90: -0.0569, comparison_mean: 0.6828, bound: -0.0683, passed: true}
+        verdict: supported
+        verdict_without_flagged_doers:
+          verdict: partly_supported
+          estimate: -0.0282
+          ci95: [-0.053, -0.0033]
+          p_two_sided: 0.0268
+          stars: '*'
+          n_lists: 1082
+          clusters: 79
+          noninferiority_compliant_count: {estimate: -0.0443, lower_90: -0.1415, comparison_mean: 0.8528, bound: -0.0853, passed: false}
+        unresolved_bounds:
+          all_valid: {estimate: -0.0297, p: 0.00302, stars: '**'}
+          all_fabricated: {estimate: -0.0157, p: 0.0524, stars: ''}
+        robustness:
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.1376, p: 0.0363, stars: '*', converged: true}
+            bootstrap_ci95: [-0.0377, -0.004]
+          compliant_count:
+            poisson_or_fractional_logit: {family: poisson, scale: log rate, estimate: 0.0947, p: 0.335, stars: '', converged: true}
+            bootstrap_ci95: [-0.0641, 0.1796]
+        answer_rate_by_group:
+          lead_high: {answer_rate: 0.8695, refusal_share: 0.0261, abstention_rate: 0.615}
+          lead_low: {answer_rate: 0.8528, refusal_share: 0.0245, abstention_rate: 0.6487}
+        supporting_dvs:
+          compliant_count: {estimate: 0.0483, p: 0.447, stars: ''}
+          year_mismatch_rate: {estimate: -0.0022, p: 0.862, stars: ''}
+          misplacement_rate: {estimate: -0.0203, p: 0.151, stars: ''}
+      H9:
+        model: R1
+        status: confirmatory
+        deciding_dvs: [compliant_count, fabrication_rate, year_mismatch_rate, misplacement_rate]
+        per_dv: see h9_per_dv
+        verdict: supported
+        verdict_without_flagged_doers:
+          verdict: supported
+          per_dv:
+            compliant_count: {estimate: 0.1138, p: 0.115, stars: ''}
+            fabrication_rate: {estimate: -0.045, p: 0.0101, stars: '*'}
+            year_mismatch_rate: {estimate: -0.0141, p: 0.0168, stars: '*'}
+            misplacement_rate: {estimate: -0.0046, p: 0.595, stars: ''}
+        unresolved_bounds:
+          compliant_count:
+            all_valid: {estimate: 0.1281, p: 0.0444, stars: '*'}
+            all_fabricated: {estimate: 0.1894, p: 0.0002, stars: '***'}
+          fabrication_rate:
+            all_valid: {estimate: -0.0368, p: 0.000761, stars: '***'}
+            all_fabricated: {estimate: -0.0541, p: 1.66e-05, stars: '***'}
+          year_mismatch_rate:
+            all_valid: {estimate: -0.009, p: 0.0005, stars: '***'}
+            all_fabricated: {estimate: -0.0079, p: 0.0248, stars: '*'}
+          misplacement_rate:
+            all_valid: {estimate: -0.0103, p: 0.0153, stars: '*'}
+            all_fabricated: {estimate: -0.0109, p: 0.0582, stars: ''}
+        robustness:
+          compliant_count:
+            poisson_or_fractional_logit: {family: poisson, scale: log rate, estimate: 0.0326, p: 0.304, stars: '', converged: true}
+            bootstrap_ci95: [0.0994, 0.2756]
+          fabrication_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.2414, p: 1.15e-05, stars: '***', converged: true}
+            bootstrap_ci95: [-0.0677, -0.0237]
+          year_mismatch_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.316, p: 0.000201, stars: '***', converged: true}
+            bootstrap_ci95: [-0.0148, -0.0015]
+          misplacement_rate:
+            poisson_or_fractional_logit: {family: logit, scale: log odds, estimate: -0.1551, p: 0.0372, stars: '*', converged: true}
+            bootstrap_ci95: [-0.0222, -0.0005]
+        journal_first_order:
+          year_mismatch_rate:
+            registered_order: {estimate: -0.0079, p: 0.0248, stars: '*'}
+            journal_first: {estimate: -0.0059, p: 0.0696, stars: ''}
+          misplacement_rate:
+            registered_order: {estimate: -0.0109, p: 0.0582, stars: ''}
+            journal_first: {estimate: -0.0129, p: 0.0315, stars: '*'}
+        answer_rate_by_group: {cross-H: 0.8, cross-L: 0.7738, none: 0.8675, same-H: 0.7975, same-L: 0.785}
+    h9_per_dv:
+      compliant_count:
+        estimate: 0.1894
+        se_cr1: 0.0471
+        ci95: [0.0947, 0.284]
+        df: 49
+        p_two_sided: 0.0002
+        stars: '***'
+        n_lists: 4000
+        clusters: 50
+      fabrication_rate:
+        estimate: -0.045
+        se_cr1: 0.0115
+        ci95: [-0.0681, -0.0219]
+        df: 49
+        p_two_sided: 0.000281
+        stars: '***'
+        n_lists: 3219
+        clusters: 50
+        measure_note: on the 3219 of 4000 lists that have this measure
+      year_mismatch_rate:
+        estimate: -0.0079
+        se_cr1: 0.0034
+        ci95: [-0.0148, -0.001]
+        df: 49
+        p_two_sided: 0.0248
+        stars: '*'
+        n_lists: 2849
+        clusters: 50
+        measure_note: on the 2849 of 4000 lists that have this measure
+      misplacement_rate:
+        estimate: -0.0109
+        se_cr1: 0.0056
+        ci95: [-0.0221, 0.0004]
+        df: 49
+        p_two_sided: 0.0582
+        stars: ''
+        n_lists: 2849
+        clusters: 50
+        measure_note: on the 2849 of 4000 lists that have this measure
+    h9_misplacement_note: report the venue-review caveat (validation.pilot_hand_checks.venue_review_finding) beside this DV
+    named_secondaries:
+      realized_false_rejection:
+        H3:
+          estimate: 0.0498
+          ci95: [0.0148, 0.0848]
+          p_two_sided: 0.0064
+          stars: '**'
+          n_lists: 908
+          clusters: 43
+          note: 'reference: same-L:claude, same-L:deepseek; on the 908 of 4000 lists that have this measure'
+        H9:
+          estimate: -0.0511
+          ci95: [-0.0892, -0.013]
+          p_two_sided: 0.00972
+          stars: '**'
+          n_lists: 908
+          clusters: 43
+          note: 'reference: same-L:claude, same-L:deepseek; on the 908 of 4000 lists that have this measure'
+      list_without_open_objections:
+        H2:
+          compliant_count: {estimate: 0.6341, p: 4.22e-07, stars: '***'}
+          fabrication_rate: {estimate: -0.398, p: 2.46e-37, stars: '***'}
+          year_mismatch_rate: {estimate: -0.0378, p: 2.69e-05, stars: '***'}
+          misplacement_rate: {estimate: -0.0973, p: 1.36e-09, stars: '***'}
+        H3:
+          compliant_count: {estimate: -0.0331, p: 0.437, stars: ''}
+          fabrication_rate: {estimate: -0.038, p: 0.00576, stars: '**'}
+          year_mismatch_rate: {estimate: -0.0075, p: 0.0974, stars: ''}
+          misplacement_rate: {estimate: -0.0223, p: 0.00283, stars: '**'}
+        H5:
+          compliant_count: {estimate: 0.3169, p: 0.00161, stars: '**'}
+          fabrication_rate: {estimate: 0.0061, p: 0.644, stars: ''}
+          year_mismatch_rate: {estimate: -0.0062, p: 0.617, stars: ''}
+          misplacement_rate: {estimate: 0.0147, p: 0.403, stars: ''}
+        H9:
+          compliant_count: {estimate: 0.2606, p: 1.13e-05, stars: '***'}
+          fabrication_rate: {estimate: -0.0538, p: 0.000222, stars: '***'}
+          year_mismatch_rate: {estimate: -0.0009, p: 0.825, stars: ''}
+          misplacement_rate: {estimate: -0.011, p: 0.0205, stars: '*'}
+      review_measures_by_level: descriptive table by Doer vendor and review level in results.json (secondary.review_measures_by_level)
+      h7_cost:
+        H1:
+          cost_usd: {estimate: 0.0054, p: 8.24e-21, stars: '***'}
+          tokens_total: {estimate: 2498.1, p: 5.07e-25, stars: '***'}
+          calls: {estimate: 0.004, p: 0.0962, stars: ''}
+          cost_per_valid_paper: {estimate: 0.0036, p: 8.26e-09, stars: '***'}
+          working_time_s: {estimate: 38.4032, p: 2.25e-38, stars: '***'}
+        H2:
+          cost_usd: {estimate: 0.0364, p: 3.0e-31, stars: '***'}
+          tokens_total: {estimate: 45241.5, p: 5.56e-31, stars: '***'}
+          calls: {estimate: 3.7784, p: 3.73e-36, stars: '***'}
+          cost_per_valid_paper: {estimate: 0.0151, p: 3.41e-13, stars: '***'}
+          working_time_s: {estimate: null, note: 'not estimable: no data for cross-H:deepseek, cross-L:deepseek'}
+        H3:
+          cost_usd: {estimate: 0.004, p: 1.95e-08, stars: '***'}
+          tokens_total: {estimate: 4748.3, p: 3.24e-10, stars: '***'}
+          calls: {estimate: 0.0819, p: 0.0273, stars: '*'}
+          cost_per_valid_paper: {estimate: 0.0021, p: 0.0913, stars: ''}
+          working_time_s: {estimate: null, note: 'not estimable: no data for cross-H:deepseek, cross-L:deepseek'}
+        H4a:
+          cost_usd: {estimate: 0.0146, p: 1.98e-42, stars: '***'}
+          tokens_total: {estimate: 1499.4, p: 1.97e-24, stars: '***'}
+          calls: {estimate: -0.0055, p: 0.0188, stars: '*'}
+          cost_per_valid_paper: {estimate: 0.0072, p: 8.09e-19, stars: '***'}
+          working_time_s: {estimate: 50.442, p: 7.69e-39, stars: '***'}
+        H6:
+          cost_usd: {estimate: -0.0061, p: 1.19e-33, stars: '***'}
+          tokens_total: {estimate: -2774.9, p: 1.41e-34, stars: '***'}
+          calls: {estimate: -0.004, p: 0.0962, stars: ''}
+          cost_per_valid_paper: {estimate: -0.0031, p: 1.09e-06, stars: '***'}
+          working_time_s: {estimate: -22.3621, p: 2.27e-22, stars: '***'}
+        H8:
+          cost_usd: {estimate: 0.0004, p: 0.0302, stars: '*'}
+          tokens_total: {estimate: 93.4897, p: 0.276, stars: ''}
+          calls: {estimate: -0.0008, p: 0.741, stars: ''}
+          cost_per_valid_paper: {estimate: -0.0005, p: 0.344, stars: ''}
+          working_time_s: {estimate: 1.5726, p: 0.0555, stars: ''}
+        H9:
+          cost_usd: {estimate: 0.0324, p: 9.94e-29, stars: '***'}
+          tokens_total: {estimate: -5275.4, p: 5.06e-14, stars: '***'}
+          calls: {estimate: -0.1594, p: 2.27e-06, stars: '***'}
+          cost_per_valid_paper: {estimate: 0.017, p: 2.47e-15, stars: '***'}
+          working_time_s: {estimate: null, note: 'not estimable: no data for cross-H:deepseek, cross-L:deepseek'}
+      h7_note: no verdict registered; working time not estimable for H2, H3 and H9 (no working-time data for the cross-L and cross-H cells of the DeepSeek Doers)
+    open_weight_descriptive:
+      source:
+        file: ow_cells.csv
+        sha256: 716483c5e8978af1afce61e4a9c5b79cc4b3e435237d256fe77223c20cde2161
+        bytes: 50722
+        rows: 720
+        columns: [doer, lead, goal, may_report, review, dv, runs, defined, mean, lo95, hi95]
+        layout: 72 cells (3 Doers x 24 cells) x 10 DVs, 50 runs per cell
+      labels: {rules_ow_labels_sha256: 2c0b1045455e35e427f2b95e84fa2a521add10dfebaff00fad6237ca03059491}
+      note: every registered DV by cell, mean with cluster-bootstrap 95% interval (lo95, hi95); no tests; never pooled with the API-hosted arm
+      doers: [qwen3-14b, qwen3-32b, qwen38-27b]
+      dvs: [compliant_count, fabrication_rate, year_mismatch_rate, misplacement_rate, venue_violation_rate, author_mismatch_rate, rehomed_rate, misplacement_rate_jfirst, year_mismatch_rate_jfirst, unresolved_share]
+      empty_cells: 175 of 720 rows have no value because no list in that cell has the measure (defined = 0)
+      range_of_cell_means_by_doer:
+        qwen3-14b:
+          compliant_count: {cells_with_a_value: 24, min: 0.0, max: 0.0}
+          fabrication_rate: {cells_with_a_value: 24, min: 0.9993, max: 1.0}
+          year_mismatch_rate: {cells_with_a_value: 9, min: 0.0, max: 1.0}
+          misplacement_rate: {cells_with_a_value: 9, min: 0.0, max: 1.0}
+          unresolved_share: {cells_with_a_value: 24, min: 0.0101, max: 0.0747}
+        qwen3-32b:
+          compliant_count: {cells_with_a_value: 24, min: 0.0, max: 0.0}
+          fabrication_rate: {cells_with_a_value: 24, min: 0.9907, max: 1.0}
+          year_mismatch_rate: {cells_with_a_value: 15, min: 0.0, max: 1.0}
+          misplacement_rate: {cells_with_a_value: 15, min: 0.0, max: 1.0}
+          unresolved_share: {cells_with_a_value: 24, min: 0.0087, max: 0.0523}
+        qwen38-27b:
+          compliant_count: {cells_with_a_value: 24, min: 0.0, max: 0.02}
+          fabrication_rate: {cells_with_a_value: 24, min: 0.9721, max: 1.0}
+          year_mismatch_rate: {cells_with_a_value: 23, min: 0.3117, max: 1.0}
+          misplacement_rate: {cells_with_a_value: 23, min: 0.0, max: 0.4}
+          unresolved_share: {cells_with_a_value: 24, min: 0.0236, max: 0.1443}
+      range_note: min and max over cells of the cell means in ow_cells.csv, computed by fill_level1_ow.py; descriptive only
+    output_files:
+      results_json: {sha256: e6685474f48fc22c7d7081ecbbb720756061320bf508a4a0648736276397dc6f}
+      results_md: {sha256: f4778113d6c5de31af36d814709197d1031efec6e7f5af697779a8e3de0a966f}
+      runs_csv: {sha256: a72d918c1d90542274c62fa69564ee549dbc47df40e78a9cb1ddf1f70845e020, what: one row per API-hosted run with every DV}
+      runs_secondary_csv: {sha256: b1e7ce04cf8a9a46d68ce23d2ef150f8ff0b6ff5e176ff3b802c4c22ea56ef60, rows: 5728}
+      bound_runs_csv: {unresolved_all_valid_runs_csv: d7b682d54a249d2b397603d4fca0d9ccb1f09754b671788274405b969d9d3f5e, unresolved_all_fabricated_runs_csv: bb8e79c187e101e04ed45cfe1555988f1936470bafbbf82e6d358ed0571e8cbe}
+      labels_first_pass: {sha256: 4e7d6681cdafab79d2c4190e698b42df9e87b8f9bb8e55f2ee342684b5664ca3, what: 'Crossref and local copy only, before any OpenAlex answer existed'}
+      labels_merged: {sha256: 51d01385634374583bf598935de9e8d3cbcf93f3e198eeab74f31ca9fe73545a, what: labels used for the DVs (merge by registered set)}
+      rules_api_labels: {sha256: b7190f51d0bb131a31d3394b56e6fc892c26f454bfa020a5c300250ccfaa1c59, decisions_file_sha256: 1a5529044670679946a9b0438e0b7cc062d97f7c39485dcaff3e1897a23bf7b5}
+      rules_ow_labels: {sha256: 2c0b1045455e35e427f2b95e84fa2a521add10dfebaff00fad6237ca03059491, decisions_file_sha256: 1a5529044670679946a9b0438e0b7cc062d97f7c39485dcaff3e1897a23bf7b5}
+      ow_cells_csv: {sha256: 716483c5e8978af1afce61e4a9c5b79cc4b3e435237d256fe77223c20cde2161, rows: 720}
+      driver_scripts: {merge_final_labels.py: ba736b6a1655864b5414ab291058d0b89ceafda08121329b6a4d8c979404e78e, flow_after_step8.sh: b64adbc9bca1232f4d677c6f37ad25b8dd43ea20a04117b6bc9032f6f1b6e6f0, analysis_main.sh: 39343d1f0378349ca62eaa5baa275efd452b13eb224249b727848dd47a97b9ca}
+      code_commit: cc939c70f1706bfbf7be317a57bc49e448cd97ec
+
+# ---------------------------------------------------------------------------------------------------------------
+# 6. Replication requirements
+# ---------------------------------------------------------------------------------------------------------------
+replication_requirements:
+  runs:
+    api_hosted: {full_grid_minitracks: 50, drafts_only_minitracks: 29, drafts: 2528, reviewed_runs: 3200, total_runs: 5728}
+    open_weight: {full_grid_minitracks: 50, drafts: 1200, reviewed_runs: 2400, total_runs: 3600}
+    pilot: {minitracks: 10, enters_analysis: false}
+  randomization:
+    minitrack_split: {method: "pool sorted by ID, random.Random(20261107).shuffle", order: "first 10 pilot, next 50 full grid, remaining 29 drafts-only"}
+    cell_order: {method: balanced_blocks, seed: 20261030, block_size: 1}
+    sample_seed: 20261029
+    waves: "waves of 10 mini-tracks in drawn order; wave 1 all full-grid; waves 2-7 six full-grid + four drafts-only; wave 8 the remaining four + five"
+    open_weight_request_seed_base: 20261106
+    hand_check_draw: {script: draw_handchecks.py, sha256: 33bfef83a7e74e9256e88c103e8ff7f0815435361fed2d5ddc3b9adcae0fa8d5, seed: 20261107}
+  exclusion_rules:
+    empty_draft: leaves rate DVs; counts 0 in compliant_count; shown in answer_rate
+    refusal: the model's answer; recorded, never re-asked; a refused draft is an empty draft; a refusal in review ends the run with the list as it stands, flagged
+    readable_reply_at_output_limit: used normally; share reported (amendment no. 1)
+    unreadable_cut_off_reply: no repair turn; draft keeps complete papers before the cut (truncated); revision or audit ends the run with the last complete or current list (revise_truncated, review_truncated)
+    other_unreadable_reply: one repair turn; draft then salvaged or failed; revision changes nothing; audit ends the run (review_parse_error)
+    repeated_paper: only the first appearance counts (title lower-cased, punctuation and spacing removed)
+    untitled_paper: counts 0 in compliant_count; left out of rate DVs
+    server_or_network_error: retried up to 3 times, never scored; a failed item is rerun once before analysis inside the cap; still failing -> left out and listed by cell
+    served_model_mismatch: reply left out and item rerun once; above 1% of calls, collection stops
+    incomplete_minitrack: only complete mini-tracks are analysed
+    pilot_data: never enter the analysis
+  uncertainty:
+    primary: CR1 cluster-robust standard errors by mini-track
+    secondary: mini-track cluster bootstrap (2000 resamples, seed 20261107)
+    unresolved_bounds: both bounds reported for every deciding contrast
+  comparability_criterion: >
+    A replication matches this study if each hypothesis' estimate falls inside this study's 95% interval, widened by
+    the registered run-to-run spread for that Doer and DV (stochastic_variation below).
+
+# ---------------------------------------------------------------------------------------------------------------
+# 7. Scope conditions
+# ---------------------------------------------------------------------------------------------------------------
+scope_conditions:
+  holds_for:
+    - teams that work from model memory only, with no tools, retrieval or internet
+    - information-systems literature; the 34 ABDC A* and A IS journals; publication years 2010-2024
+    - the four named API-hosted models at the logged access dates (2026-11-07 to 2026-11-09), with thinking off as configured
+    - English prompts in the honest-option format (separate fields, no full-reference entry)
+    - HICSS-59 mini-tracks as topics; a Lead-Doer-Auditor team with at most 3 audit rounds and shared review history
+  depends_on:
+    - the verifier's sources being a sufficient record for the 34 journals (Crossref; local copy; live search for four thinly indexed journals)
+    - the amendment-5 labelling rules as selected by the pilot hand checks
+    - a single wording per condition (prompt-wording sensitivity is not tested)
+  invalidated_or_changed_by:
+    - giving any role a search or retrieval tool
+    - a model update or a different snapshot behind the same model ID
+    - turning thinking or reasoning on
+    - a different journal list, field or publication window
+    - restoring a full-reference entry in the paper format (in pilot stage 2, dropping it raised fabrication sharply)
+    - a different review memory (rounds that see only the current list) or a different audit cap
+  known_limits:   # PREREGISTRATION.md section 15
+    - run-to-run tolerance covers draft DVs only; review-DV tolerance is not measured in the API-hosted arm
+    - prompt-wording sensitivity is not tested
+    - API-hosted models take no request seed; Claude models run at provider-default sampling
+    - the study format was chosen after failed pilot gates (amendments no. 3 and 4); DeepSeek Flash and DeepSeek V4-Pro are flagged
+    - off-list and no-journal misses are labelled fabricated without a live search (about +0.6 points of fabrication_rate in the pilot; measured by the widened check)
+    - near misses are settled by a fixed rule; its with-author branch failed its pilot bar (16 of 50), so those citations stay unresolved, and title_only citations stay unresolved (71 of 100 against a bar of 90)
+    - the verifier does not expand conference acronyms, so misplacement_rate is overstated for proceedings papers cited under short names (6 of 40 sampled misplaced labels in the pilot venue check)
+    - the pilot hand checks are split, not double-coded, so they give no inter-rater statistic
+    - the open-weight arm sits at the fabrication ceiling and is descriptive only
+    - "post-registration constructs (amendment no. 6): the author_rule has no hand check; one will be run if a reviewer asks"
+    - "post-registration constructs: the 4,952 title_only citations stay unresolved, so they are left out of every construct base"
+    - "the conference-acronym caveat carries over to the constructs: about 15% of misplaced labels (6 of 40 in the pilot venue check; Wilson 95% interval 7% to 29%) are proceedings papers cited by acronym, so factual hallucination is overstated and faithful hallucination understated by that share (check B2 leaves them out)"
+    - "the main-run near-miss hand check was not run (amendment no. 6, Part 7), a deviation from the registration; the pilot check of that branch (50 of 50) remains the evidence for it"
+
+# ---------------------------------------------------------------------------------------------------------------
+# 8. Experimental agent data (extra fields for experiments with agents as subjects)
+# ---------------------------------------------------------------------------------------------------------------
+agent_experiment:
+  models:
+    - {alias: claude_haiku_55, provider: Anthropic, family: claude, model_id: claude-haiku-5-5, tier: L, roles: [lead_low, doer, auditor_L], api: "Messages API via Batch API", thinking: {type: disabled}, output_config: {effort: high}, temperature: provider default (the API rejects a temperature setting), knowledge_cutoff_stated: "2026-06"}
+    - {alias: claude_sonnet_55, provider: Anthropic, family: claude, model_id: claude-sonnet-5-5, tier: H, roles: [lead_high, doer, auditor_H], api: "Messages API via Batch API", thinking: {type: between_tools, reason: "thinking disabled is rejected; no tools are given"}, output_config: {effort: high}, temperature: provider default}
+    - {alias: deepseek_flash, provider: DeepSeek, family: deepseek, model_id: deepseek-flash, served_as: DeepSeek-V4.1-Flash-1017, tier: L, roles: [lead_low, doer, auditor_L], api: "OpenAI-compatible chat", thinking: {type: disabled}, temperature: 0.0}
+    - {alias: deepseek_v4_pro, provider: DeepSeek, family: deepseek, model_id: deepseek-v4-pro, served_as: DeepSeek-V4-Pro-0813, tier: H, roles: [lead_high, doer, auditor_H], api: "OpenAI-compatible chat", thinking: {type: disabled}, temperature: 0.0}
+    - {alias: qwen3_14b, provider: "OpenRouter, pinned to DeepInfra (fp8), fallbacks off, zero data retention", family: qwen, model_id: qwen/qwen3-14b, tier: L, arm: open_weight, roles: [lead_low, doer, auditor_same_L], thinking: "off via /no_think prompt suffix", sampling: {temperature: 0.7, top_p: 0.8, top_k: 20}, window: 40960}
+    - {alias: qwen3_32b, provider: "OpenRouter, pinned to DeepInfra (fp8)", family: qwen, model_id: qwen/qwen3-32b, tier: H, arm: open_weight, roles: [lead_high, doer, auditor_same_H], thinking: "off via /no_think", sampling: {temperature: 0.7, top_p: 0.8, top_k: 20}, window: 40960}
+    - {alias: qwen38_27b, provider: "OpenRouter, pinned to DeepInfra (bf16)", family: qwen, model_id: qwen/qwen3.8-27b, arm: open_weight, roles: [doer], thinking: "off via reasoning effort none", sampling: {temperature: 0.7, top_p: 0.8, top_k: 20, presence_penalty: "not sent"}, window: 262144}
+    - {alias: gemma3_12b, provider: "OpenRouter, pinned to DeepInfra (bf16)", family: gemma, model_id: google/gemma-3-12b-it, tier: L, arm: open_weight, roles: [auditor_cross_L], sampling: {temperature: 1.0, top_p: 0.95, top_k: 64}, window: 131072}
+    - {alias: gemma3_27b, provider: "OpenRouter, pinned to DeepInfra (fp8)", family: gemma, model_id: google/gemma-3-27b-it, tier: H, arm: open_weight, roles: [auditor_cross_H], sampling: {temperature: 1.0, top_p: 0.95, top_k: 64}, window: 131072}
+  access_dates_utc:
+    lead_plans_pilot: "2026-11-07"
+    pilot_stages_1_to_3: "2026-11-07 to 2026-11-08"
+    lead_plans_main: "2026-11-08"
+    main_run: "2026-11-08T19:36:22Z to 2026-11-09T17:59Z"
+  snapshot_control: every reply logs the served model (and, open-weight, the provider); API-hosted model IDs are aliases with no dated snapshot, so the served name and build stamp are the record
+  prompts_tools_retrieval_permissions: see key_parameters.prompts and actors_and_information_flows (no tools, no retrieval, no permissions)
+  sampling_and_randomization:
+    api_hosted_request_seed: none (neither API supports one)
+    open_weight_request_seed: "per call, derived from base 20261106"
+    cell_order_seed: 20261030
+    minitrack_draw_seed: 20261107
+  task_and_condition_structure: see study_type_and_design_logic
+  controls:
+    order_effects: seeded within-mini-track cell order (balanced blocks); waves mix cell kinds after wave 1; journal list order fixed and stated
+    prompt_sensitivity: not tested (one wording per condition); stated limit
+    model_drift: fixed model IDs; served model and build stamp logged on every call; 22-hour collection window; manipulation check and format gates compare formats drafted at the same time
+    retries: server and network errors retried up to 3 times with backoff, logged, never scored (max_retries 3, timeout 1800 s)
+    failed_calls: one rerun per failed item, ever, right after its wave, inside the cap; API-hosted 0 failed items; open-weight 18 failed on provider rate limits, all 18 succeeded on rerun
+    peak_pricing: no DeepSeek call ran in the provider's peak-price hours
+    spending: ledgers reserve each call's worst-case cost before sending; caps fixed before each step
+  behavioural_logs_and_conversion:
+    logs: see data_provenance.generated
+    parser: a paper needs a title; text outside the JSON object is stored, not scored; honest_option read from true/false/yes/no/1/0, anything else stored as unreadable and counted
+    conversion: see data_provenance.transformations and docs/dv_specification.md
+  stochastic_variation:
+    method: "pilot stage 3 re-drafted the 160 stage-2b honest-option high-Lead drafts (120 open-weight) with the same models, prompts, plans and settings; per Doer and primary DV, tolerance = 2.5th to 97.5th percentile of (second copy - first copy) across the 10 pilot mini-tracks"
+    values: {file: registration/tag2_values.json, sha256: 9f34f529e2a151cea8212d6079d423744b9bc15e7907bc1a36f0513b1444a8f2, rows: 8, selected_row: "author=not_used, noauthor=used, title_only=does_not_join", selected_at: prereg-tag2b}
+    selected_row_note: "in pilot stage 3 this row leaves 6.4% of API-hosted citations unresolved (0% to 13.6% by cell)"
+    review_dvs_api_hosted: not measured (stated limit)
+    review_dvs_open_weight: review tolerance repeat of the 480 stage-3 reviewed runs (descriptive)
+    exact_duplication_expected: false
+  software_environment:
+    language: Python
+    python_version_used: "3.14.0 (CPython)"
+    python_required: ">=3.12 for the tag2_values digits to match exactly (earlier versions change the last digit of a few values); package metadata says >=3.10"
+    platform_used: macOS 27.2, arm64
+    packages_used: {PyYAML: 6.0.3, pydantic: 2.14.1, pydantic_core: 2.50.1, annotated-types: 0.8.0, typing_extensions: 4.16.0, typing-inspection: 0.4.4}
+    dev_packages: {pytest: 9.2.0}
+    analysis_dependencies: standard library only (no numpy or scipy)
+    lock_file: <to add to the replication package>
+    keys: read from environment variables or an --env-file; never stored in any file
+
+# ---------------------------------------------------------------------------------------------------------------
+# 9. Validation
+# ---------------------------------------------------------------------------------------------------------------
+validation:
+  pilot_hand_checks:
+    cases: {venue_matching: 100, title_only: 100, near_miss: 100}
+    coders: two study-team members; half of each check to each coder; sheets blind to verifier label, rule prediction, Doer and cell
+    key: {sha256: b951672952e29d08f7c085b4e0d0994cb5bcef1c136a0cc1f471c1b4152d38b6, withheld_until: scoring}
+    bars:
+      near_miss_branch_used_if: ">= 45 of its 50 cases agree"
+      author_rule_joins_if: ">= 90 of 100 title_only citations are real works cited with wrong authors"
+    coder_instructions: {version_1: "2026-11-08, sha256 ea4b1a18804d00699a9d490ed4d25badc158f8efb2d7d9057414bba8bd137a82", coding_manual_added: "2026-11-10T03:05Z (page version 4); one-sentence key rules 03:19Z (version 5)", answers_last_changed_before_manual: {coder_1: 59, coder_2: 3}}
+    design: split (each case coded by one coder, half each, as drawn); no inter-rater statistic
+    coder_rule_defaults: {U_with_note: "stays U (not agreement)", preprint_record: "judged as shown"}
+    status: done (sheets filed 2026-11-12T01:41Z; scored 01:43Z, 0 sheet problems)
+    scorer: {file: score_handchecks.py, sha256: ba7ce8fae17088814d4093288df2ddb6ed130c8d319f054a7085d4e47471162e}
+    results:
+      near_miss_with_cited_author: {agree: 16, of: 50, bar: 45, decision: not used}
+      near_miss_without_cited_author: {agree: 50, of: 50, bar: 45, decision: used}
+      title_only_same_work_wrong_authors: {agree: 71, of: 100, bar: 90, decision: author rule does not join}
+      venue_matching: {agree: 68, of: 100, decided_cases: "68 of 80 (85%; Wilson 95% 76% to 91%)", sets: nothing, review: "done; no fix"}
+    scores_file: {file: registration/handcheck_scores.md, json: registration/handcheck_scores.json, json_sha256: a5473cb9150c509b93f78a5f807596900e71e37b56209c48d3acfd8a6fb07947}
+    venue_review_finding: "the verifier does not expand conference acronyms, so a real proceedings paper cited under a short proceedings name (e.g. CHI, EMNLP) is labelled misplaced where the DV specification says off_venue: 6 of 40 sampled misplaced labels (15%; 7% to 29%). misplacement_rate overstated, venue_violation_rate understated; compliant_count, fabrication_rate, year_mismatch_rate and rehomed_rate unaffected. No fix (post hoc); reported beside H9's misplacement_rate result"
+  main_run_hand_checks:
+    near_miss_check: {cases: 50, branch: "without cited author (the only branch that decides citations)", changes_labels: false, status: "not run, by Author A's decision of 2026-11-13T23:40Z; a deviation from the registration, recorded in amendment no. 6, Part 7 (ecdb3790); it would have changed no label, and the pilot check of that branch (50 of 50) remains the evidence for it", result: null}
+    verifier_validation:
+      cases: 100
+      coding: double-coded blind by two coders
+      changes_rules: false
+      status: "done: fixed before the draw in note dda421f7; drawn 2026-11-12T15:09Z; scored 2026-11-13T23:36Z"
+      result:
+        raw_agreement: {agree: 95, of: 100, share: 0.950, ci95_wilson: [0.888, 0.978]}
+        cohens_kappa: {value: 0.902, ci95_bootstrap: [0.820, 0.980], resamples: 2000, resampled_within: the two strata, seed: 20261107}
+        precision_verifier_fabricated: {both_coded_n: 48, of: 49, share: 0.980, ci95_wilson: [0.893, 0.996]}
+        precision_verifier_real: {both_coded_s: 44, of: 46, share: 0.957, ci95_wilson: [0.855, 0.988]}
+        precision_counted_over: cases where both coders gave the same S or N
+        overall_accuracy_weighted: {value: 0.977, weights: {fabricated: 85130, real: 11287}}
+        u_or_disagreement: {cases: 5, disagreements: 5, with_a_u: 2, adjudicated: false}
+        precision_by_route_descriptive:
+          fabricated_near_miss_noauthor: {drawn: 5, both_agreed: 4, verifier_right: 4}
+          fabricated_offlist_default: {drawn: 17, both_agreed: 17, verifier_right: 17}
+          fabricated_verifier: {drawn: 28, both_agreed: 28, verifier_right: 27}
+          real_verifier: {drawn: 50, both_agreed: 46, verifier_right: 44}
+      files:
+        draw_script: {file: draw_verifier_validation.py, sha256: 8683f76bec6c31211a5f68e5fcdea29ae0ac0f7bdc1f3dd87146e0fd3c0481b0}
+        sheet_sha256: e8d117f27fac63fcc1a0c8527686ee34123dd5e408fd3b8110902d25d9f73c58
+        key_sha256: f66068b8e9b8ed104ab70215db03f48c793f22c6e39a906741856ac1e35b0774
+        scorer: {file: score_verifier_validation.py, sha256: f9a3ce86a0e3f9231aa31a9b4bfaa2573eb90f31cbd1883cec1a5bfc1f45fbc4}
+        scores_json_sha256_as_written: 1f3123600e574a9e75d7c48306880a1aceed3f55a99e293c2ec7f799b652ddcf   # the package copy names the coders Author A and Author B, so its hash differs
+      record: "AMENDMENTS.md, note on the verifier validation scores (2026-11-16)"
+  served_model_checks: "0 mismatches of 20408 replies"
+
+# ---------------------------------------------------------------------------------------------------------------
+# 10. Spending (registered caps and actual spend)
+# ---------------------------------------------------------------------------------------------------------------
+spending:
+  main_run_caps_usd: {api_hosted: 225.00, open_weight: 22.50, live_searches: 23.00}
+  main_run_spend_usd: {api_hosted: 139.95, open_weight: 15.77, lead_plans: 0.69, live_searches: {searches_billed: 16187, usd_approx: 16.19, note: "includes the two retry searches"}}
+
+# ---------------------------------------------------------------------------------------------------------------
+# 11. Release and archive
+# ---------------------------------------------------------------------------------------------------------------
+release:
+  during_review: <journal-approved upload of this file, the Artifact Note and a code-and-data archive; anonymous link if the Author Guide allows>
+  on_acceptance: <stable public archive with a DOI>
+  licences: {code: MIT, data_and_docs: CC BY 4.0, decided: "authors, 11 Nov 2026", excluded: "third-party text (the conference mini-track titles and descriptions in the task file), shared with source URLs under its own terms"}
+  ai_generated_content_notice: all model replies in the logs are AI-generated

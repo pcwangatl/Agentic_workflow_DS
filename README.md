@@ -13,6 +13,8 @@ Authors are withheld during peer review.
 | [registration/tag1_hashes.sha256](registration/tag1_hashes.sha256) | SHA-256 hashes of the 62 code, prompt, config, task and list files frozen at `prereg-tag1` |
 | [registration/amendment3_hashes.sha256](registration/amendment3_hashes.sha256) | SHA-256 hashes of the 70 files frozen after amendment no. 3 (pilot stage 2b) |
 | [AMENDMENTS.md](AMENDMENTS.md) | Every dated change made after the first registration tag |
+| [artifact/b1_level1_config.yaml](artifact/b1_level1_config.yaml) | The Level 1 research configuration: the design, actors, parameters, data provenance, analytical targets, replication requirements and scope conditions as structured fields |
+| [artifact/ARTIFACT_NOTE.md](artifact/ARTIFACT_NOTE.md) | A short note on what the Level 1 file holds and how to use it, with the licence statement |
 
 The prompt file, config, verifier version and analysis code are added as the registration tags below require. A hash file (SHA-256) of every frozen file is added at the second tag.
 

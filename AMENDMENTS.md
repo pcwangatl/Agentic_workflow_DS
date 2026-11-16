@@ -540,3 +540,52 @@ decision of 13 November 2026, 23:40 UTC, it is not run.
 The registered verifier validation (note `dda421f7`) is not affected. It was run and scored as registered on 13
 November 2026 at 23:36 UTC, with `score_verifier_validation.py`
 (`f9a3ce86a0e3f9231aa31a9b4bfaa2573eb90f31cbd1883cec1a5bfc1f45fbc4`).
+
+**Note on the verifier validation scores (2026-11-16, US Eastern).** Times are UTC. This note reports the verifier
+validation that the note of 12 November (`dda421f7`) fixed before the draw. The validation was run and scored as
+that note registers (amendment no. 6, Part 7).
+
+*The run.*
+- **The draw** ran at 15:09 on 12 November, after that note was pushed at 15:08, with the draw script it names. It
+  wrote the coding sheet, `verifier_validation_100.csv`, SHA-256
+  `e8d117f27fac63fcc1a0c8527686ee34123dd5e408fd3b8110902d25d9f73c58`, and the key, `verifier_validation_key.csv`,
+  SHA-256 `f66068b8e9b8ed104ab70215db03f48c793f22c6e39a906741856ac1e35b0774`. The key was kept from both coders.
+- **The coding.** Author A and Author B each coded all 100 cases on the sheet. Their answer files have SHA-256
+  `4b704ac0ecbc62240aa616ea3b1cb8b3f46cd3f004e3fefe1784f14edc8ddcc6` (Author A) and
+  `1386c9aa2d6bc74d4f967354a8ce39f25a860b435cf0655cd87f1c1cc112332a` (Author B).
+- **The scoring script** is `score_verifier_validation.py`, SHA-256
+  `f9a3ce86a0e3f9231aa31a9b4bfaa2573eb90f31cbd1883cec1a5bfc1f45fbc4`. It was last changed at 15:15 on 12 November,
+  and it makes no request. It scored both answer files at 23:36 on 13 November and wrote `scores.json`, SHA-256
+  `1f3123600e574a9e75d7c48306880a1aceed3f55a99e293c2ec7f799b652ddcf`, and `scores.md`. These two files name the
+  coders. The copies in the replication package call them Author A and Author B, so their SHA-256 sums will differ.
+
+*The results,* in the order the note of 12 November lists them.
+
+| Measure | Result | 95% interval |
+| --- | --- | --- |
+| Raw agreement | 95 of 100 (0.950) | 0.888 to 0.978 (Wilson) |
+| Cohen's kappa | 0.902 | 0.820 to 0.980 (bootstrap: 2,000 resamples within the two strata, seed 20261107) |
+| Verifier precision, verifier-fabricated (share both coders agreed N) | 48 of 49 (0.980) | 0.893 to 0.996 (Wilson) |
+| Verifier precision, verifier-real (share both coders agreed S) | 44 of 46 (0.957) | 0.855 to 0.988 (Wilson) |
+| Overall accuracy, the two strata weighted 85,130 : 11,287 as in the frame | 0.977 | — |
+
+- **Answers.** Author A: 47 S, 51 N and 2 U. Author B: 48 S and 52 N.
+- **Where both coders agreed,** the verifier was wrong in three cases: one it labelled fabricated that both coded S,
+  and two it labelled real that both coded N.
+- **Cases with a U or a disagreement: 5.** All five are disagreements, and two of them have a U from Author A. One is
+  a fabricated case from the near-miss rule, and four are real cases labelled by the verifier (table below). They are
+  listed in the scores file and are not adjudicated.
+
+*Precision by labelling route, as a description.*
+
+| Stratum | Route | Drawn | Both coders gave the same S or N | Verifier right |
+| --- | --- | --- | --- | --- |
+| Fabricated | `near_miss_noauthor`: the near-miss rule, branch without a cited author (amendment no. 5) | 5 | 4 | 4 |
+| Fabricated | `offlist_default`: an off-list or no-journal miss, labelled fabricated without a live search (amendment no. 5) | 17 | 17 | 17 |
+| Fabricated | `verifier`: the verifier's own label | 28 | 28 | 27 |
+| Real | `verifier`: the verifier's own label | 50 | 46 | 44 |
+
+The validation changes no rule and no label.
+
+*When this was written.* On 16 November 2026, after the main-run analysis, the exploratory runs of 12 to 14 November
+and amendment no. 6. The figures are copied from `scores.json`; no case was scored again.
