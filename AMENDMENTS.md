@@ -13,6 +13,7 @@ Changes to [PREREGISTRATION.md](PREREGISTRATION.md) or to any frozen file made a
 | 3 | 2026-11-07 (US Eastern) | 2 (step 2), 4 (paper format; Lead plans), 5 (pilot table), 7 (what is the same; pilot table), 9, 10 (stages 0, 2, 2b and 3; main-run ceiling), 13, 14, 15, Appendices A and B; DV specification sections 6 and 7 | The study's paper format becomes the honest-option format, and a new pilot stage 2b tests it before stage 3. Both stage-2b formats give each paper as separate fields (title, authors, year, journal, summary) with no full-reference entry. The control keeps the old forced-list rule: the journal must be one of the 34, written as listed. The honest-option format adds one clause, which lets the Doer return a real paper from another journal, under its real journal, when it cannot recall enough real papers from the approved journals, and one true/false field, `honest_option`, that marks such a paper. The field is a self-report: it never sets a label or a DV, and its shares are reported beside `rehomed_rate`. Stage 2b drafts the 160 high-Lead drafts (120 in the open-weight arm) in each format at the same time, with the stage-2 Lead plans, and is verified as stage 2 was, including the 10% check. The stage-2 gate applies unchanged, with the stage-2b control in place of the old-format arm. Stage 3, the tolerance copies and the main-run ceiling use the honest-option format. Stage-2b spending is capped at $6.00 in all: $1.90 API-hosted, $0.70 open-weight and $3.40 of live searches. Hashed files: two prompt files and six configs are added, and the parser, ledger, prompt builder, workflow, config script and DV script change so that the field is kept, shown to reviewers and counted. The existing prompt files and configs are unchanged. [registration/amendment3\_hashes.sha256](registration/amendment3_hashes.sha256) lists all 70 hashed files. | Pilot stage 2 (7 November 2026) failed its gate. Pooled over the API-hosted Doers, `fabrication_rate` was 91.3% in the honest format against 17.4% in the old forced-list arm, where the limit was 3 points higher. In the open-weight arm it was 99.97% against 89.0%. Re-homing was halved for three of the four API-hosted Doers. The arm that kept the full-reference entry with the honest venue field had 11.3% and passed every gate line, so the rise came from dropping that entry. The study team chose a format without the full-reference entry, and to test an explicit honest option against a same-time control that also has no such entry. | Lead plans for the 10 pilot mini-tracks; pilot stage 1 (1 mini-track, both arms); pilot stage 2 (480 API-hosted and 360 open-weight drafts in three formats), its verification and its 10% check. No stage-2b, stage-3 or main-run data. |
 | 4 | 2026-11-07 (US Eastern) | 4 (Lead plans; how audits are handled), 5 (pilot tables), 10 (stage 2b; main run), 14, 15, Appendices A and B | Pilot stage 2b failed its gate in both arms. In the API-hosted arm, the pooled lines passed: `fabrication_rate` was 87.5% in the honest-option format against 94.2% in the control, refusal 1.9% against 4.4%, and parse 100% in both. Re-homing was lower for all four Doers and was halved for Claude Haiku 5.5 (3 of 31 real works, 9.7%, against 3 of 14, 21.4%) and Claude Sonnet 5.5 (4 of 295, 1.4%, against 6 of 65, 9.2%). It was not halved for DeepSeek Flash (14 of 125, 11.2%, against 4 of 25, 16.0%) or DeepSeek V4-Pro (13 of 168, 7.7%, against 14 of 92, 15.2%, where half is 7.6%). In the open-weight arm, almost every paper was invented in both formats (99.89% against 99.91%; 4 real papers of 3,692 against 3 of 3,435), and no draft held a compliant paper. Re-homing rested on 0 to 3 real papers per Doer, so it could not be compared, and that arm's halving line failed. The 10% live-search check found no real paper among 1,106 sampled misses, so no full search was needed. The honest-option format stays the study format in both arms. This amendment makes no other change to the open-weight arm. Whether its stage 3 and main run go ahead is decided and recorded before they run. DeepSeek Flash and DeepSeek V4-Pro are flagged. They stay in every primary verdict, and every verdict is also reported without them, as section 10 already does for a Doer above its ceiling. In the honest-option format, the Auditor's instructions gain one paragraph on papers marked `honest_option: true`, and the revising Doer's replacement line names the "However" rule (Appendix A). The Doer's draft prompt and the control format are unchanged. Before stage 3, a review check runs once on the stage-2b drafts. The 157 answered honest-option high-Lead API-hosted drafts each go through the full review under the new wording, with the other vendor's high-tier Auditor. No new drafts are made. Its data never enter the analysis. It reports the Auditor's rulings on papers whose labels are already known, and the final lists against their drafts. API-hosted spending is capped at $26.00 and live searches at 2,500 searches, which cost $2.50, so the check costs $28.50 at most; the expected spend is about $11–16.50. Hashed files: the honest-option prompt file changes. The runner gains `--drafts-prompt-file`, so that a review can reuse drafts made under an earlier prompt file only when that file has the source run's hash and gives an identical Doer draft prompt. The prompt code gains the hash this check uses. [registration/amendment4\_hashes.sha256](registration/amendment4_hashes.sha256) lists all 70 hashed files; three changed. The code commit is 37832fb95c2ec3a6038886c6c46ca1477a1a11bb. | Stage 2b drafted lists without any review, so it could not show how the Auditor treats a paper marked `honest_option: true`. A check of the registered Auditor prompt found that it never said. The Auditor reads requirement 3 as written for the Doer, where a paper in another journal "does not count", so it could remove a real paper from another journal. It could also take the mark as a sign that a paper is real. The new paragraph keeps the existing bar for every paper: a paper the Auditor believes is made up is removed, whatever its mark. The honest-option format was kept because, in the API-hosted arm, it was as good as or better than the control on every pooled line and lowered re-homing for every Doer. It also gave three times as many real papers per answered draft (3.94 against 1.28) and twice as many compliant ones (0.66 against 0.33). The two halving failures rest on few papers: Flash's control rate comes from 4 re-homed papers of 25 (mini-track bootstrap 95% interval 0–46.2%), and V4-Pro missed half by 0.1 point. In the open-weight arm the two formats did not differ. | Lead plans for the 10 pilot mini-tracks; pilot stages 1, 2 and 2b (drafts, labels and the 10% checks). No list had yet been reviewed in the honest-option format. No stage-3 or main-run data. |
 | 5 | 2026-11-08 (US Eastern) | Status line, 2 (step 5), 7 (open-weight arm), 10 (stage 3; hand checks), 11 (cut-off and unreadable replies), 13, 14, 15, Appendix B; DV specification sections 2, 6 and 7 | **Stage-3 result.** Pilot stage 3 ran on 7 and 8 November 2026. In the API-hosted arm, 115 of 16,533 replacements (0.70%) only moved a rejected paper to another approved journal, and no new failure type appeared, so the first and third lines of its gate passed; its cost line is settled when the main-run cap is set at `prereg-tag2`. In the open-weight arm the first line failed: 393 of 7,963 replacements (4.9%), and 3.5% in the review tolerance repeat. **Open-weight arm.** The arm becomes an exploratory boundary-condition check. It tests no hypothesis and has no verdict, gate, p-value or pooled estimate. In the main run it runs the full grid on the 50 full-grid mini-tracks (1,200 drafts and 2,400 reviewed runs), with the registered models, settings, prompts and run order, and it does not run the 29 drafts-only mini-tracks. Every registered DV is reported for every cell, with mini-track cluster-bootstrap 95% intervals, in a section of its own after the confirmatory results. Its citations are labelled from Crossref and the local copy alone, with no live search. Its spending has its own ledger and cap, set at `prereg-tag2`, and a spend stop in this arm does not affect the API-hosted arm. **Live searches.** A citation that names a journal outside the 34 or no journal, and that Crossref and the local copy do not find, is labelled fabricated without a live search, as approved-journal misses already are. The four poorly indexed approved journals keep the live search. The 10% check of amendment no. 2 is widened to these citations. It is drawn within each Doer, each list type (citations that appear in a draft; citations that first appear in a revision) and each kind of miss (approved journal; other or no journal), with seed 20261107, by a draw script named by its SHA-256 in a dated note before the draw. If more than 3% of the drawn citations of the second kind in a Doer and list type are real works, every such citation in that Doer and list type gets the live search and its label. The check of approved-journal misses changes no label, as before. **Near misses.** The verifier and its stored labels are unchanged; the analysis code applies these rules on top of them. A citation with a fuzzy title (similarity 0.80 to 0.90) or a short title counts as a real work with a minor title error when a cited author is on the matched record, and then goes through checks 2 to 5; with no cited author on the record it is fabricated. Each of these two branches is used only if a person agrees with it in at least 45 of 50 pilot cases; a branch that fails leaves its citations unresolved. The `title_only` check adds the author rule only if at least 90 of its 100 citations are real works cited with wrong authors. A citation to a poorly indexed approved journal that no source finds stays unresolved. A citation whose journal name the verifier marks uncertain keeps the verifier's label. **Hand checks and a new tag.** The registered hand checks on pilot data no longer have to finish before the main run. They must finish before a new tag, `prereg-tag2b`, cut after the main run's data collection and before any main-run citation is labelled or any main-run DV is computed. `prereg-tag2` still comes before the main run and freezes the Lead plans, the ceilings, the tolerance numbers, the caps and the analysis code, with every possible hand-check outcome built in. `prereg-tag2b` records the hand-check results, the decisions they set by the bars above, and the SHA-256 of every main-run output file. A third hand check joins the two registered ones: 100 stage-3 API-hosted citations with a fuzzy or short title, 50 with a cited author on the record and 50 without, drawn with seed 20261107 by a draw script named by its SHA-256 in a dated note before the draw. After the main run, a person checks 100 citations decided by the near-miss rule, 50 per branch, and the agreement is reported; this changes no label. **Auditor replies.** An Auditor reply cut off at the output limit, or still unreadable after its repair turn, ends the run, and the Doer's current list is the output, flagged `review_truncated` or `review_parse_error`. This matches the frozen code. No hashed file changes. | The open-weight arm failed a stage-3 gate line twice, and the Doer behind the failure changed between the two runs (Qwen3-14B at 10.1%, then Qwen3.8-27B at 7.5%), so dropping one Doer would not fix it. In stages 2b and 3, 99.6–99.9% of its papers were invented and no list held a compliant paper, so its contrasts on `compliant_count` cannot move and its fabrication contrasts sit at the ceiling. A fix would mean tuning a treatment after seeing pilot data. In the pilot's paid label searches, 131 of 8,230 API-hosted citations (1.59%) and 2 of 2,441 open-weight citations (0.08%) were real works. Labelling these citations fabricated without a search therefore overstates `fabrication_rate` by about 0.6 points in the API-hosted arm, and the widened check measures this in the main data. A real paper in one of the four poorly indexed journals can be compliant, so their labels do not change. In stage 3, 2,804 of 16,447 API-hosted citations (17%) went to adjudication, which scales to about 26,000 cases in the main run, far more than people can decide one by one. Left unresolved, their share of final lists ranged from 3.2% to 29.1% across cells and was lowest under Sonnet Auditors, so the two bounds of the Auditor contrasts (H3, H9) could differ by up to about 25 points. The near-miss rule is the registered real-work test (a title match and a cited author) with the title bar lowered from 0.90 to 0.80 when an author matches. In stage 3 the fuzzy titles split 264 with a cited author on the record and 1,396 without. Moving the hand checks after data collection takes them off the main run's critical path. They use pilot data only, the bars that turn their results into decisions are fixed here, and no main-run citation is labelled until the results are recorded, so no main-run result can inform them. Three exits appeared for the first time in stage 3: `review_refusal` once, `review_truncated` three times and `review_parse_error` twice. The frozen code and the final output rule handle them, but section 11 named cut-off and unreadable replies only for drafts and revisions. | Lead plans for the 10 pilot mini-tracks; pilot stages 1, 2, 2b and 3, with their labels, their 10% checks and the open-weight review tolerance repeat; the amendment-4 review check. Pilot data never enter the analysis. No main-run data existed. |
+| 6 | 2026-11-15 (US Eastern) | 6 (Hypotheses: how the paper presents them), 8 (Dependent variables: post-registration constructs), 10 (Pilot gates: the main-run near-miss check); names only: the notes to `prereg-tag2` and `prereg-tag2b` and `registration/handcheck_scores.md` and `.json` | Adds four post-registration constructs and a looser author rule, reported beside the registered DVs; groups the registered hypotheses under named constructs; adds one exploratory cost-effectiveness measure; records that the main-run near-miss hand check is not run; calls the authors Author A and Author B. The registered labels, rules, DVs, contrasts and verdicts do not change. | The constructs group the registered citation checks in the terms of the hallucination literature, for the paper. The authors are withheld during peer review. | Every main-run label, DV and registered result; the exploratory runs of 12 to 14 November 2026 |
 
 **Note to amendment no. 2 (2026-11-06, US Eastern).** The draw script for the 10% live-search check is `sample_openalex.py`, SHA-256 `c235d677b0d9a094aebe9bba0da9ff40f1b5ddc2e20f92710d4280fea1ce8921`. It was fixed before the draw was run and is published with the replication package. The $8 cap on the pilot's stage-2 live searches covers both the searches in step 3 and the check.
 
@@ -74,12 +75,12 @@ The main-run 10% draw script is `sample_openalex_main.py`, SHA-256 `382cdab27368
 
 | Coding sheet | SHA-256 |
 | --- | --- |
-| Near miss, PC | `b492cf3151ec32ccdf8211ddc119ab87d0bd906761b33d42f1324f7e1845e267` |
-| Near miss, Rain | `cc37243332eb7241335a86e00b9448ffbe905e84e8520e8696a0153f2a15c4cb` |
-| `title_only`, PC | `68c1b6bbcdba3773f8c6262ce7234d118250a679f56c4a4efe9b6689172b4c34` |
-| `title_only`, Rain | `69fba3e75114deecb0d25462db336cd482f9dcfbeb02f75b6f0ecaab5c84a77d` |
-| Venue, PC | `fa1dc70ed9ac6b60a22658d3e130ef53be7eb6b28a5d9e25bd59932a025a1066` |
-| Venue, Rain | `925797100820079fefb39111ead20e54e7c5a93ad170bd45beeaf2c9bca40a0f` |
+| Near miss, Author A | `b492cf3151ec32ccdf8211ddc119ab87d0bd906761b33d42f1324f7e1845e267` |
+| Near miss, Author B | `cc37243332eb7241335a86e00b9448ffbe905e84e8520e8696a0153f2a15c4cb` |
+| `title_only`, Author A | `68c1b6bbcdba3773f8c6262ce7234d118250a679f56c4a4efe9b6689172b4c34` |
+| `title_only`, Author B | `69fba3e75114deecb0d25462db336cd482f9dcfbeb02f75b6f0ecaab5c84a77d` |
+| Venue, Author A | `fa1dc70ed9ac6b60a22658d3e130ef53be7eb6b28a5d9e25bd59932a025a1066` |
+| Venue, Author B | `925797100820079fefb39111ead20e54e7c5a93ad170bd45beeaf2c9bca40a0f` |
 
 When this note was written, these data existed:
 - the Lead plans for the 10 pilot mini-tracks and the main-run mini-tracks;
@@ -136,7 +137,7 @@ Every mini-track has all of its planned runs, and no failed run remains (see bel
   - It is the only such run in either arm. The API-hosted arm, which carries every confirmatory test, has none.
 
 *Hand checks (amendment no. 5).*
-- **Sheets and instructions.** The six coding sheets of the tag-2 note and the coder instructions (SHA-256 `ea4b1a18804d00699a9d490ed4d25badc158f8efb2d7d9057414bba8bd137a82`) went to PC and Rain at 19:31 on 8 November, after the `prereg-tag2` release. The instructions give the questions and answer letters, and they do not say what the rule predicts.
+- **Sheets and instructions.** The six coding sheets of the tag-2 note and the coder instructions (SHA-256 `ea4b1a18804d00699a9d490ed4d25badc158f8efb2d7d9057414bba8bd137a82`) went to Author A and Author B at 19:31 on 8 November, after the `prereg-tag2` release. The instructions give the questions and answer letters, and they do not say what the rule predicts.
 - **The coding page.** The coders worked on a coding page that holds only the sheet columns. It was published five times:
   1. 19:57 on 8 November: the instructions' questions and answers, with saving and export;
   2. 22:38 on 8 November: a note box with four note tags;
@@ -144,25 +145,25 @@ Every mini-track has all of its planned runs, and no failed run remains (see bel
   4. 03:05 on 10 November: a coding manual with a rule and examples for each sheet, and a request to re-check earlier answers;
   5. 03:19 on 10 November: a one-sentence key rule for each sheet.
 
-  The text of each version, with SHA-256 sums, is kept for the replication package. 59 of PC's answers and 3 of Rain's were last changed before version 4. The page does not record whether those cases were re-read.
+  The text of each version, with SHA-256 sums, is kept for the replication package. 59 of Author A's answers and 3 of Author B's were last changed before version 4. The page does not record whether those cases were re-read.
 - **Two rule questions.** Two coder-rule questions were left at their stated defaults: a U with a note stays U, and a preprint record is judged as shown.
   - Counting all five U answers as agreement would give 18 and 74, still under both bars.
   - Two venue cases whose record is a preprint server (venue-096, venue-058) were coded Y from where the paper appeared, not from the record as shown. They are scored as given. The venue check sets no rule.
-- **Who coded what.** Each case was coded by one coder, half by each, as the draw assigned them. No case was coded by both, so these checks report no inter-rater statistic. Three answers PC entered under Rain's case IDs were stored under PC's own account. They are on neither sheet and were not scored.
-- **Filed sheets.** PC's last save was at 19:22 on 11 November and Rain's at 01:35 on 12 November. The filled sheets were filed at 01:41 on 12 November. Each one differs from its handed-out sheet only in the answer and note columns.
+- **Who coded what.** Each case was coded by one coder, half by each, as the draw assigned them. No case was coded by both, so these checks report no inter-rater statistic. Three answers Author A entered under Author B's case IDs were stored under Author A's own account. They are on neither sheet and were not scored.
+- **Filed sheets.** Author A's last save was at 19:22 on 11 November and Author B's at 01:35 on 12 November. The filled sheets were filed at 01:41 on 12 November. Each one differs from its handed-out sheet only in the answer and note columns.
 
 | Filled sheet | SHA-256 |
 | --- | --- |
-| Near miss, PC | `5c9951b475894ec876e976c4d5f6767993e128fb945d4871e524dd995753307e` |
-| Near miss, Rain | `ed69d42dfe2d3c8ef74097786ba413676f2d3402d308def2a7afb55c78be66bb` |
-| `title_only`, PC | `3cb6b2a672e6d67f64dfe0ed999fa9ff550d3112f79816f346cc949d548b39f9` |
-| `title_only`, Rain | `be1adec66a2a45db731acabbafdcd2bf46141dbebebc749bb532574238532af2` |
-| Venue, PC | `c0ed9295ba772f666bb63ab6b71c6185b93b5d47049a7dc799a629ea237d774d` |
-| Venue, Rain | `3ecf8cbc9d5413187e891a95d11d80d374459543924e8b78d8fe36530cf0aee2` |
+| Near miss, Author A | `5c9951b475894ec876e976c4d5f6767993e128fb945d4871e524dd995753307e` |
+| Near miss, Author B | `ed69d42dfe2d3c8ef74097786ba413676f2d3402d308def2a7afb55c78be66bb` |
+| `title_only`, Author A | `3cb6b2a672e6d67f64dfe0ed999fa9ff550d3112f79816f346cc949d548b39f9` |
+| `title_only`, Author B | `be1adec66a2a45db731acabbafdcd2bf46141dbebebc749bb532574238532af2` |
+| Venue, Author A | `c0ed9295ba772f666bb63ab6b71c6185b93b5d47049a7dc799a629ea237d774d` |
+| Venue, Author B | `3ecf8cbc9d5413187e891a95d11d80d374459543924e8b78d8fe36530cf0aee2` |
 
 *Scores.* `score_handchecks.py` (SHA-256 `ba7ce8fae17088814d4093288df2ddb6ed130c8d319f054a7085d4e47471162e`) scored the sheets at 01:43 on 12 November against the key (`b951672952e29d08f7c085b4e0d0994cb5bcef1c136a0cc1f471c1b4152d38b6`), with no sheet problem. In the near-miss and `title_only` checks a U is not agreement with the rule. Its output is [registration/handcheck\_scores.md](registration/handcheck_scores.md), with a machine-readable copy [registration/handcheck\_scores.json](registration/handcheck_scores.json).
 
-| Check | Answers (PC; Rain) | Score | Bar | Decision |
+| Check | Answers (Author A; Author B) | Score | Bar | Decision |
 | --- | --- | --- | --- | --- |
 | Near miss, cited author on the record (rule: same work) | S 9, N 15, U 1; S 7, N 17, U 1 | 16 of 50 | 45 of 50 | Not used: its citations stay `unresolved` |
 | Near miss, no cited author on the record (rule: not the same work) | N 25; N 25 | 50 of 50 | 45 of 50 | Used: its citations are `fabricated` |
@@ -299,3 +300,243 @@ The validation changes no rule and no label.
 
 *When this was fixed.* When this note was written, the main-run labels and the main-run analysis existed. The draw
 script had been written and hashed at 12:44, and no validation case had been drawn.
+
+**Amendment no. 6 (2026-11-15, US Eastern).** Post-registration constructs and a looser author rule, reported beside the registered DVs; the paper's grouping of the registered hypotheses; one exploratory cost-effectiveness measure; a registered check that is not run; and the authors' names. The row in the table above sums it up. The parts below give the exact text.
+
+*Part 1. Status and dated record.*
+
+1. **Written after the results.** The registered analysis ran at 04:47–04:50 UTC on 12 November 2026. The registered
+   labels, rules, DVs, contrasts and verdicts (sections 6 and 8, the DV specification, and the notes up to `dda421f7`)
+   stay the study's confirmatory results, as registered and computed.
+2. **Everything below is post-registration.** It is reported beside the registered results, never in place of them. It
+   carries no verdict, and its tests are exploratory. They are reported at raw p and labelled uncorrected: no
+   multiple-comparison adjustment is used, by Author A's decision (as for the registered tests).
+3. **Each change was written down, dated, before it was computed.** Files are in the replication package.
+   - **12 Nov 2026, 21:17 UTC.** First definition of the factual and faithful constructs:
+     `NOTE_2026-11-12_factual_faithful.md`, `4108514f0d4a7077a03a783ac40afd33bad466b686768dc35ef0a2616128b3bd`.
+   - **13 Nov 2026, 16:56 UTC.** Revised definitions with the author rule of Part 3:
+     `NOTE_2026-11-13_factual_faithful_loose.md`, `eb043f19e032d6681fbd06c4d80deb11b9e3a2f92b6f130c4e497d5f59825b86`.
+     - Author rule: `author_loose.py`, `f133f30fac1a8a4ec3cf5c93fc30689f70b1a2f5d7b982eaa2f6c40c8ec45810`; its counts
+       `author_loose.json`, `d3cef9be1e2c588fef7198ab24c1b0e76363853a3d28de30a845b1b046f8554e`.
+     - Construct estimates: `factual_faithful_loose.py`,
+       `77bb5c356b5352c71f801de3ec5607db370858cae7f953cb23004f2b6f8d956b`; output `factual_faithful_loose.json`,
+       `1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1`.
+   - **13 Nov 2026, 23:40 UTC.** The main-run near-miss hand check is not run (Part 7). Author A's decision, recorded here.
+   - **14 Nov 2026, 00:04 UTC.** The exploratory cost-effectiveness measure (Part 5):
+     `NOTE_2026-11-14_cost_effectiveness.md`, `603b77c0aa78a274733716ec169a93791bcec52d3e602725f40e970a4d9536ed`.
+     - Script `cost_effectiveness.py`, `dc1f44402eac760c7852dee0e2d11927af3441f13a01105299b3158b01f15d49`; output
+       `cost_effectiveness.json`, `61a20dfb2e503fa3fc7b2837b74432c9e523d73d0f6afe2f387a02d4e220a3e1`.
+   - **14 Nov 2026, about 00:10 UTC.** Task cost is read as tokens and US dollars only (Part 2). Author A's decision, recorded
+     here.
+4. **Robustness checks, run offline after the results.** Author A gave the go at 00:21 UTC on 14 Nov 2026.
+   - **Dated note.** The checks were defined before any of them ran, in `NOTE_2026-11-14_robustness.md`
+     (`e673c941339d25241fa761a02db8c43296926bfd03f83502f22de0241ee4bef3`), written at 00:24 UTC.
+   - **Addendum.** The note has an addendum written at 00:26 UTC, before any B1 estimate existed. The first B1 run
+     stopped with no estimates: with compliant as the base, a mini-track that has no compliant citation gets an
+     infinite fixed effect. The addendum drops each mini-track in which one of the three categories never occurs, as
+     the registered fractional logit does for groups with no usable variation, and the count dropped is reported.
+   - **Every check that ran is reported, whatever it shows.**
+
+   **Set A: the registered checks of section 12** (Poisson, fractional logit, the 2,000-resample cluster bootstrap, the
+   unresolved bounds, journal-first order). The registered analysis computed them on 12 November (`results.json`,
+   `e6685474f48fc22c7d7081ecbbb720756061320bf508a4a0648736276397dc6f`). Nothing was refitted; they were only read out
+   beside the main estimates. They are reported as registered, and this is not a change.
+   - Script `robustness_setA.py`, `769c76c8cedf94589b0b6f1f317e7e2d9efd1970a52e46b3bc207e5830060825`.
+   - Output `robustness_setA.json`, `8508b397525620c5088d7fdfab1d0e3639f34edccbceb6c0b2992f63f3475b9b`, and `.md`,
+     `1b082790f980a8bd9db372b9314f293d24603e44b8b54fb4e606867fbddf9e85`.
+
+   **Set B: exploratory checks of the construct estimates** (Part 2), on all Doers and without the flagged Doers:
+   - **B1:** a fractional multinomial logit on each list's three shares, with compliant as the base, clustered by
+     mini-track, using the registered contrast weights.
+   - **B2:** every `misplaced` citation whose matched record is a proceedings paper is left out of each list's base,
+     and the construct rates are refitted.
+   - **B3:** the cross-vendor Auditor contrast within each Doer vendor, on the constructs, tokens and US dollars.
+   - Scripts: `robustness_setB.py`, `d9c1e41a1ffce660dc37b940a6a423e9d8edb498955679706b749877016d0969`;
+     `robustness_setB_mnl.py`, `31d875bea38ab41ed4784d0ea6fb47fb0c0fe3fcc2b727368b955c977a3c90c5`;
+     `robustness_report.py`, `84f838480a90e32e925d8f6c0e1d826d9dc71f50772f12e74552d2977c1a18ea`.
+   - Outputs: `robustness_setB_b1_mnl.json`, `dbcb4250ffabcef7931a272008e2a53db59cf31d9782d1160bd281c649ebec12`;
+     `robustness_setB_b2_b3.json`, `b3e80fad28fbd58944560ef7664972dd916a3e00c04e24e6fd9febbd071b2734`;
+     `robustness_setB.md`, `a91db32de97d6552c942e0a694abaec829a88c27ee85e9afc323126676a2336d`.
+
+5. **Approval.** Both authors approved this amendment on 15 November 2026 (US Eastern).
+6. **The authors' names.** In this repository's files the two authors are now called Author A and Author B. The same
+   commit replaces their names in the notes to `prereg-tag2` and `prereg-tag2b` above, and in
+   `registration/handcheck_scores.md` and `registration/handcheck_scores.json` (the coder rows and sheet names). Nothing
+   else in those files changes, and the tagged versions keep the earlier text.
+   - `registration/handcheck_scores.md`: `a35011914f0093ed7c92c1d380ec9db112eb53019105b532c1ad68a299616cc3` before,
+     `8262d0010d2d1056c6bdbe6bffc40d9252e0cddc5fb58c851de028fb7f9c81a6` after.
+   - `registration/handcheck_scores.json`: `a5473cb9150c509b93f78a5f807596900e71e37b56209c48d3acfd8a6fb07947` before,
+     `1bc01b2c979ef47a36b047604e3e205f1a6a7609e1b4d49a1e45094d0b598d6e` after.
+
+*Part 2. Post-registration constructs (outcomes).*
+
+Each outcome construct is defined in four parts: a conceptual definition, its domain, the unit it applies to, and an
+operational rule.
+
+**One outcome per citation.** Every resolved citation (the verifier found its record, or ruled it fabricated) gets
+exactly one of three outcomes: factual hallucination, faithful hallucination, or compliant (author-checked). The three
+are mutually exclusive and exhaustive over the resolved citations, so their shares add up to 1 on every list. The
+factual checks come first, and a citation can be faithful only if it passes all of them. The base of each share is the
+resolved citations, the base of the registered `fabrication_rate`.
+
+**Factual hallucination.**
+
+- **Conceptual definition.** A citation whose content conflicts with the verifiable bibliographic record, so that it
+  brings false knowledge into the output.
+- **Domain.** Fabrication (the work does not exist) and contradiction (the work exists, but a checked attribute is
+  wrong: its authors, journal or year). It excludes correctly described works, whatever their relevance or scope.
+- **Unit.** One citation in a returned list.
+- **Operational rule.** A resolved citation is a factual hallucination if no matching record exists, or if the
+  matched record differs on authors (loose A, Part 3), on journal, or on year by two or more.
+- **Registered labels it draws on:** `fabricated`, `year_mismatch`, `misplaced`, and real works of any other label
+  whose authors fail loose A.
+
+**Faithful hallucination.**
+
+- **Conceptual definition.** A citation to a real, correctly described work that departs from the constraints stated
+  in the task prompt, so that true knowledge is applied outside the requested scope.
+- **Domain.** Breaks of the prompt's explicit constraints: the approved journals and the publication window. It
+  excludes any citation with a factual error, which is classified as factual first. It also excludes topical
+  relevance, which is not one of the prompt's stated requirements and is not judged in this study.
+- **Unit.** One citation in a returned list.
+- **Operational rule.** A resolved citation with no factual error is a faithful hallucination if its journal is not
+  one of the 34 approved journals listed in the prompt (`off_venue`), or its year lies outside the prompt's window of
+  2010 to 2024 (`off_window`). This holds whether or not the Doer flagged it.
+- **Registered labels it draws on:** `off_venue` and `off_window`, when the authors pass loose A.
+
+**Compliant (author-checked), beside compliant (registered).**
+
+A real paper that passes every check: authors pass loose A, year within 1, right journal, on the list, 2010 to 2024. A
+missing subtitle is allowed. It draws on the registered `compliant` label, when the authors pass.
+
+**Task cost.**
+
+Tokens and US dollars per run (`tokens_total`, `cost_usd`), as the registered H7 reads them.
+
+**Rules that apply to all of them.**
+
+- **Order of checks.** A citation that fails several checks is counted once, under the first check it fails: exists,
+  then year, then journal, then authors (the factual checks), then list, then window (the faithful checks).
+- **Measurement rules.** The year tolerance (a year off by one is allowed, as registered) and the author rule of
+  Part 3 are this study's own measurement rules.
+- **Unresolved citations stay out** of every base, as registered (Part 3).
+- **Compliant (registered)** is the registered `compliant_count`, unchanged and confirmatory. "Compliant
+  (author-checked)" is the same idea with the Part 3 check added. It is a qualifier, not a new construct name.
+- **The Doer's flag plays no part.**
+  - A real paper cited under its own journal and year is faithful hallucination when it is off the list or off the
+    years. That holds whether or not the Doer set `honest_option` to true, including papers the honest option's
+    "however" clause let it return.
+  - An off-list paper cited under an approved journal it never appeared in (re-homed) has the wrong journal, so it is
+    `misplaced` and counts as factual hallucination, flagged or not.
+  - As registered, the flag never sets a label. It is reported beside `rehomed_rate` as the honest-option and mismatch
+    shares.
+- **The terms.** "Factual" and "faithful" are short labels for the split in the hallucination literature between
+  conflict with real-world facts (here, the bibliographic record) and departure from the instructions given in the
+  prompt. No person takes part in the task, so here "faithful" refers to the task prompt, not to a user or to a source
+  document. The manuscript gives the sources. Where the paper introduces the terms, it says that the registration
+  calls `off_venue` "a rule break, not a hallucination", and that both labels are real, correctly cited papers.
+- **Wall time is not part of task cost.** It varies with server load, and it is not recorded for Claude runs, which go
+  through the Batch API. The registered H7 still reports working time, as registered.
+
+*Part 3. Frozen label counts and the author rule ("loose A").*
+
+**Counts.** Unique citations, from the frozen labels file `rules_api/labels.jsonl`
+(`b7190f51d0bb131a31d3394b56e6fc892c26f454bfa020a5c300250ccfaa1c59`) and `author_loose.json` (Part 1):
+
+| Registered label | Citations | Authors fail loose A | Goes to |
+| --- | --- | --- | --- |
+| `fabricated` | 85,130 | — | factual |
+| `year_mismatch` | 1,341 | 427 | factual |
+| `misplaced` | 2,615 | 290 | factual |
+| `off_venue` | 6,269 | 434 | faithful (5,835); factual if authors fail (434) |
+| `off_window` | 158 | 4 | faithful (154); factual if authors fail (4) |
+| `compliant` | 904 | 107 | compliant (author-checked) (797); factual if authors fail (107) |
+| `unresolved` | 7,029, including 4,952 `title_only` | — | left out |
+| **All** | **103,446** (11,287 real) | **1,262** | |
+
+- **Construct totals** (sums of the rows above): factual 89,631; faithful 5,989; compliant (author-checked) 797. They
+  add up to the 96,417 resolved citations.
+- **Label names.** The labels file names the real works `unjudged` 904, `misattributed` 3,846, `off_venue` 6,379 and
+  `off_window` 158. The DV categories split `misattributed` into `year_mismatch` and `misplaced`, and count the 110
+  works with no journal on the record as `misplaced`, not `off_venue`.
+- **`title_only` stays unresolved** by Author A's decision: its registered hand check scored 71 of 100, under the bar of 90.
+- **Acronyms.** About 15% of `misplaced` labels (6 of 40 in the pilot venue check; Wilson 95% interval 7% to 29%) are
+  proceedings papers cited by acronym, which the DV specification would call `off_venue`. So factual hallucination is
+  overstated, and faithful hallucination understated, by that share. Check B2 (Part 1, item 4) leaves out every
+  `misplaced` citation matched to a proceedings paper.
+
+**The rule.** The registered first check already needs at least one cited author on the matched record. For real works,
+loose A adds one test:
+1. Names are lower-cased. Accents, hyphens, initials, "et al." and name order are ignored, and compound surnames are
+   split.
+2. Each cited author's surname parts are compared with all name parts of every author on the matched records
+   (Crossref, OpenAlex and the local copy, joined by DOI).
+3. **Wrong authors:** at least one cited author matches nobody on the record. An author the citation leaves out never
+   counts, and author order is not checked.
+
+The rule has no hand check, by Author A's decision; one will be run if a reviewer asks. Under the registration, author
+mismatch stays a flag (`author_mismatch_rate`, secondary), not a label.
+
+*Part 4. How the paper's hypotheses map to the registered ones.*
+
+**The registered H numbers do not change.** Each registered hypothesis keeps its deciding DV, test and verdict rule. A
+sign is flipped only where a factor is recoded, and the registered direction is reported as registered.
+
+| Paper hypothesis | Construct | Item and coding | Registered | Registered status |
+| --- | --- | --- | --- | --- |
+| HP1 | **Adding an Auditor** | Any Auditor (four levels averaged) vs none | H2 | Confirmatory |
+| HP2 | **Model capability**: one construct, three items, one per role | Item 1: high vs low Doer within vendor | H4a | Confirmatory |
+| | | Item 2: high vs low Lead within vendor | H8 | Confirmatory, directional |
+| | | Item 3: high vs low Auditor tier | H9 | Confirmatory (four-DV verdict) |
+| HP3 | **Task difficulty**: one construct, two items, both coded 1 = easier | Item 1: goal 3 (= 1) vs goal 10 | H1 (sign flipped) | Confirmatory |
+| | | Item 2: may-report (= 1) vs must-fill | H6 | Confirmatory |
+| | | Item 1 × item 2 | H6x (sign flipped) | Secondary |
+| HP4 | **Model heterogeneity** (mechanism: error independence) | Other-vendor vs same-vendor Auditor | H3 | Confirmatory, directional |
+| HP5 | **Adding an Auditor × task difficulty** (HP1 × HP3) | Any Auditor × goal | H5 (sign flipped) | Secondary |
+| — | **Task cost** | Every contrast above, on tokens and US dollars | H7 | Secondary |
+
+- **Items keep their own verdicts.** H4a, H8 and H9 each keep theirs, and so do H1 and H6 (H6 with its 10%
+  non-inferiority check on `compliant_count`). The paper does not merge them into one verdict per construct.
+- **H3's registered rationale is quoted as registered:** "a different model family brings more diverse knowledge".
+  "Model heterogeneity", with error independence as the mechanism, re-frames that rationale. It is not a new
+  prediction. Check B3 (Part 1, item 4) splits this contrast by Doer vendor, and the paper reports it beside the
+  pooled estimate.
+- **Every verdict is also reported without the flagged Doers** (DeepSeek Flash and DeepSeek V4-Pro), as amendment no. 4
+  requires.
+
+*Part 5. Exploratory: cost-effectiveness.*
+
+This measure was defined after the results, in the note of 14 November 2026, 00:04 UTC (Part 1), before it was
+computed. It has two parts:
+- **Per contrast in Part 4:** the drop in factual-hallucination points, per US dollar and per 1,000 tokens of added
+  cost per run. A ratio is given only where the cost rises and its 95% interval excludes 0.
+- **Per configuration:** the configurations that no other configuration beats on both mean factual rate and mean US
+  dollars per run.
+
+It carries no verdict. It is reported beside the registered H7 measures, which stay as registered.
+
+*Part 6. Why these constructs.*
+
+- **Outcomes.** The two hallucination constructs follow the literature's split between factuality hallucination
+  (output that conflicts with real-world facts, including invented entities and wrong attributes) and faithfulness
+  hallucination (output that departs from the instructions given in the prompt).
+  - A non-existent paper, or a real paper with a wrong author, journal or year, conflicts with the bibliographic record.
+  - A real, correctly cited paper outside the approved journals or years breaks a constraint stated in the task
+    prompt.
+- **Factors.** The factor constructs of Part 4 regroup the registered contrasts. "Model heterogeneity" re-frames the
+  registered H3 rationale, as Part 4 says.
+- **Sources.** The manuscript cites the sources. The measurement rules (the year tolerance and the Part 3 author rule)
+  are this study's own.
+
+*Part 7. A registered check that is not run.*
+
+**Main-run near-miss hand check: not run.** Section 10 and the tag-2b note registered a hand check of the main-run
+citations decided by the near-miss rule: 50 cases from the branch without a cited author, the only branch used. By Author A's
+decision of 13 November 2026, 23:40 UTC, it is not run.
+- It would have changed no label.
+- The pilot check of that branch, where a person agreed with all 50 of its cases, remains the evidence for it.
+- The paper lists this as a deviation from the registration.
+
+The registered verifier validation (note `dda421f7`) is not affected. It was run and scored as registered on 13
+November 2026 at 23:36 UTC, with `score_verifier_validation.py`
+(`f9a3ce86a0e3f9231aa31a9b4bfaa2573eb90f31cbd1883cec1a5bfc1f45fbc4`).

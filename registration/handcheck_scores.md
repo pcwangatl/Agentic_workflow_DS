@@ -22,17 +22,17 @@ Venue uncertain cases (no verifier call): {'Y': 7, 'N': 13, 'U': 0, 'blank': 0}.
 
 | Stratum, coder | Answers |
 |---|---|
-| nearmiss_author, PC | {'S': 9, 'N': 15, 'U': 1} |
-| nearmiss_author, Rain | {'U': 1, 'N': 17, 'S': 7} |
-| nearmiss_noauthor, PC | {'N': 25} |
-| nearmiss_noauthor, Rain | {'N': 25} |
-| title_only, PC | {'S': 33, 'U': 1, 'N': 16} |
-| title_only, Rain | {'S': 38, 'N': 10, 'U': 2} |
-| venue_different, PC | {'N': 16, 'Y': 4} |
-| venue_different, Rain | {'N': 16, 'Y': 4} |
-| venue_same/approved, PC | {'Y': 10, 'N': 1} |
-| venue_same/approved, Rain | {'Y': 5, 'N': 1} |
-| venue_same/off_list, PC | {'Y': 8, 'N': 1} |
-| venue_same/off_list, Rain | {'Y': 13, 'N': 1} |
-| venue_uncertain, PC | {'N': 7, 'Y': 3} |
-| venue_uncertain, Rain | {'Y': 4, 'N': 6} |
+| nearmiss_author, Author A | {'S': 9, 'N': 15, 'U': 1} |
+| nearmiss_author, Author B | {'U': 1, 'N': 17, 'S': 7} |
+| nearmiss_noauthor, Author A | {'N': 25} |
+| nearmiss_noauthor, Author B | {'N': 25} |
+| title_only, Author A | {'S': 33, 'U': 1, 'N': 16} |
+| title_only, Author B | {'S': 38, 'N': 10, 'U': 2} |
+| venue_different, Author A | {'N': 16, 'Y': 4} |
+| venue_different, Author B | {'N': 16, 'Y': 4} |
+| venue_same/approved, Author A | {'Y': 10, 'N': 1} |
+| venue_same/approved, Author B | {'Y': 5, 'N': 1} |
+| venue_same/off_list, Author A | {'Y': 8, 'N': 1} |
+| venue_same/off_list, Author B | {'Y': 13, 'N': 1} |
+| venue_uncertain, Author A | {'N': 7, 'Y': 3} |
+| venue_uncertain, Author B | {'Y': 4, 'N': 6} |
