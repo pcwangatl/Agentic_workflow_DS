@@ -4,14 +4,21 @@ The data behind Study B1's registered and post-registration results are archived
 
 | Field | Value |
 | --- | --- |
-| DOI (this version) | [10.5281/zenodo.24292422](https://doi.org/10.5281/zenodo.24292422) |
+| DOI (this version) | [10.5281/zenodo.24295675](https://doi.org/10.5281/zenodo.24295675) |
 | Concept DOI (all versions) | [10.5281/zenodo.24292421](https://doi.org/10.5281/zenodo.24292421) |
-| Record | https://zenodo.org/records/24292422 |
-| Version | 1.0, published 2026-11-16 |
+| Record | https://zenodo.org/records/24295675 |
+| Version | 1.1, published 2026-11-16 |
+| Earlier version | 1.0, published 2026-11-16: [10.5281/zenodo.24292422](https://doi.org/10.5281/zenodo.24292422), https://zenodo.org/records/24292422 |
 | Licence | CC BY 4.0 for the data and text; the analysis code is released separately under MIT |
-| Files | 9, 1,534,955,303 bytes in all |
+| Files | 9, 1,534,956,064 bytes in all |
 
-## Files and SHA-256
+Version 1.1 adds amendment no. 7 (a correction of amendment no. 6) to the linked registration. It differs from
+version 1.0 only in the package's `README.md`; the six archives, `SHA256SUMS` and `MANIFEST.sha256` are
+byte-identical, so the data are unchanged. The copy of `README.md` inside `documents.tar.gz`, listed in
+`MANIFEST.sha256`, is the version 1.0 text (4,691 bytes, SHA-256
+`0195357be40d14d1fe71b54416311c800e4cdf1ccf458b5334cd47d2af172d24`).
+
+## Files and SHA-256 (version 1.1)
 
 | File | Bytes | SHA-256 |
 | --- | ---: | --- |
@@ -23,7 +30,7 @@ The data behind Study B1's registered and post-registration results are archived
 | `verification_labels.tar.gz` | 222,098,019 | `8b219f640cfd87370420fe1878cfe15f474808e182ef6c0f8fca9a96208a0ba1` |
 | `SHA256SUMS` | 526 | `31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab` |
 | `MANIFEST.sha256` | 53,671,474 | `9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600` |
-| `README.md` | 4,691 | `0195357be40d14d1fe71b54416311c800e4cdf1ccf458b5334cd47d2af172d24` |
+| `README.md` | 5,452 | `f678104e24cf676797a167a33fbb198310474942bfd24006cad757f49cf94a5c` |
 
 - `SHA256SUMS` lists the SHA-256 of the six archives, and `MANIFEST.sha256` lists the SHA-256 of every file inside
   them. Their own SHA-256 sums above tie both lists to this repository.
@@ -48,7 +55,7 @@ cc2875742aae6cd14ef74d02250c2ad4cb047b0c125802fea4db799b9b225f83  run_data_main.
 8b219f640cfd87370420fe1878cfe15f474808e182ef6c0f8fca9a96208a0ba1  verification_labels.tar.gz
 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab  SHA256SUMS
 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600  MANIFEST.sha256
-0195357be40d14d1fe71b54416311c800e4cdf1ccf458b5334cd47d2af172d24  README.md
+f678104e24cf676797a167a33fbb198310474942bfd24006cad757f49cf94a5c  README.md
 EOF
 ```
 

@@ -1,8 +1,9 @@
 # Level 1 research configuration: Study B1
 #
-# Version 5, 2026-11-16. Draft 3 of 2026-11-12 with amendment no. 6 (commit ecdb3790), the verifier validation
-# scores (AMENDMENTS.md, note in f2decec8) and the data archive's DOI added. Every registered value of draft 3 is
-# unchanged.
+# Version 6, 2026-11-16. Version 5 (draft 3 of 2026-11-12 with amendment no. 6, commit ecdb3790, the verifier
+# validation scores, note in f2decec8, and the data archive's DOI) with amendment no. 7 (commit 6e535a6b) and the
+# data archive's version 1.1 DOI added.
+# Every registered value of draft 3 is unchanged.
 # - Every value is taken from the registration (PREREGISTRATION.md, AMENDMENTS.md, docs/dv_specification.md,
 #   registration/*) or from the frozen code and configs at commits 6069c884 and cc939c70. If this file ever differs from
 #   PREREGISTRATION.md, PREREGISTRATION.md wins. Paths to those registration files are from the root of this
@@ -10,15 +11,17 @@
 # - prereg-tag2b (1f69b31, released 2026-11-12T02:12:02Z) and the dated note on the final label pass (c8986072) are
 #   recorded below. The registered analysis ran on code cc939c70; `analytical_targets.results` is copied by script from
 #   its output (results.json, SHA-256 e6685474...) in the shape fixed by draft 2's `result_slots`.
-# - Fields named post_registration come from amendment no. 6. They were written after the results, are exploratory,
-#   carry no verdict, and are reported beside the registered results, never in place of them.
+# - Fields named post_registration come from amendments no. 6 and 7. They were written after the results and are
+#   reported beside the registered results, never in place of them. Amendment no. 7 corrects amendment no. 6: the
+#   paper's hypotheses HP1 to HP5 are stated and decided on factual and faithful hallucination; every other
+#   post-registration field carries no verdict.
 # - Placeholders in angle brackets (<...>) are filled before submission (anonymous links, the code archive).
 # - The field names follow the list in the Decision Sciences Track A call (Level 1, plus the extra fields for
 #   experiments with agents as subjects). No official schema is published in the call.
 
 artifact:
   kind: level1_research_configuration
-  config_version: b1-level1-version-5 (2026-11-16)
+  config_version: b1-level1-version-6 (2026-11-16)
   study_code: B1
   title: "Agent-team set-up and literature-reference errors"
   track: A
@@ -36,6 +39,7 @@ artifact:
       - {commit: f2decec83c1a770cb6cfa42468a87c3f007a5b90, committed_utc: "2026-11-16T20:33:11Z", file: AMENDMENTS.md, title: "Note on the verifier validation scores (2026-11-16)", reports: validation.main_run_hand_checks.verifier_validation, changes: "no rule and no label"}
     amendment_after_tag2b:
       - {number: 6, commit: ecdb3790511d5acf608d38e1bd8ad495988a7057, committed_utc: "2026-11-16T00:55:22Z", file: AMENDMENTS.md, adds: "post-registration constructs and a looser author rule, reported beside the registered DVs; the paper's grouping of the registered hypotheses; one exploratory cost-effectiveness measure; the main-run near-miss hand check not run; the authors called Author A and Author B", changes: "no registered label, rule, DV, contrast or verdict", fields_here: [key_parameters.outcome_variables.post_registration, data_provenance.transformations, analytical_targets.post_registration, scope_conditions.known_limits, validation.main_run_hand_checks]}
+      - {number: 7, commit: 6e535a6b415403ae419399d186a0b1516f5674c0, committed_utc: "2026-11-17T00:56:07Z", file: AMENDMENTS.md, adds: "a correction of amendment no. 6, Part 1, item 2: the paper's hypotheses HP1 to HP5 are stated and decided on factual and faithful hallucination, each with the direction of the registered hypothesis it maps to", changes: "no registered label, rule, DV, contrast or verdict; no construct definition or estimate", fields_here: [key_parameters.outcome_variables.post_registration, analytical_targets.post_registration]}
     code_commit_main_run: 6069c884ed1fc7c846400bac8ad7f578db79d966
     code_commit_labelling_and_analysis: cc939c70f1706bfbf7be317a57bc49e448cd97ec   # on 6069c884; fills the decisions file only; no hashed file changes (study_b1/HASHES.sha256 still 8bcce5ca...)
     code_commit_pilot_stage3_and_plans: 37832fb95c2ec3a6038886c6c46ca1477a1a11bb
@@ -264,7 +268,7 @@ key_parameters:
     manipulation_and_data_checks: [rehomed_rate, journal_field_empty_rate, honest_option shares, unresolved_share, truncated/salvaged/repeat/untitled shares, unreviewed papers, window-full stops]
     performance_h7: [tokens, calls, cost_usd, cost_per_valid_paper, working_time_s]
     formulas: docs/dv_specification.md
-    post_registration:   # amendment no. 6 (ecdb3790), Parts 2 and 3; exploratory, no verdict; reported beside the registered DVs above
+    post_registration:   # amendment no. 6 (ecdb3790), Parts 2 and 3; factual and faithful hallucination decide the paper's hypotheses (amendment no. 7, 6e535a6b); reported beside the registered DVs above
       unit: one citation in a returned list
       outcomes: "every resolved citation (the verifier found its record, or ruled it fabricated) gets exactly one of factual_hallucination, faithful_hallucination and compliant_author_checked, so the three shares add up to 1 on every list"
       base: resolved citations, the base of fabrication_rate
@@ -391,7 +395,7 @@ data_provenance:
       code: {file: study_b1/dv/secondary_dvs_b1.py, sha256: b48d0a1bee5fdc67e380233c7fa29ee4b356348e6f450fd3b60a1eff7e29cded}
     - step: models, contrasts, verdicts
       code: [{file: study_b1/analysis/analysis_b1.py, sha256: 07e6017bf416ac4e1f7d4c3d3a3bc23526550abae83bd771c12ae7415ce43483}, {file: study_b1/analysis/b1stats.py, sha256: 398fc2046bfda03a44825c1d484efa098c7f9c42ac9417a082322b08c8822cc9}]
-    - step: post-registration constructs (amendment no. 6, ecdb3790); exploratory
+    - step: post-registration constructs (amendment no. 6, ecdb3790); they decide the paper's hypotheses (amendment no. 7, 6e535a6b)
       what: "the registered labels plus the author_rule test on the stored records (key_parameters.outcome_variables.post_registration); no new labelling and no request"
       dated_note: {file: NOTE_2026-11-13_factual_faithful_loose.md, sha256: eb043f19e032d6681fbd06c4d80deb11b9e3a2f92b6f130c4e497d5f59825b86, written_utc: "2026-11-13T16:56Z"}
       input_labels: {file: rules_api/labels.jsonl, sha256: b7190f51d0bb131a31d3394b56e6fc892c26f454bfa020a5c300250ccfaa1c59}
@@ -457,19 +461,25 @@ analytical_targets:
     - rate DVs read as "when the team answers"; answer_rate, refusal and abstention are reported beside every draft contrast
     - a fall in fabrication bought by fewer valid papers is not full support (partly supported)
     - open-weight results are descriptive and are never pooled with the API-hosted arm
-  post_registration:   # amendment no. 6 (ecdb3790), Parts 1, 4 and 5; written after the results
-    status: "exploratory: no verdict; reported beside the registered results, never in place of them; each change was written down and dated before it was computed"
+  post_registration:   # amendment no. 6 (ecdb3790), Parts 1, 4 and 5, and amendment no. 7 (6e535a6b); written after the results
+    status: "the paper's hypotheses HP1 to HP5 are stated and decided on factual and faithful hallucination (amendment no. 7); everything else here carries no verdict; reported beside the registered results, never in place of them; each change was written down and dated before it was computed"
     outcomes: key_parameters.outcome_variables.post_registration (the three construct shares, tokens_total and cost_usd)
     models: the registered models and contrasts (D1, D2, R1, R2), on all Doers and without the flagged Doers
     report: "estimates, 95% intervals and raw p, labelled uncorrected; no multiple-comparison adjustment, by Author A's decision (as for the registered tests)"
     registered_hypotheses: "the registered H numbers, deciding DVs, tests and verdict rules do not change; each item keeps its own verdict; a sign flips only where a factor is recoded"
-    paper_hypotheses:
-      - {id: HP1, construct: "adding an Auditor", item: "any Auditor (four levels averaged) vs none", registered: H2}
-      - {id: HP2, construct: "model capability (one construct, three items, one per role)", items: ["item 1: high vs low Doer within vendor (H4a)", "item 2: high vs low Lead within vendor (H8)", "item 3: high vs low Auditor tier (H9)"]}
-      - {id: HP3, construct: "task difficulty (one construct, two items, both coded 1 = easier)", items: ["item 1: goal 3 (= 1) vs goal 10 (H1, sign flipped)", "item 2: may-report (= 1) vs must-fill (H6)", "item 1 x item 2 (H6x, sign flipped)"]}
-      - {id: HP4, construct: "model heterogeneity (mechanism: error independence)", item: "other-vendor vs same-vendor Auditor", registered: H3, note: "re-frames the registered H3 rationale, 'a different model family brings more diverse knowledge'; not a new prediction; check B3 splits it by Doer vendor and is reported beside the pooled estimate"}
-      - {id: HP5, construct: "adding an Auditor x task difficulty (HP1 x HP3)", item: "any Auditor x goal", registered: "H5 (sign flipped)"}
-      - {id: none, construct: "task cost", item: "every contrast above, on tokens and US dollars", registered: H7}
+    paper_hypotheses:   # amendment no. 7 (6e535a6b): stated and decided on the constructs; each keeps the direction of the registered hypothesis it maps to
+      - {id: HP1, construct: "adding an Auditor", item: "any Auditor (four levels averaged) vs none", hypothesis: "adding an Auditor lowers factual hallucination and faithful hallucination", decided_on: [factual_hallucination, faithful_hallucination], registered: H2}
+      - {id: HP2a, construct: "model capability", item: "high vs low Doer within vendor", hypothesis: "a higher-capability Doer lowers factual hallucination", decided_on: [factual_hallucination], registered: H4a}
+      - {id: HP2b, construct: "model capability", item: "high vs low Lead within vendor", hypothesis: "a higher-capability Lead lowers factual hallucination", decided_on: [factual_hallucination], registered: H8}
+      - {id: HP2c, construct: "model capability", item: "high vs low Auditor tier", hypothesis: "a higher-tier Auditor lowers factual hallucination and faithful hallucination", decided_on: [factual_hallucination, faithful_hallucination], registered: H9}
+      - {id: HP3a, construct: "task difficulty (both items coded 1 = easier)", item: "goal 3 (= 1) vs goal 10", hypothesis: "an easier task, 3 rather than 10 papers per subtopic, lowers factual hallucination", decided_on: [factual_hallucination], registered: "H1 (sign flipped)"}
+      - {id: HP3b, construct: "task difficulty (both items coded 1 = easier)", item: "may-report (= 1) vs must-fill", hypothesis: "letting the team return fewer papers than asked lowers factual hallucination", decided_on: [factual_hallucination], registered: H6}
+      - {id: HP4, construct: "model heterogeneity (mechanism: error independence)", item: "other-vendor vs same-vendor Auditor", hypothesis: "an other-vendor Auditor lowers factual hallucination more than a same-vendor Auditor", decided_on: [factual_hallucination], registered: H3, note: "re-frames the registered H3 rationale, 'a different model family brings more diverse knowledge'; not a new prediction; check B3 splits it by Doer vendor and is reported beside the pooled estimate"}
+      - {id: HP5, construct: "adding an Auditor x task difficulty (HP1 x HP3a)", item: "any Auditor x goal", hypothesis: "adding an Auditor lowers factual hallucination more at goal 10 than at goal 3", decided_on: [factual_hallucination], registered: "H5 (sign flipped)"}
+      - {id: none, construct: "task difficulty, item 1 x item 2", item: "goal x count rule", hypothesis: none, report: "its estimate is reported briefly, with no verdict", registered: "H6x (sign flipped)"}
+      - {id: none, construct: "task cost", item: "every contrast above, on tokens and US dollars", hypothesis: none, report: "each contrast's cost is reported as its trade-off, with no verdict", registered: H7}
+    paper_verdict_rule: "each construct named in decided_on gets its own verdict from the registered contrast, model and cluster-robust standard errors: supported (the predicted direction at two-sided raw p < .05), opposite (the other direction at p < .05), not supported otherwise; no multiple-comparison adjustment (amendment no. 7)"
+    paper_reporting: "a not-supported or opposite result is reported as a surprise, and no direction is changed after the data; each registered verdict is reported beside the paper's verdict"
     without_flagged_doers: every estimate is also reported without DeepSeek Flash and DeepSeek V4-Pro (amendment no. 4)
     cost_effectiveness:   # Part 5; exploratory, no verdict; reported beside the registered H7 measures
       per_contrast: "the drop in factual-hallucination points per US dollar and per 1,000 tokens of added cost per run; given only where the cost rises and its 95% interval excludes 0"
@@ -1218,6 +1228,6 @@ spending:
 release:
   during_review: <journal-approved upload of this file, the Artifact Note and a code-and-data archive; anonymous link if the Author Guide allows>
   on_acceptance: <stable public archive with a DOI>
-  data_archive: {doi: 10.5281/zenodo.24292422, concept_doi: 10.5281/zenodo.24292421, record: "https://zenodo.org/records/24292422", version: "1.0", published: "2026-11-16", licence: CC BY 4.0, files: 9, sha256sums_sha256: 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab, manifest_sha256: 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600, details: DATA_ARCHIVE.md}
+  data_archive: {doi: 10.5281/zenodo.24295675, concept_doi: 10.5281/zenodo.24292421, record: "https://zenodo.org/records/24295675", version: "1.1", published: "2026-11-16", earlier_version: {doi: 10.5281/zenodo.24292422, version: "1.0"}, licence: CC BY 4.0, files: 9, sha256sums_sha256: 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab, manifest_sha256: 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600, readme_sha256: f678104e24cf676797a167a33fbb198310474942bfd24006cad757f49cf94a5c, details: DATA_ARCHIVE.md}
   licences: {code: MIT, data_and_docs: CC BY 4.0, decided: "authors, 11 Nov 2026", excluded: "third-party text (the conference mini-track titles and descriptions in the task file), shared with source URLs under its own terms"}
   ai_generated_content_notice: all model replies in the logs are AI-generated

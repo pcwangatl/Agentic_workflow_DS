@@ -1,6 +1,6 @@
 # Level 2 reasoning front-end: Study B1
 #
-# Version 9, 2026-11-16. Built from the Level 2 draft of 2026-11-12, amendment no. 6 as committed (ecdb3790,
+# Version 10, 2026-11-16. Version 9 with amendment no. 7 (commit 6e535a6b) and the data archive's version 1.1 DOI added. Built from the Level 2 draft of 2026-11-12, amendment no. 6 as committed (ecdb3790,
 # 2026-11-15), the verifier validation scores (AMENDMENTS.md, note in f2decec8) and Author A's comments and decisions
 # of 2026-11-16. Placeholders in angle brackets (<...>) are filled before submission.
 # - Built only from Study B1's own record: PREREGISTRATION.md, AMENDMENTS.md, docs/dv_specification.md and the
@@ -12,7 +12,9 @@
 #   relation was set mechanically by `positioning_relation_rules`, written before any result; where a verdict differs
 #   without the flagged Doers, both relations are given.
 # - The post-registration constructs of amendment no. 6 are added beside the registered ones, marked
-#   `status: post_registration`. They carry no verdict and set no positioning relation.
+#   `status: post_registration`. The paper's hypotheses are stated and decided on outcome_factual and outcome_faithful
+#   (amendment no. 7, a correction of amendment no. 6); those verdicts are reported in the paper. The constructs set no
+#   positioning relation.
 # - Sources for the positioning entries and the construct terms are given in the manuscript, not in this file.
 # - Structure: motivations; theoretical positioning with typed relationships (extends, contradicts, bounds,
 #   synthesizes, replicates); a typed concept graph; the reasoning journey as an exploration tree (node kinds
@@ -21,7 +23,7 @@
 
 front_end:
   kind: level2_reasoning_front_end
-  version: b1-level2-version-9 (2026-11-16)
+  version: b1-level2-version-10 (2026-11-16)
   study_code: B1
   companion_level1: b1_level1_config.yaml
   authors: withheld during review
@@ -54,7 +56,7 @@ front_end:
       post_registration_outputs:   # every dated note, script and output is listed with its hash in amendment no. 6, Part 1
         construct_estimates: {file: factual_faithful_loose.json, sha256: 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1}
         author_rule_counts: {file: author_loose.json, sha256: d3cef9be1e2c588fef7198ab24c1b0e76363853a3d28de30a845b1b046f8554e}
-      archive: {doi: 10.5281/zenodo.24292422, concept_doi: 10.5281/zenodo.24292421, record: "https://zenodo.org/records/24292422", version: "1.0", published: "2026-11-16", files: 9, sha256sums_sha256: 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab, manifest_sha256: 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600, details: DATA_ARCHIVE.md}
+      archive: {doi: 10.5281/zenodo.24295675, concept_doi: 10.5281/zenodo.24292421, record: "https://zenodo.org/records/24295675", version: "1.1", published: "2026-11-16", earlier_version: {doi: 10.5281/zenodo.24292422, version: "1.0"}, files: 9, sha256sums_sha256: 31db19e9aff5291e118fd337caacdf3288a14715bf22832bfcd000891ff3b8ab, manifest_sha256: 9cf7da48ec4e75b65d1a734f0d7e8d4509d93e49d7f8432e1d43dc326ce71600, readme_sha256: f678104e24cf676797a167a33fbb198310474942bfd24006cad757f49cf94a5c, details: DATA_ARCHIVE.md}
       record_during_review: <journal upload or anonymous data link, per the Author Guide>
     licences:
       code: MIT
@@ -128,14 +130,14 @@ motivations:
       hypotheses: [H2]
     - id: O2
       objective: estimate where model capability matters, in the Doer, the Lead or the Auditor, since the strongest model cannot be used in every role
-      paper_hypothesis: HP2
+      paper_hypothesis: [HP2a, HP2b, HP2c]
       hypotheses: [H4a, H8, H9]
     - id: O3
       objective: estimate how task difficulty (the number of goals; may-report versus must-fill) changes hallucination and usable output
-      paper_hypothesis: HP3
+      paper_hypothesis: [HP3a, HP3b]
       hypotheses: [H1, H6, H6x]
     - id: O4
-      objective: estimate whether an Auditor from another vendor lowers fabrication more than one from the same vendor (model heterogeneity)
+      objective: estimate whether an Auditor from another vendor lowers factual hallucination more than one from the same vendor (model heterogeneity)
       paper_hypothesis: HP4
       hypotheses: [H3]
     - id: O5
@@ -176,7 +178,7 @@ theoretical_positioning:
       re-homed reference.
     hypotheses: [H1]
     result_dependent: true   # per positioning_relation_rules
-    construct: {name: task difficulty, item: "1, number of goals (coded 1 = goal 3, so the sign of H1 is flipped)", paper_hypothesis: HP3, status: post_registration}
+    construct: {name: task difficulty, item: "1, number of goals (coded 1 = goal 3, so the sign of H1 is flipped)", paper_hypothesis: HP3a, status: post_registration}
   - id: P2
     relation: synthesizes   # set by positioning_relation_rules from the verdicts with all Doers
     relation_qualifier: "fabrication falls, but usable output is lost"
@@ -192,7 +194,7 @@ theoretical_positioning:
       with the goal size.
     hypotheses: [H6, H6x]
     result_dependent: true   # per positioning_relation_rules
-    construct: {name: task difficulty, item: "2, reporting format (coded 1 = may-report)", within_construct_interaction: "H6x, items 1 x 2 (sign flipped)", paper_hypothesis: HP3, note: "the two items keep their own registered verdicts", status: post_registration}
+    construct: {name: task difficulty, item: "2, reporting format (coded 1 = may-report)", within_construct_interaction: "H6x, items 1 x 2 (sign flipped)", paper_hypothesis: HP3b, note: "the two items keep their own registered verdicts", status: post_registration}
   - id: P3
     relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
     relation_without_flagged_doers: extends
@@ -263,7 +265,7 @@ theoretical_positioning:
       (H8) and of a better producer (H4a) on fabrication are estimated on the same topics, with cost alongside (H7).
     hypotheses: [H4a, H8, H7]
     result_dependent: false
-    construct: {name: model capability, items: ["1, Doer (H4a)", "2, Lead (H8)", "3, Auditor tier (H9; see P6)"], paper_hypothesis: HP2, note: "each item keeps its registered verdict; no merged verdict", task_cost: "tokens and US dollars; the registered H7 also keeps calls, cost per valid paper and working time", status: post_registration}
+    construct: {name: model capability, items: ["1, Doer (H4a)", "2, Lead (H8)", "3, Auditor tier (H9; see P6)"], paper_hypothesis: [HP2a, HP2b, HP2c], note: "each item keeps its registered verdict; no merged verdict", task_cost: "tokens and US dollars; the registered H7 also keeps calls, cost per valid paper and working time", status: post_registration}
   - id: P8
     relation: extends   # set by positioning_relation_rules from the verdicts with all Doers
     relation_without_flagged_doers: extends
@@ -310,7 +312,8 @@ concept_graph:
     - {id: compliant_count, kind: outcome}
     - {id: rehomed_rate, kind: manipulation_check}
     - {id: cost, kind: outcome, dvs: [tokens, cost_usd, calls, cost_per_valid_paper, working_time_s], label: "task cost (tokens and US dollars)"}
-    # post-registration constructs (amendment no. 6); no verdicts. The three outcome constructs are mutually exclusive and
+    # post-registration constructs (amendment no. 6); the paper's hypotheses are decided on outcome_factual and
+    # outcome_faithful (amendment no. 7). The three outcome constructs are mutually exclusive and
     # exhaustive over the resolved citations, so their shares sum to 1 on each list; unresolved citations stay out. Order
     # of checks: exists, year, journal, authors (factual), then list, window (faithful).
     - {id: task_difficulty, kind: construct, status: post_registration, items: [goal, permission_to_report_too_few], coding: "both items coded 1 = easier (goal 3; may-report)"}
@@ -330,7 +333,7 @@ concept_graph:
     - {from: reviewer_tier, to: [compliant_count, fabrication_rate, year_mismatch_rate, misplacement_rate], sign: "better on each", hypothesis: H9, verdict: {all_doers: supported, without_flagged_doers: supported}}
     - {from: every_lever, to: cost, sign: "reported", hypothesis: H7, status: secondary, verdict: "none registered; reported (working time not estimable for H2, H3 and H9)"}
     - {from: honest_option, to: rehomed_rate, sign: "-", role: "manipulation check (pilot stage 2b against a same-time control)"}
-    # how the post-registration constructs are built (amendment no. 6); no verdicts
+    # how the post-registration constructs are built (amendment no. 6)
     - {from: goal, to: task_difficulty, kind: item_of, coding: "1 = goal 3"}
     - {from: permission_to_report_too_few, to: task_difficulty, kind: item_of, coding: "1 = may-report"}
     - {from: doer_capability, to: model_capability, kind: item_of}
@@ -341,7 +344,7 @@ concept_graph:
     - {from: "registered label compliant, authors pass", to: outcome_compliant_checked, kind: built_from}
   results:
     release_status: "reportable: the registered verifier validation was scored on 2026-11-13 (b1_level1_config.yaml, validation.main_run_hand_checks.verifier_validation)"
-    post_registration: {status: exploratory, verdicts: none, tests: "raw p, labelled uncorrected", reported_in: the manuscript, output: "factual_faithful_loose.json, sha256 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1"}
+    post_registration: {status: "the paper's main analysis (amendment no. 7, 6e535a6b)", verdicts: "one per construct for HP1 to HP5 (supported, opposite or not supported, at two-sided raw p < .05); none for the cost-effectiveness measure or the Set B checks", tests: "raw p, labelled uncorrected", reported_in: the manuscript, output: "factual_faithful_loose.json, sha256 1e3301199b02dfdac81939034e187358cf1d214769fadc8ecf5a869ef95e92e1"}
     source: "b1_level1_config.yaml, analytical_targets.results (copied from results.json, sha256 e6685474f48fc22c7d7081ecbbb720756061320bf508a4a0648736276397dc6f)"
     sample: {minitracks: 79, left_out: 0, failed_runs: 0, flagged_doers: [deepseek-flash, deepseek-v4-pro]}
     manipulation_check: "main-run rehomed_rate above its ceiling for deepseek-flash only (0.2248 against 0.2011); the other three Doers are under theirs"
@@ -567,6 +570,7 @@ reasoning_journey:
                   - {id: D51, kind: decision, when: "2026-11-14T00:04Z to 00:26Z", choice: "exploratory additions, each defined in a dated note before it ran: one cost-effectiveness measure; robustness set A (the registered checks, read out, not refitted) and set B (three exploratory checks of the constructs); every check that ran is reported; tests at raw p, labelled uncorrected", record: "amendment no. 6, Part 1 (dated notes and hashes)"}
                   - {id: D52, kind: decision, when: "2026-11-13 to 2026-11-15", decided_by: both authors, choice: "a real, correctly described work off the approved journals or off the window is a faithful hallucination, whether or not the Doer used the honest option", why: "the honest option was given to the Doer only as an option; the returned result is still off the list, so it violates the general goal of the task prompt", record: "AMENDMENTS.md, amendment no. 6, Part 2"}
               - {id: D53, kind: decision, when: "2026-11-16T17:10Z to 20:02Z", decided_by: Author A, choice: "the paper states one research question that shows the tension between hallucination and cost (motivations.research_question, picked from drafted variants), framed as how the workflow set-up of an agent team changes information retrieval, with literature search as the operationalisation; the term is kept and defined once, at first use, as the user obtaining information from the model itself, which answers from its own memory; the boundary condition is stated as an assumption (motivations.information_retrieval, research_question, boundary_condition)", why: "the registered question (Q0) already fixes recall from memory without tools; the framing names the broader problem it is an instance of and changes no label, DV, test or verdict"}
+              - {id: V-am7, kind: decision, when: "2026-11-17T00:38Z to 00:55Z", decided_by: Author A, trigger: "amendment no. 6 said the post-registration constructs carry no verdict, a drafting error that misstated the authors' intent", choice: "amendment no. 7, a correction: the paper's hypotheses HP1 to HP5 are stated and decided on factual hallucination (and on faithful hallucination for HP1 and HP2c), each with the direction of the registered hypothesis it maps to; each registered verdict is reported beside", why: "the constructs are the paper's main analysis; the registered labels, DVs, contrasts, tests and verdicts do not change", record: "AMENDMENTS.md, amendment no. 7 (2026-11-16, commit 6e535a6b)"}
 
 # ---------------------------------------------------------------------------------------------------------------
 # 5. Extension directions (each with scope conditions and the Level 1 fields to vary)
